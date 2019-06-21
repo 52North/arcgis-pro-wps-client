@@ -117,8 +117,30 @@
     <AddInContent Include="DarkImages\AddInDesktop32.png" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Module1.cs" />
+    <Compile Include="WpsModule.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Views\Capabilities.xaml.cs">
+      <DependentUpon>Capabilities.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\CapabilitiesViewModel.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Page Include="Views\Capabilities.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <AddInContent Include="Images\GenericButtonPurple16.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AddInContent Include="Images\GenericButtonPurple32.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AddInContent Include="DarkImages\GenericButtonPurple16.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AddInContent Include="DarkImages\GenericButtonPurple32.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!--

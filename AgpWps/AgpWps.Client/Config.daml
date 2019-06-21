@@ -1,12 +1,6 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
-<ArcGIS defaultAssembly="AgpWps.Client.dll"
-        defaultNamespace="AgpWps.Client"
-        xmlns="http://schemas.esri.com/DADF/Registry"
-        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:schemaLocation="http://schemas.esri.com/DADF/Registry file:///C:/Users/stanm/AppData/Local/Programs/ArcGIS/Pro/bin/ArcGIS.Desktop.Framework.xsd">
-
+﻿<ArcGIS defaultAssembly="AgpWps.Client.dll" defaultNamespace="AgpWps.Client" xmlns="http://schemas.esri.com/DADF/Registry" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://schemas.esri.com/DADF/Registry file:///C:/Users/stanm/AppData/Local/Programs/ArcGIS/Pro/bin/ArcGIS.Desktop.Framework.xsd">
   <AddInInfo id="{e4e4b991-c9db-4b78-a061-262f23bde399}" version="1.0" desktopVersion="2.3.15769">
-    <Name>AgpWps.Client</Name>   
+    <Name>AgpWps.Client</Name>
     <Description>AgpWps.Client description</Description>
     <Image>Images\AddinDesktop32.png</Image>
     <Author>stanm</Author>
@@ -16,28 +10,41 @@
     <!-- Note subject can be one or more of these topics:
                     Content, Framework, Editing, Geodatabase, Geometry, Geoprocessing, Layouts, Map Authoring, Map Exploration -->
   </AddInInfo>
-
   <modules>
-    <insertModule id="AgpWps" className="Module1" autoLoad="false" caption="Module1">
+    <insertModule id="AgpWps" className="WpsModule" autoLoad="false" caption="WpsModule">
       <!-- uncomment to have the control hosted on a separate tab-->
       <tabs>
         <!--<tab id="AgpWps.Client_Tab1" caption="New Tab">
           <group refID="AgpWps.Client_Group1"/>
         </tab>-->
       </tabs>
-              
       <groups>
         <!-- comment this out if you have no controls on the Addin tab to avoid
               an empty group-->
         <group id="AgpWpsGroup" caption="WPS" appearsOnAddInTab="true">
           <!-- host controls within groups -->
+          <button refID="AgpWps_Client_Views_Capabilities_ShowButton" size="large" />
         </group>
       </groups>
-      
       <controls>
         <!-- add your controls here -->
-      </controls> 
-      
+        <button id="AgpWps_Client_Views_Capabilities_ShowButton" caption="Show Capabilities" className="AgpWps.Client.Views.Capabilities_ShowButton" loadOnClick="true" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericButtonPurple16.png" largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericButtonPurple32.png">
+          <tooltip heading="Show Dockpane">Show Dockpane<disabledText /></tooltip>
+        </button>
+        <button id="AgpWps_Client_Views_Capabilities_MenuButton" caption="Burger Menu Button" className="AgpWps.Client.Views.Capabilities_MenuButton" loadOnClick="true" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericButtonPurple16.png" largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericButtonPurple32.png">
+          <tooltip heading="Burger Menu Button">ToolTip<disabledText /></tooltip>
+        </button>
+      </controls>
+      <dockPanes>
+        <dockPane id="AgpWps_Client_Views_Capabilities" caption="Capabilities" className="AgpWps.Client.Views.CapabilitiesViewModel" dock="group" dockWith="esri_core_contentsDockPane">
+          <content className="AgpWps.Client.Views.CapabilitiesView" />
+        </dockPane>
+      </dockPanes>
+      <menus>
+        <menu id="AgpWps_Client_Views_Capabilities_Menu" caption="Options" contextMenu="true">
+          <button refID="AgpWps_Client_Views_Capabilities_MenuButton" />
+        </menu>
+      </menus>
     </insertModule>
   </modules>
 </ArcGIS>
