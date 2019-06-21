@@ -142,6 +142,22 @@
   <ItemGroup>
     <AddInContent Include="DarkImages\GenericButtonPurple32.png" />
   </ItemGroup>
+  <ItemGroup>
+    <AddInContent Include="DarkImages\MaterialCircleAdd16.png" />
+    <AddInContent Include="DarkImages\MaterialCircleAdd32.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AddInContent Include="Images\MaterialCircleAdd16.png" />
+    <AddInContent Include="Images\MaterialCircleAdd32.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AddInContent Include="Images\MaterialCircleRemove16.png" />
+    <AddInContent Include="Images\MaterialCircleRemove32.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AddInContent Include="DarkImages\MaterialCircleRemove16.png" />
+    <AddInContent Include="DarkImages\MaterialCircleRemove32.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!--
   PackageAction can be:

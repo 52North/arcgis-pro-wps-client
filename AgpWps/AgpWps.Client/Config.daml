@@ -23,16 +23,25 @@
               an empty group-->
         <group id="AgpWpsGroup" caption="WPS" appearsOnAddInTab="true">
           <!-- host controls within groups -->
-          <button refID="AgpWps_Client_Views_Capabilities_ShowButton" size="large" />
+          <button refID="AgpWps_Client_Views_CapabilitiesShowCapabilities" size="large" />
         </group>
       </groups>
       <controls>
         <!-- add your controls here -->
-        <button id="AgpWps_Client_Views_Capabilities_ShowButton" caption="Show Capabilities" className="AgpWps.Client.Views.Capabilities_ShowButton" loadOnClick="true" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericButtonPurple16.png" largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericButtonPurple32.png">
-          <tooltip heading="Show Dockpane">Show Dockpane<disabledText /></tooltip>
+        <button id="AgpWps_Client_Views_CapabilitiesShowCapabilities" caption="Show Capabilities" className="AgpWps.Client.Views.CapabilitiesShowCapabilities" loadOnClick="true" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericButtonPurple16.png" largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericButtonPurple32.png">
+          <tooltip heading="WPS Client">
+            Shows WPS providers capabilities<disabledText />
+          </tooltip>
         </button>
-        <button id="AgpWps_Client_Views_Capabilities_MenuButton" caption="Burger Menu Button" className="AgpWps.Client.Views.Capabilities_MenuButton" loadOnClick="true" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericButtonPurple16.png" largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericButtonPurple32.png">
-          <tooltip heading="Burger Menu Button">ToolTip<disabledText /></tooltip>
+        <button id="AgpWps_Client_Views_CapabilitiesAddProviderButton" caption="Add WPS provider" className="AgpWps.Client.Views.CapabilitiesAddProviderButton" loadOnClick="true" smallImage="Images/MaterialCircleAdd16.png" largeImage="Images/MaterialCircleAdd32.png">
+          <tooltip heading="Add WPS Provider">
+            Adds a WPS provider to the list<disabledText />
+          </tooltip>
+        </button>
+        <button id="AgpWps_Client_Views_CapabilitiesClearProvidersButton" caption="Clear all providers" className="AgpWps.Client.Views.CapabilitiesClearProvidersButton" loadOnClick="true" smallImage="Images/MaterialCircleRemove16.png" largeImage="Images/MaterialCircleRemove32.png">
+          <tooltip heading="Clear all providers">
+            Removes all the providers from the list<disabledText />
+          </tooltip>
         </button>
       </controls>
       <dockPanes>
@@ -42,7 +51,8 @@
       </dockPanes>
       <menus>
         <menu id="AgpWps_Client_Views_Capabilities_Menu" caption="Options" contextMenu="true">
-          <button refID="AgpWps_Client_Views_Capabilities_MenuButton" />
+          <button refID="AgpWps_Client_Views_CapabilitiesAddProviderButton" />
+          <button refID="AgpWps_Client_Views_CapabilitiesClearProvidersButton" />
         </menu>
       </menus>
     </insertModule>

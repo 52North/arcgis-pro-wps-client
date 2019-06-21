@@ -40,7 +40,7 @@ namespace AgpWps.Client.Views
         /// <summary>
         /// Tooltip shown when hovering over the burger button.
         /// </summary>
-        public string BurgerButtonTooltip => "Options";
+        public string BurgerButtonTooltip => "Manage Providers";
 
         /// <summary>
         /// Menu shown when burger button is clicked.
@@ -53,7 +53,7 @@ namespace AgpWps.Client.Views
     /// <summary>
     /// Button implementation to show the DockPane.
     /// </summary>
-    internal class Capabilities_ShowButton : Button
+    internal class CapabilitiesShowCapabilities : Button
     {
         protected override void OnClick()
         {
@@ -61,10 +61,14 @@ namespace AgpWps.Client.Views
         }
     }
 
-    /// <summary>
-    /// Button implementation for the button on the menu of the burger button.
-    /// </summary>
-    internal class Capabilities_MenuButton : Button
+    internal class CapabilitiesAddProviderButton : Button
+    {
+        protected override void OnClick()
+        {
+        }
+    }
+
+    internal class CapabilitiesClearProvidersButton : Button
     {
         protected override void OnClick()
         {
