@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="15.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -164,6 +164,12 @@
   <ItemGroup>
     <AddInContent Include="DarkImages\MaterialCircleRemove16.png" />
     <AddInContent Include="DarkImages\MaterialCircleRemove32.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\AgpWps.Model\AgpWps.Model.csproj">
+      <Project>{ec8d2524-7926-4d58-865f-8bcad2cd1144}</Project>
+      <Name>AgpWps.Model</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!--
