@@ -1,12 +1,12 @@
 ﻿<UserControl x:Class="AgpWps.Client.Views.CapabilitiesView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"    
-             xmlns:ui="clr-namespace:AgpWps.Client.Views"
-             xmlns:extensions="clr-namespace:ArcGIS.Desktop.Extensions;assembly=ArcGIS.Desktop.Extensions"
-             xmlns:controls="clr-namespace:ArcGIS.Desktop.Framework.Controls;assembly=ArcGIS.Desktop.Framework"                       
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:converters="clr-namespace:AgpWps.Client.Converters"
              xmlns:vm="clr-namespace:AgpWps.Model.ViewModels;assembly=AgpWps.Model"
+             xmlns:extensions="clr-namespace:ArcGIS.Desktop.Extensions;assembly=ArcGIS.Desktop.Extensions"
+             xmlns:controls="clr-namespace:ArcGIS.Desktop.Framework.Controls;assembly=ArcGIS.Desktop.Framework"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300"
              d:DataContext="{d:DesignInstance vm:CapabilitiesViewModel}">
@@ -14,6 +14,9 @@
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <extensions:DesignOnlyResourceDictionary Source="pack://application:,,,/ArcGIS.Desktop.Framework;component\Themes\Default.xaml"/>
+                <ResourceDictionary>
+                    <converters:ValidReferenceToVisibilityConverter x:Key="ValidReferenceToVisibilityConverter"/>
+                </ResourceDictionary>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </UserControl.Resources>
@@ -36,5 +39,50 @@
                 </TextBlock.ToolTip>
             </TextBlock>
         </DockPanel>
+
+        <TreeView Grid.Row="1"
+                  Name="ServersTreeView"
+                  ItemsSource="{Binding Servers}"
+                  Style="{DynamicResource {x:Type TreeView}}">
+            <TreeView.ItemTemplate>
+                <HierarchicalDataTemplate DataType="{x:Type vm:ServerViewModel}">
+                    <TreeViewItem Header="{Binding ServerName}"
+                                  ItemsSource="{Binding ProcessOfferings}">
+                        <TreeViewItem.ItemTemplate>
+                            <HierarchicalDataTemplate DataType="{x:Type vm:ProcessOfferingViewModel}">
+                                <TreeViewItem Header="{Binding ProcessName}">
+                                    <StackPanel Orientation="Vertical">
+                                        <TextBlock Visibility="{Binding Version, Converter={StaticResource ValidReferenceToVisibilityConverter}}">
+                                            <Run Text="Version: "/>
+                                            <Run Text="{Binding Version}"/>
+                                        </TextBlock>
+                                        <TextBlock Visibility="{Binding Keywords, Converter={StaticResource ValidReferenceToVisibilityConverter}}">
+                                            <Run Text="Version: "/>
+                                            <Run Text="{Binding Keywords}"/>
+                                        </TextBlock>
+                                        <TextBlock Visibility="{Binding JobControlOptions, Converter={StaticResource ValidReferenceToVisibilityConverter}}">
+                                            <Run Text="Version: "/>
+                                            <Run Text="{Binding JobControlOptions}"/>
+                                        </TextBlock>
+                                        <TextBlock Visibility="{Binding TransmissionModes, Converter={StaticResource ValidReferenceToVisibilityConverter}}">
+                                            <Run Text="Version: "/>
+                                            <Run Text="{Binding TransmissionModes}"/>
+                                        </TextBlock>
+                                        <TextBlock Visibility="{Binding Abstract, Converter={StaticResource ValidReferenceToVisibilityConverter}}">
+                                            <Run Text="Abstract: "/>
+                                            <Run Text="{Binding Abstract}"/>
+                                        </TextBlock>
+                                        <TextBlock Visibility="{Binding Model, Converter={StaticResource ValidReferenceToVisibilityConverter}}">
+                                            <Run Text="Model: "/>
+                                            <Run Text="{Binding Model}"/>
+                                        </TextBlock>
+                                    </StackPanel>
+                                </TreeViewItem>
+                            </HierarchicalDataTemplate>
+                        </TreeViewItem.ItemTemplate>
+                    </TreeViewItem>
+                </HierarchicalDataTemplate>
+            </TreeView.ItemTemplate>
+        </TreeView>
     </Grid>
 </UserControl>

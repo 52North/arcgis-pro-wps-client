@@ -1,4 +1,5 @@
-﻿using AgpWps.Model.ViewModels;
+﻿using AgpWps.Model.Services;
+using AgpWps.Model.ViewModels;
 using ArcGIS.Desktop.Framework;
 using ArcGIS.Desktop.Framework.Contracts;
 using DryIoc;
@@ -46,19 +47,10 @@ namespace AgpWps.Client.Views
     internal class CapabilitiesAddProviderButton : Button
     {
 
-        private AddServerPopup _popup;
         protected override void OnClick()
         {
-            if (_popup != null)
-                return;
-
-            _popup = new AddServerPopup
-            {
-                Owner = System.Windows.Application.Current.MainWindow,
-                DataContext = new AddServerPopupViewModel()
-            };
-            _popup.Closed += (o, e) => { _popup = null; };
-            _popup.ShowDialog();
+            var dialogService = WpsModule.Current.Container.Resolve<IDialogService>();
+            dialogService.ShowAddServerDialog();
         }
     }
 
@@ -66,6 +58,8 @@ namespace AgpWps.Client.Views
     {
         protected override void OnClick()
         {
+            var dialogService = WpsModule.Current.Container.Resolve<IDialogService>();
+            dialogService.ShowAddServerDialog();
         }
     }
 }

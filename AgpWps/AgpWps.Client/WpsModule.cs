@@ -1,7 +1,11 @@
-﻿using AgpWps.Model.ViewModels;
+﻿using AgpWps.Client.Services;
+using AgpWps.Model.Factories;
+using AgpWps.Model.Services;
+using AgpWps.Model.ViewModels;
 using ArcGIS.Desktop.Framework;
 using ArcGIS.Desktop.Framework.Contracts;
 using DryIoc;
+using System.Net.Http;
 using Wps.Client.Services;
 
 namespace AgpWps.Client
@@ -27,10 +31,16 @@ namespace AgpWps.Client
         {
             var container = new Container();
 
+            var client = new WpsClient(new HttpClient(), new XmlSerializationService());
+
             // Services
-            container.Register<IWpsClient, WpsClient>(Reuse.Singleton);
+            container.RegisterInstance<IWpsClient>(client);
+            container.Register<IContext, ArcgisContext>();
+            container.Register<IDialogService, DialogService>();
+            container.Register<IViewModelFactory, ViewModelFactory>();
 
             // View Models
+            container.Register<AddServerPopupViewModel>();
             container.Register<CapabilitiesViewModel>();
 
             return container;
