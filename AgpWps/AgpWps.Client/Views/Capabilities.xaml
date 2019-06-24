@@ -6,9 +6,10 @@
              xmlns:ui="clr-namespace:AgpWps.Client.Views"
              xmlns:extensions="clr-namespace:ArcGIS.Desktop.Extensions;assembly=ArcGIS.Desktop.Extensions"
              xmlns:controls="clr-namespace:ArcGIS.Desktop.Framework.Controls;assembly=ArcGIS.Desktop.Framework"                       
+             xmlns:vm="clr-namespace:AgpWps.Model.ViewModels;assembly=AgpWps.Model"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300"
-             d:DataContext="{Binding Path=ui.CapabilitiesViewModel}">
+             d:DataContext="{d:DesignInstance vm:CapabilitiesViewModel}">
     <UserControl.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
@@ -24,21 +25,16 @@
 
         <DockPanel Grid.Row="0" LastChildFill="true" KeyboardNavigation.TabNavigation="Local" Height="30">
             <controls:BurgerButton DockPanel.Dock="Right"
-                                   ToolTip="{Binding BurgerButtonTooltip}"
-                                   PopupMenu="{Binding BurgerButtonMenu}"/>
+                                   Name="MenuBurgerButton"
+                                   ToolTip="Manage Providers"/>
 
-            <TextBlock Text="{Binding Heading}" Style="{DynamicResource Esri_TextBlockDockPaneHeader}">
+            <TextBlock Text="Servers Capabilities" Style="{DynamicResource Esri_TextBlockDockPaneHeader}">
                 <TextBlock.ToolTip>
                     <WrapPanel Orientation="Vertical" MaxWidth="300">
-                        <TextBlock Text="{Binding Heading}" TextWrapping="Wrap"/>
+                        <TextBlock Text="Servers Capabilities" TextWrapping="Wrap"/>
                     </WrapPanel>
                 </TextBlock.ToolTip>
             </TextBlock>
         </DockPanel>
-
-        <TreeView Grid.Row="1"
-                  Margin="5"
-                  Name="ServersTreeView">
-        </TreeView>
     </Grid>
 </UserControl>

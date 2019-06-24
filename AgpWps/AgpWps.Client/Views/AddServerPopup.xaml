@@ -44,6 +44,6 @@
                 Padding="15,0,15,0"
                 Command="{Binding AddConnectionCommand}"
                 CommandParameter="{Binding ElementName=ServerInputBox, Path=Text}"
-                HorizontalAlignment="Center"></Button>
+                HorizontalAlignment="Center"/>
     </Grid>
 </controls:ProWindow>

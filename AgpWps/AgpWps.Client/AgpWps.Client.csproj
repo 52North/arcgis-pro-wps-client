@@ -42,6 +42,9 @@
     <ArcGISFolder Condition="'$(ArcGISFolder)' == ''">$(registry:HKEY_CURRENT_USER\SOFTWARE\ESRI\ArcGISPro@InstallDir)</ArcGISFolder>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="DryIoc, Version=4.0.5.0, Culture=neutral, PublicKeyToken=dfbf2bd50fcf7768, processorArchitecture=MSIL">
+      <HintPath>..\packages\DryIoc.dll.4.0.5\lib\net45\DryIoc.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -125,7 +128,7 @@
     <Compile Include="Views\Capabilities.xaml.cs">
       <DependentUpon>Capabilities.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\CapabilitiesViewModel.cs" />
+    <Compile Include="Views\CapabilitiesPane.cs" />
   </ItemGroup>
   <ItemGroup>
     <Page Include="Views\AddServerPopup.xaml">
@@ -166,10 +169,17 @@
     <AddInContent Include="DarkImages\MaterialCircleRemove32.png" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\..\wpsclient4arcgispro\src\Wps\Wps.Client\Wps.Client.csproj">
+      <Project>{1de678be-dbca-4d45-b826-c9c396c77abe}</Project>
+      <Name>Wps.Client</Name>
+    </ProjectReference>
     <ProjectReference Include="..\AgpWps.Model\AgpWps.Model.csproj">
       <Project>{ec8d2524-7926-4d58-865f-8bcad2cd1144}</Project>
       <Name>AgpWps.Model</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!--
