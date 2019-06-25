@@ -1,8 +1,10 @@
 ﻿<UserControl x:Class="AgpWps.Client.Views.CapabilitiesView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:command="http://www.galasoft.ch/mvvmlight"
              xmlns:converters="clr-namespace:AgpWps.Client.Converters"
              xmlns:vm="clr-namespace:AgpWps.Model.ViewModels;assembly=AgpWps.Model"
              xmlns:extensions="clr-namespace:ArcGIS.Desktop.Extensions;assembly=ArcGIS.Desktop.Extensions"
@@ -51,6 +53,11 @@
                         <TreeViewItem.ItemTemplate>
                             <HierarchicalDataTemplate DataType="{x:Type vm:ProcessOfferingViewModel}">
                                 <TreeViewItem Header="{Binding ProcessName}">
+                                    <i:Interaction.Triggers>
+                                        <i:EventTrigger EventName="MouseDoubleClick">
+                                            <command:EventToCommand Command="{Binding OpenExecutionPanelCommand}"/>
+                                        </i:EventTrigger>
+                                    </i:Interaction.Triggers>
                                     <StackPanel Orientation="Vertical">
                                         <TextBlock Visibility="{Binding Version, Converter={StaticResource ValidReferenceToVisibilityConverter}}">
                                             <Run Text="Version: "/>

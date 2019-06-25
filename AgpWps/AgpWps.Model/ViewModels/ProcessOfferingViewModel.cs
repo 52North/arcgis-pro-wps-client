@@ -1,9 +1,18 @@
 ﻿using GalaSoft.MvvmLight;
+using GalaSoft.MvvmLight.Command;
 
 namespace AgpWps.Model.ViewModels
 {
     public class ProcessOfferingViewModel : ViewModelBase
     {
+        private readonly string _processId;
+
+        private RelayCommand _openExecutionPanelCommand;
+        public RelayCommand OpenExecutionPanelCommand
+        {
+            get => _openExecutionPanelCommand;
+            set => Set(ref _openExecutionPanelCommand, value);
+        }
 
         private string _processName;
         public string ProcessName
@@ -53,6 +62,18 @@ namespace AgpWps.Model.ViewModels
         {
             get => _abstract;
             set => Set(ref _abstract, value);
+        }
+
+        public ProcessOfferingViewModel(string processId)
+        {
+            _processId = processId;
+
+            OpenExecutionPanelCommand = new RelayCommand(OpenExecutionPanel);
+        }
+
+        private void OpenExecutionPanel()
+        {
+            
         }
 
     }

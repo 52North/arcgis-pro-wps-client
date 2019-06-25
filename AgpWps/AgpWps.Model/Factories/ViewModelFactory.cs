@@ -7,7 +7,7 @@ namespace AgpWps.Model.Factories
     {
         public ProcessOfferingViewModel CreateProcessOfferingViewModel(ProcessSummary sum)
         {
-            return new ProcessOfferingViewModel
+            return new ProcessOfferingViewModel(sum.Identifier)
             {
                 ProcessName = sum.Identifier,
                 TransmissionModes = sum.OutputTransmission.ToString(),
