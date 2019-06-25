@@ -5,15 +5,19 @@ using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Messaging;
 using System;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
+using AgpWps.Model.Enums;
 using Wps.Client.Services;
 
 namespace AgpWps.Model.ViewModels
 {
     public class CapabilitiesViewModel : ViewModelBase
     {
+
         private readonly IWpsClient _wpsClient;
         private readonly IContext _context;
         private readonly IViewModelFactory _viewModelFactory;
+        private readonly IDialogService _dialogService;
 
         private ObservableCollection<ServerViewModel> _servers = new ObservableCollection<ServerViewModel>();
 
@@ -23,11 +27,12 @@ namespace AgpWps.Model.ViewModels
             set => Set(ref _servers, value);
         }
 
-        public CapabilitiesViewModel(IWpsClient wpsClient, IContext context, IViewModelFactory viewModelFactory)
+        public CapabilitiesViewModel(IWpsClient wpsClient, IContext context, IViewModelFactory viewModelFactory, IDialogService dialogService)
         {
             _wpsClient = wpsClient ?? throw new ArgumentNullException(nameof(wpsClient));
             _context = context ?? throw new ArgumentNullException(nameof(context));
             _viewModelFactory = viewModelFactory ?? throw new ArgumentNullException(nameof(viewModelFactory));
+            _dialogService = dialogService;
 
             Messenger.Default.Register<ServerAddedMessage>(this, OnAddedServer);
         }
@@ -37,21 +42,29 @@ namespace AgpWps.Model.ViewModels
             var serverUrl = msg.ServerUrl;
             _wpsClient.GetCapabilities(serverUrl).ContinueWith(resp =>
             {
-                var response = resp.Result;
-                var serverVm = new ServerViewModel
+                try
                 {
-                    ServerName = serverUrl
-                };
-                
-                foreach (var sum in response.ProcessSummaries)
-                {
-                    serverVm.ProcessOfferings.Add(_viewModelFactory.CreateProcessOfferingViewModel(sum));
-                }
+                    var response = resp.Result;
+                    var serverVm = new ServerViewModel
+                    {
+                        ServerName = serverUrl
+                    };
 
-                _context.Invoke(() =>
+                    foreach (var sum in response.ProcessSummaries)
+                    {
+                        serverVm.ProcessOfferings.Add(_viewModelFactory.CreateProcessOfferingViewModel(sum));
+                    }
+
+                    _context.Invoke(() =>
+                    {
+                        Servers.Add(serverVm);
+                    });
+                }
+                catch (Exception e)
                 {
-                    Servers.Add(serverVm);
-                });
+                    _dialogService.ShowMessageDialog("Error", "Something went wrong. Please check your url and connection.", DialogMessageType.Error);
+                    Debug.Write(e);
+                }
             });
         }
     }
