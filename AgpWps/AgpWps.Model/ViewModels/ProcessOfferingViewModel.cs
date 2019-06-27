@@ -1,11 +1,16 @@
-﻿using GalaSoft.MvvmLight;
+﻿using AgpWps.Model.Services;
+using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
+using System;
+using Wps.Client.Services;
 
 namespace AgpWps.Model.ViewModels
 {
     public class ProcessOfferingViewModel : ViewModelBase
     {
         private readonly string _processId;
+        private readonly IDialogService _dialogService;
+        private readonly IWpsClient _wpsClient;
 
         private RelayCommand _openExecutionPanelCommand;
         public RelayCommand OpenExecutionPanelCommand
@@ -64,16 +69,19 @@ namespace AgpWps.Model.ViewModels
             set => Set(ref _abstract, value);
         }
 
-        public ProcessOfferingViewModel(string processId)
+        public ProcessOfferingViewModel(string processId, IDialogService dialogService, IWpsClient wpsClient)
         {
-            _processId = processId;
+            _processId = processId ?? throw new ArgumentNullException(nameof(processId));
+            _dialogService = dialogService ?? throw new ArgumentNullException(nameof(dialogService));
+            _wpsClient = wpsClient ?? throw new ArgumentNullException(nameof(wpsClient));
 
             OpenExecutionPanelCommand = new RelayCommand(OpenExecutionPanel);
         }
 
         private void OpenExecutionPanel()
         {
-            
+            var executionVm = new ExecutionBuilderViewModel(_processId, _wpsClient);
+            _dialogService.ShowExecutionBuilderDialog(executionVm);
         }
 
     }

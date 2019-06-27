@@ -52,7 +52,7 @@ namespace AgpWps.Model.ViewModels
 
                     foreach (var sum in response.ProcessSummaries)
                     {
-                        serverVm.ProcessOfferings.Add(_viewModelFactory.CreateProcessOfferingViewModel(sum));
+                        serverVm.ProcessOfferings.Add(_viewModelFactory.CreateProcessOfferingViewModel(sum, _dialogService, _wpsClient));
                     }
 
                     _context.Invoke(() =>

@@ -30,7 +30,17 @@ namespace AgpWps.Client.Services
             popup.ShowDialog();
         }
 
-        private MessageBoxImage GetIcon(DialogMessageType type)
+        public void ShowExecutionBuilderDialog(ExecutionBuilderViewModel vm)
+        {
+            var executionBuilder = new ExecutionBuilder
+            {
+                Owner = Application.Current.MainWindow,
+                DataContext = vm
+            };
+            executionBuilder.ShowDialog();
+        }
+
+        private static MessageBoxImage GetIcon(DialogMessageType type)
         {
             switch (type)
             {

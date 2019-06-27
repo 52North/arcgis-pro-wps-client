@@ -178,6 +178,9 @@
     <Compile Include="Views\AddServerPopup.xaml.cs">
       <DependentUpon>AddServerPopup.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\ExecutionBuilder.xaml.cs">
+      <DependentUpon>ExecutionBuilder.xaml</DependentUpon>
+    </Compile>
     <Compile Include="WpsModule.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Views\Capabilities.xaml.cs">
@@ -191,6 +194,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\Capabilities.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\ExecutionBuilder.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
