@@ -64,15 +64,15 @@
                                             <Run Text="{Binding Version}"/>
                                         </TextBlock>
                                         <TextBlock Visibility="{Binding Keywords, Converter={StaticResource ValidReferenceToVisibilityConverter}}">
-                                            <Run Text="Version: "/>
+                                            <Run Text="Keywords: "/>
                                             <Run Text="{Binding Keywords}"/>
                                         </TextBlock>
                                         <TextBlock Visibility="{Binding JobControlOptions, Converter={StaticResource ValidReferenceToVisibilityConverter}}">
-                                            <Run Text="Version: "/>
+                                            <Run Text="Job control: "/>
                                             <Run Text="{Binding JobControlOptions}"/>
                                         </TextBlock>
                                         <TextBlock Visibility="{Binding TransmissionModes, Converter={StaticResource ValidReferenceToVisibilityConverter}}">
-                                            <Run Text="Version: "/>
+                                            <Run Text="Transmissions: "/>
                                             <Run Text="{Binding TransmissionModes}"/>
                                         </TextBlock>
                                         <TextBlock Visibility="{Binding Abstract, Converter={StaticResource ValidReferenceToVisibilityConverter}}">
