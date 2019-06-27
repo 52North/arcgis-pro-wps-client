@@ -1,4 +1,5 @@
-﻿using AgpWps.Model.Factories;
+﻿using AgpWps.Model.Enums;
+using AgpWps.Model.Factories;
 using AgpWps.Model.Messages;
 using AgpWps.Model.Services;
 using GalaSoft.MvvmLight;
@@ -6,7 +7,6 @@ using GalaSoft.MvvmLight.Messaging;
 using System;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
-using AgpWps.Model.Enums;
 using Wps.Client.Services;
 
 namespace AgpWps.Model.ViewModels
@@ -54,7 +54,7 @@ namespace AgpWps.Model.ViewModels
 
                     foreach (var sum in response.ProcessSummaries)
                     {
-                        serverVm.ProcessOfferings.Add(_viewModelFactory.CreateProcessOfferingViewModel(sum, _dialogService, _wpsClient));
+                        serverVm.ProcessOfferings.Add(_viewModelFactory.CreateProcessOfferingViewModel(serverUrl, sum, _dialogService, _wpsClient, _context, _viewModelFactory));
                     }
 
                     _context.Invoke(() =>

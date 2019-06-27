@@ -1,4 +1,5 @@
-﻿using AgpWps.Model.Services;
+﻿using AgpWps.Model.Factories;
+using AgpWps.Model.Services;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using System;
@@ -8,9 +9,12 @@ namespace AgpWps.Model.ViewModels
 {
     public class ProcessOfferingViewModel : ViewModelBase
     {
+        private readonly string _wpsUri;
         private readonly string _processId;
         private readonly IDialogService _dialogService;
         private readonly IWpsClient _wpsClient;
+        private readonly IContext _context;
+        private readonly IViewModelFactory _viewModelFactory;
 
         private RelayCommand _openExecutionPanelCommand;
         public RelayCommand OpenExecutionPanelCommand
@@ -69,18 +73,21 @@ namespace AgpWps.Model.ViewModels
             set => Set(ref _abstract, value);
         }
 
-        public ProcessOfferingViewModel(string processId, IDialogService dialogService, IWpsClient wpsClient)
+        public ProcessOfferingViewModel(string wpsUri, string processId, IDialogService dialogService, IWpsClient wpsClient, IContext context, IViewModelFactory viewModelFactory)
         {
+            _wpsUri = wpsUri ?? throw new ArgumentNullException(nameof(wpsUri));
             _processId = processId ?? throw new ArgumentNullException(nameof(processId));
             _dialogService = dialogService ?? throw new ArgumentNullException(nameof(dialogService));
             _wpsClient = wpsClient ?? throw new ArgumentNullException(nameof(wpsClient));
+            _context = context ?? throw new ArgumentNullException(nameof(context));
+            _viewModelFactory = viewModelFactory ?? throw new ArgumentNullException(nameof(viewModelFactory));
 
             OpenExecutionPanelCommand = new RelayCommand(OpenExecutionPanel);
         }
 
         private void OpenExecutionPanel()
         {
-            var executionVm = new ExecutionBuilderViewModel(_processId, _wpsClient);
+            var executionVm = new ExecutionBuilderViewModel(_wpsUri, _processId, _wpsClient, _context, _viewModelFactory);
             _dialogService.ShowExecutionBuilderDialog(executionVm);
         }
 
