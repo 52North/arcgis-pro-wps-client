@@ -171,6 +171,9 @@
     <AddInContent Include="DarkImages\AddInDesktop32.png" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controls\LiteralInput.xaml.cs">
+      <DependentUpon>LiteralInput.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Converters\DebugConverter.cs" />
     <Compile Include="Converters\ValidReferenceToVisibilityConverter.cs" />
     <Compile Include="Services\ArcgisContext.cs" />
@@ -190,6 +193,10 @@
     <Compile Include="Views\CapabilitiesPane.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Page Include="Controls\LiteralInput.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\AddServerPopup.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

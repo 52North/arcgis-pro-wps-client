@@ -9,6 +9,7 @@
                     xmlns:extensions="clr-namespace:ArcGIS.Desktop.Extensions;assembly=ArcGIS.Desktop.Extensions"
                     xmlns:controls="clr-namespace:ArcGIS.Desktop.Framework.Controls;assembly=ArcGIS.Desktop.Framework"
                     xmlns:converters="clr-namespace:AgpWps.Client.Converters"
+                    xmlns:controls1="clr-namespace:AgpWps.Client.Controls"
                     mc:Ignorable="d"
         d:DataContext="{d:DesignInstance viewModels:ExecutionBuilderViewModel}"
         Title="ExecutionBuilder" Height="600" Width="600"
@@ -22,11 +23,7 @@
         <ResourceDictionary>
             <DataTemplate DataType="{x:Type viewModels:LiteralInputViewModel}"
                           x:Key="LiteralInputDataTemplate">
-                <StackPanel Orientation="Horizontal">
-                    <TextBlock Text="Value:"/>
-                    <TextBox HorizontalAlignment="Stretch"
-                             Text="{Binding Value}"/>
-                </StackPanel>
+                <controls1:LiteralInput DataContext="{Binding}"/>
             </DataTemplate>
 
             <DataTemplate x:Key="UnknownDataTemplate">

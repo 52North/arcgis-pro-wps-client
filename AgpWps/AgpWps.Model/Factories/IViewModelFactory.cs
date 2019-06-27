@@ -10,7 +10,7 @@ namespace AgpWps.Model.Factories
     {
 
         ProcessOfferingViewModel CreateProcessOfferingViewModel(string wpsUri, ProcessSummary summary, IDialogService dialogService, IWpsClient wpsClient, IContext context, IViewModelFactory viewModelFactory);
-        DataInputViewModel CreateDataInputViewModel(Data data);
+        DataInputViewModel CreateDataInputViewModel(Input input);
 
     }
 }

@@ -1,5 +1,7 @@
 ﻿using AgpWps.Model.Services;
 using AgpWps.Model.ViewModels;
+using System.Collections.ObjectModel;
+using System.Linq;
 using Wps.Client.Models;
 using Wps.Client.Models.Data;
 using Wps.Client.Services;
@@ -22,18 +24,24 @@ namespace AgpWps.Model.Factories
             };
         }
 
-        public DataInputViewModel CreateDataInputViewModel(Data data)
+        public DataInputViewModel CreateDataInputViewModel(Input input)
         {
-            switch (data)
+            if (input != null)
             {
-                case LiteralData ld:
-                    return new LiteralInputViewModel
+                var formats = input.Data.Formats.Select(f => f.MimeType);
+                if (input.Data is LiteralData ld)
+                {
+                    var vm = new LiteralInputViewModel
                     {
-                        Value = "test"
+                        ProcessName = input.Identifier,
+                        Formats = new ObservableCollection<string>(formats)
                     };
-                default:
-                    return null;
+
+                    return vm;
+                }
             }
+
+            return null;
         }
     }
 }

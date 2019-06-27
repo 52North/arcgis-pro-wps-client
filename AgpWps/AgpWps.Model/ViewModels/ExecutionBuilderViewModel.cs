@@ -66,7 +66,7 @@ namespace AgpWps.Model.ViewModels
                     {
                         foreach (var input in processOffering.Process.Inputs)
                         {
-                            var vm = _viewModelFactory.CreateDataInputViewModel(input.Data);
+                            var vm = _viewModelFactory.CreateDataInputViewModel(input);
                             _context.Invoke(() =>
                             {
                                 _dataInputViewModels.Add(vm);
