@@ -3,6 +3,7 @@ using AgpWps.Model.Enums;
 using AgpWps.Model.Services;
 using AgpWps.Model.ViewModels;
 using DryIoc;
+using System;
 using System.Windows;
 using MessageBox = ArcGIS.Desktop.Framework.Dialogs.MessageBox;
 
@@ -32,6 +33,8 @@ namespace AgpWps.Client.Services
 
         public void ShowExecutionBuilderDialog(ExecutionBuilderViewModel vm)
         {
+            if (vm == null) throw new ArgumentNullException(nameof(vm));
+
             var executionBuilder = new ExecutionBuilder
             {
                 Owner = Application.Current.MainWindow,

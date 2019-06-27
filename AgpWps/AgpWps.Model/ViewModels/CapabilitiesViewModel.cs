@@ -32,13 +32,15 @@ namespace AgpWps.Model.ViewModels
             _wpsClient = wpsClient ?? throw new ArgumentNullException(nameof(wpsClient));
             _context = context ?? throw new ArgumentNullException(nameof(context));
             _viewModelFactory = viewModelFactory ?? throw new ArgumentNullException(nameof(viewModelFactory));
-            _dialogService = dialogService;
+            _dialogService = dialogService ?? throw new ArgumentNullException(nameof(dialogService));
 
             Messenger.Default.Register<ServerAddedMessage>(this, OnAddedServer);
         }
 
         private void OnAddedServer(ServerAddedMessage msg)
         {
+            if (msg == null) throw new ArgumentNullException(nameof(msg));
+
             var serverUrl = msg.ServerUrl;
             _wpsClient.GetCapabilities(serverUrl).ContinueWith(resp =>
             {

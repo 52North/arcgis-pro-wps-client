@@ -8,6 +8,8 @@ namespace AgpWps.Client.Services
     {
         public void Invoke(Action action)
         {
+            if (action == null) throw new ArgumentNullException(nameof(action));
+
             Application.Current.Dispatcher.Invoke(action);
         }
     }
