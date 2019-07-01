@@ -32,6 +32,7 @@
             </Style.Triggers>
         </Style>
         <converters:DebugConverter x:Key="DebugConverter"/>
+        <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
     </UserControl.Resources>
     <GroupBox Header="{Binding ProcessName}">
         <GroupBox.HeaderTemplate>
@@ -41,7 +42,7 @@
                                VerticalAlignment="Center"/>
                     <ToggleButton Content="Ref."
                                   Margin="5,0,0,0"
-                                  IsChecked="{Binding DataContext.IsReference, Converter={StaticResource DebugConverter}, ElementName=LiteralInputElement}"
+                                  IsChecked="{Binding DataContext.IsReference, ElementName=LiteralInputElement}"
                                   ToolTip="Reference your input from another location or directly input your value."
                                   Background="Transparent"
                                   VerticalAlignment="Center"
@@ -68,6 +69,11 @@
                             </DataTemplate>
                         </ToggleButton.ContentTemplate>
                     </ToggleButton>
+                    <TextBlock Text="(optional)"
+                               FontStyle="Italic"
+                               VerticalAlignment="Center"
+                               Margin="5,0,0,0"
+                               Visibility="{Binding ElementName=LiteralInputElement, Path=DataContext.IsOptional, Converter={StaticResource BooleanToVisibilityConverter}}"/>
                 </StackPanel>
             </DataTemplate>
         </GroupBox.HeaderTemplate>

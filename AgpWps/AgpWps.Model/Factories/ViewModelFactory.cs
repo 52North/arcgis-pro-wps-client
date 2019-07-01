@@ -29,10 +29,12 @@ namespace AgpWps.Model.Factories
             if (input != null)
             {
                 var formats = input.Data.Formats.Select(f => f.MimeType);
+                var isOptional = input.MinimumOccurrences == 0;
                 if (input.Data is LiteralData ld)
                 {
                     var vm = new LiteralInputViewModel
                     {
+                        IsOptional = isOptional,
                         ProcessName = input.Identifier,
                         Formats = new ObservableCollection<string>(formats)
                     };

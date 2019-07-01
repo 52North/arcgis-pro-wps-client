@@ -13,6 +13,13 @@ namespace AgpWps.Model.ViewModels
             set => Set(ref _processName, value);
         }
 
+        private bool _isOptional;
+        public bool IsOptional
+        {
+            get => _isOptional;
+            set => Set(ref _isOptional, value);
+        }
+
         private bool _isReference;
         public bool IsReference
         {
