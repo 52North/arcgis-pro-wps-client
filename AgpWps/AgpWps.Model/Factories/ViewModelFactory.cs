@@ -1,4 +1,5 @@
-﻿using AgpWps.Model.Services;
+﻿using System;
+using AgpWps.Model.Services;
 using AgpWps.Model.ViewModels;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -26,21 +27,20 @@ namespace AgpWps.Model.Factories
 
         public DataInputViewModel CreateDataInputViewModel(Input input)
         {
-            if (input != null)
-            {
-                var formats = input.Data.Formats.Select(f => f.MimeType);
-                var isOptional = input.MinimumOccurrences == 0;
-                if (input.Data is LiteralData ld)
-                {
-                    var vm = new LiteralInputViewModel
-                    {
-                        IsOptional = isOptional,
-                        ProcessName = input.Identifier,
-                        Formats = new ObservableCollection<string>(formats)
-                    };
+            if (input == null) throw new ArgumentNullException(nameof(input));
 
-                    return vm;
-                }
+            var formats = input.Data.Formats.Select(f => f.MimeType);
+            var isOptional = input.MinimumOccurrences == 0;
+            if (input.Data is LiteralData ld)
+            {
+                var vm = new LiteralInputViewModel
+                {
+                    IsOptional = isOptional,
+                    ProcessName = input.Identifier,
+                    Formats = new ObservableCollection<string>(formats)
+                };
+
+                return vm;
             }
 
             return null;

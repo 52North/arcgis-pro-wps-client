@@ -4,12 +4,9 @@
                     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-                    xmlns:templateSelectors="clr-namespace:AgpWps.Client.TemplateSelectors"
+                    xmlns:localControls="clr-namespace:AgpWps.Client.Controls"
                     xmlns:viewModels="clr-namespace:AgpWps.Model.ViewModels;assembly=AgpWps.Model"
-                    xmlns:extensions="clr-namespace:ArcGIS.Desktop.Extensions;assembly=ArcGIS.Desktop.Extensions"
                     xmlns:controls="clr-namespace:ArcGIS.Desktop.Framework.Controls;assembly=ArcGIS.Desktop.Framework"
-                    xmlns:converters="clr-namespace:AgpWps.Client.Converters"
-                    xmlns:controls1="clr-namespace:AgpWps.Client.Controls"
                     mc:Ignorable="d"
         d:DataContext="{d:DesignInstance viewModels:ExecutionBuilderViewModel}"
         Title="ExecutionBuilder" Height="600" Width="600"
@@ -19,24 +16,6 @@
             <i:InvokeCommandAction Command="{Binding WindowLoadedCommand}"></i:InvokeCommandAction>
         </i:EventTrigger>
     </i:Interaction.Triggers>
-    <controls:ProWindow.Resources>
-        <ResourceDictionary>
-            <DataTemplate DataType="{x:Type viewModels:LiteralInputViewModel}"
-                          x:Key="LiteralInputDataTemplate">
-                <controls1:LiteralInput DataContext="{Binding}"/>
-            </DataTemplate>
-
-            <DataTemplate x:Key="UnknownDataTemplate">
-                <TextBlock Text="Unknown data type"/>
-            </DataTemplate>
-
-            <templateSelectors:DataInputTemplateSelector x:Key="DataInputTemplateSelector"
-                                                         LiteralValueDataTemplate="{StaticResource LiteralInputDataTemplate}"
-                                                         UnknownDataTemplate="{StaticResource UnknownDataTemplate}"/>
-
-            <converters:DebugConverter x:Key="DebugConverter" />
-        </ResourceDictionary>
-    </controls:ProWindow.Resources>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
@@ -53,13 +32,17 @@
 
         <ScrollViewer Grid.Row="1"
                       Margin="5,0,5,0">
-            <ItemsControl ItemsSource="{Binding DataInputViewModels, Converter={StaticResource DebugConverter}}"
-                          ItemTemplateSelector="{StaticResource DataInputTemplateSelector}">
+            <ItemsControl ItemsSource="{Binding DataInputViewModels}">
                 <ItemsControl.ItemsPanel>
                     <ItemsPanelTemplate>
                         <StackPanel Orientation="Vertical"/>
                     </ItemsPanelTemplate>
                 </ItemsControl.ItemsPanel>
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate DataType="{x:Type viewModels:DataInputViewModel}">
+                        <localControls:DataInput DataContext="{Binding}"/>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
             </ItemsControl>
         </ScrollViewer>
 
