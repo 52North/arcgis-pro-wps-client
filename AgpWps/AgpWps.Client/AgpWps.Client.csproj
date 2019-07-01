@@ -251,6 +251,18 @@
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="DarkImages\DirectValue.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\DirectValue.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\ReferenceValue.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="DarkImages\ReferenceValue.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!--
   PackageAction can be:

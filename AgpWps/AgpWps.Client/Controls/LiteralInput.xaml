@@ -4,41 +4,122 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:viewModels="clr-namespace:AgpWps.Model.ViewModels;assembly=AgpWps.Model"
+             xmlns:converters="clr-namespace:AgpWps.Client.Converters"
+             xmlns:System="clr-namespace:System;assembly=mscorlib"
              mc:Ignorable="d" 
+             Name="LiteralInputElement"
              d:DataContext="{d:DesignInstance viewModels:LiteralInputViewModel}"
-             d:DesignHeight="50" d:DesignWidth="200">
+             d:DesignWidth="200">
+    <UserControl.Resources>
+        <Style x:Key="VisibleOnValue" TargetType="FrameworkElement">
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding IsReference}" Value="False">
+                    <Setter Property="Visibility" Value="Visible"/>
+                </DataTrigger>
+                <DataTrigger Binding="{Binding IsReference}" Value="True">
+                    <Setter Property="Visibility" Value="Collapsed"/>
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+        <Style x:Key="VisibleOnReference" TargetType="FrameworkElement">
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding IsReference}" Value="False">
+                    <Setter Property="Visibility" Value="Collapsed"/>
+                </DataTrigger>
+                <DataTrigger Binding="{Binding IsReference}" Value="True">
+                    <Setter Property="Visibility" Value="Visible"/>
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+        <converters:DebugConverter x:Key="DebugConverter"/>
+    </UserControl.Resources>
     <GroupBox Header="{Binding ProcessName}">
-        <Grid>
-            <Grid.RowDefinitions>
-                <RowDefinition/>
-                <RowDefinition Height="5"/>
-                <RowDefinition/>
-            </Grid.RowDefinitions>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="Auto"/>
-                <ColumnDefinition Width="*"/>
-            </Grid.ColumnDefinitions>
+        <GroupBox.HeaderTemplate>
+            <DataTemplate DataType="{x:Type System:String}">
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Text="{Binding}"
+                               VerticalAlignment="Center"/>
+                    <ToggleButton Content="Ref."
+                                  Margin="5,0,0,0"
+                                  IsChecked="{Binding DataContext.IsReference, Converter={StaticResource DebugConverter}, ElementName=LiteralInputElement}"
+                                  ToolTip="Reference your input from another location or directly input your value."
+                                  Background="Transparent"
+                                  VerticalAlignment="Center"
+                                  VerticalContentAlignment="Stretch"
+                                  HorizontalContentAlignment="Stretch"
+                                  BorderThickness="1"
+                                  Padding="1">
+                        <ToggleButton.ContentTemplate>
+                            <DataTemplate>
+                                <Image Height="17">
+                                    <Image.Style>
+                                        <Style TargetType="{x:Type Image}">
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding ElementName=LiteralInputElement, Path=DataContext.IsReference}" Value="True">
+                                                    <Setter Property="Source" Value="pack://application:,,,/AgpWps.Client;component/Images/ReferenceValue.png"/>
+                                                </DataTrigger>
+                                                <DataTrigger Binding="{Binding ElementName=LiteralInputElement, Path=DataContext.IsReference}" Value="False">
+                                                    <Setter Property="Source" Value="pack://application:,,,/AgpWps.Client;component/Images/DirectValue.png"/>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </Image.Style>
+                                </Image>
+                            </DataTemplate>
+                        </ToggleButton.ContentTemplate>
+                    </ToggleButton>
+                </StackPanel>
+            </DataTemplate>
+        </GroupBox.HeaderTemplate>
+        <StackPanel Orientation="Vertical">
+            <Grid Style="{StaticResource VisibleOnValue}">
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition Height="5"/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
 
-            <TextBlock Grid.Row="0" Grid.Column="0"
-                       Text="Value:"
-                       VerticalAlignment="Center"
-                       HorizontalAlignment="Right"
-                       Padding="0,0,5,0"/>
+                <TextBlock Grid.Row="0" Grid.Column="0"
+                           Text="Value:"
+                           VerticalAlignment="Center"
+                           HorizontalAlignment="Right"
+                           Padding="0,0,5,0"/>
 
-            <TextBox Grid.Row="0" Grid.Column="1"
-                     VerticalAlignment="Center"
-                     Text="{Binding Value}"/>
+                <TextBox Grid.Row="0" Grid.Column="1"
+                         VerticalAlignment="Center"
+                         Text="{Binding Value}"/>
 
-            <TextBlock Grid.Row="2" Grid.Column="0"
-                       Text="Data format:"
-                       VerticalAlignment="Center"
-                       HorizontalAlignment="Right"
-                       Padding="0,0,5,0"/>
+                <TextBlock Grid.Row="2" Grid.Column="0"
+                           Text="Data format:"
+                           VerticalAlignment="Center"
+                           HorizontalAlignment="Right"
+                           Padding="0,0,5,0"/>
 
-            <ComboBox Grid.Row="2" Grid.Column="1"
-                      VerticalAlignment="Center"
-                      SelectedValue="{Binding SelectedFormat}"
-                      ItemsSource="{Binding Formats}"/>
-        </Grid>
+                <ComboBox Grid.Row="2" Grid.Column="1"
+                          VerticalAlignment="Center"
+                          SelectedValue="{Binding SelectedFormat}"
+                          ItemsSource="{Binding Formats}"/>
+            </Grid>
+            <Grid Style="{StaticResource VisibleOnReference}">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <TextBlock Grid.Row="0" Grid.Column="0"
+                           Text="Reference URL:"
+                           VerticalAlignment="Center"
+                           HorizontalAlignment="Right"
+                           Padding="0,0,5,0"/>
+
+                <TextBox Grid.Row="0" Grid.Column="1"
+                         VerticalAlignment="Center"
+                         Text="{Binding ReferenceUrl}"/>
+            </Grid>
+        </StackPanel>
     </GroupBox>
 </UserControl>

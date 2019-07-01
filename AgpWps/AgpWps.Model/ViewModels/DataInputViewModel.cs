@@ -20,6 +20,13 @@ namespace AgpWps.Model.ViewModels
             set => Set(ref _isReference, value);
         }
 
+        private string _referenceUrl;
+        public string ReferenceUrl
+        {
+            get => _referenceUrl;
+            set => Set(ref _referenceUrl, value);
+        }
+
         private string _selectedFormat;
         public string SelectedFormat
         {
