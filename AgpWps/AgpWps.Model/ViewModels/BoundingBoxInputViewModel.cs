@@ -7,6 +7,7 @@ namespace AgpWps.Model.ViewModels
 {
     public class BoundingBoxInputViewModel : DataInputViewModel
     {
+        private readonly IMapService _mapService;
 
         private ICommand _selectZoneCommand;
         public ICommand SelectZoneCommand
@@ -15,13 +16,15 @@ namespace AgpWps.Model.ViewModels
             set => Set(ref _selectZoneCommand, value);
         }
 
-        public BoundingBoxInputViewModel()
+        public BoundingBoxInputViewModel(IMapService mapService)
         {
+            _mapService = mapService ?? throw new ArgumentNullException(nameof(mapService));
             SelectZoneCommand = new RelayCommand(SelectZone);
         }
 
         private void SelectZone()
         {
+            _mapService.TriggerZoneSelection();
         }
     }
 }

@@ -11,9 +11,23 @@ namespace AgpWps.Model.Factories
 {
     public class ViewModelFactory : IViewModelFactory
     {
-        public ProcessOfferingViewModel CreateProcessOfferingViewModel(string wpsUri, ProcessSummary sum, IDialogService dialogService, IWpsClient wpsClient, IContext context, IViewModelFactory viewModelFactory)
+
+        private readonly IMapService _mapService;
+        private readonly IDialogService _dialogService;
+        private readonly IWpsClient _wpsClient;
+        private readonly IContext _context;
+
+        public ViewModelFactory(IMapService mapService, IDialogService dialogService, IWpsClient wpsClient, IContext context)
         {
-            return new ProcessOfferingViewModel(wpsUri, sum.Identifier, dialogService, wpsClient, context, viewModelFactory)
+            _mapService = mapService ?? throw new ArgumentNullException(nameof(mapService));
+            _dialogService = dialogService ?? throw new ArgumentNullException(nameof(dialogService));
+            _wpsClient = wpsClient ?? throw new ArgumentNullException(nameof(wpsClient));
+            _context = context ?? throw new ArgumentNullException(nameof(context));
+        }
+
+        public ProcessOfferingViewModel CreateProcessOfferingViewModel(string wpsUri, ProcessSummary sum)
+        {
+            return new ProcessOfferingViewModel(wpsUri, sum.Identifier, _dialogService, _wpsClient, _context, this)
             {
                 ProcessName = sum.Identifier,
                 TransmissionModes = sum.OutputTransmission.ToString(),
@@ -40,7 +54,7 @@ namespace AgpWps.Model.Factories
             }
             else if (input.Data is BoundingBoxData bbd)
             {
-                vm = new BoundingBoxInputViewModel();
+                vm = new BoundingBoxInputViewModel(_mapService);
             }
             else
             {
