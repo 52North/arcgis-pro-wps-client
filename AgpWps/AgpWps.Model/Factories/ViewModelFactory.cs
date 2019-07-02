@@ -1,6 +1,6 @@
-﻿using System;
-using AgpWps.Model.Services;
+﻿using AgpWps.Model.Services;
 using AgpWps.Model.ViewModels;
+using System;
 using System.Collections.ObjectModel;
 using System.Linq;
 using Wps.Client.Models;
@@ -29,21 +29,29 @@ namespace AgpWps.Model.Factories
         {
             if (input == null) throw new ArgumentNullException(nameof(input));
 
-            var formats = input.Data.Formats.Select(f => f.MimeType);
+            var formats = input.Data.Formats.Select(f => f.MimeType).ToArray();
             var isOptional = input.MinimumOccurrences == 0;
+
+            DataInputViewModel vm;
+
             if (input.Data is LiteralData ld)
             {
-                var vm = new LiteralInputViewModel
-                {
-                    IsOptional = isOptional,
-                    ProcessName = input.Identifier,
-                    Formats = new ObservableCollection<string>(formats)
-                };
-
-                return vm;
+                vm = new LiteralInputViewModel();
+            }
+            else if (input.Data is BoundingBoxData bbd)
+            {
+                vm = new BoundingBoxInputViewModel();
+            }
+            else
+            {
+                vm = new DataInputViewModel();
             }
 
-            return null;
+            vm.IsOptional = isOptional;
+            vm.ProcessName = input.Identifier;
+            vm.Formats = new ObservableCollection<string>(formats);
+
+            return vm;
         }
     }
 }

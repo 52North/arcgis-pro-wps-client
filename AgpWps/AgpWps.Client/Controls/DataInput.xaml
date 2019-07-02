@@ -17,6 +17,11 @@
             <controls:LiteralInput DataContext="{Binding}"/>
         </DataTemplate>
 
+        <DataTemplate DataType="{x:Type viewModels:BoundingBoxInputViewModel}"
+                      x:Key="BoundingBoxInputDataTemplate">
+            <controls:BoundingBoxInput DataContext="{Binding}"/>
+        </DataTemplate>
+
         <DataTemplate x:Key="UnknownDataTemplate">
             <TextBlock Text="Unknown data type"
                        HorizontalAlignment="Center"/>
@@ -24,6 +29,7 @@
 
         <templateSelectors:DataInputTemplateSelector x:Key="InputTemplateSelector"
                                                      LiteralValueDataTemplate="{StaticResource LiteralInputDataTemplate}"
+                                                     BoundingBoxValueDataTemplate="{StaticResource BoundingBoxInputDataTemplate}"
                                                      UnknownDataTemplate="{StaticResource UnknownDataTemplate}"/>
 
         <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />

@@ -18,6 +18,8 @@ namespace AgpWps.Client.TemplateSelectors
             {
                 case LiteralInputViewModel vm:
                     return LiteralValueDataTemplate;
+                case BoundingBoxInputViewModel vm:
+                    return BoundingBoxValueDataTemplate;
                 default:
                     return UnknownDataTemplate;
             }
