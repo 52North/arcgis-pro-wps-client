@@ -54,7 +54,7 @@ namespace AgpWps.Model.Factories
             }
             else if (input.Data is BoundingBoxData bbd)
             {
-                vm = new BoundingBoxInputViewModel(_mapService);
+                vm = new BoundingBoxInputViewModel(_mapService, _context);
             }
             else
             {

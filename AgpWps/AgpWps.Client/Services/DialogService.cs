@@ -40,7 +40,8 @@ namespace AgpWps.Client.Services
                 Owner = Application.Current.MainWindow,
                 DataContext = vm
             };
-            executionBuilder.ShowDialog();
+            //executionBuilder.ShowDialog();
+            executionBuilder.Show();
         }
 
         private static MessageBoxImage GetIcon(DialogMessageType type)

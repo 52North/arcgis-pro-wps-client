@@ -183,6 +183,7 @@
     <Compile Include="Services\DialogService.cs" />
     <Compile Include="Services\MapService.cs" />
     <Compile Include="TemplateSelectors\DataInputTemplateSelector.cs" />
+    <Compile Include="Tools\SelectionTool.cs" />
     <Compile Include="Views\AddServerPopup.xaml.cs">
       <DependentUpon>AddServerPopup.xaml</DependentUpon>
     </Compile>
@@ -277,6 +278,19 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="DarkImages\ReferenceValue.png" />
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <AddInContent Include="Images\GenericButtonRed16.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AddInContent Include="Images\GenericButtonRed32.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AddInContent Include="DarkImages\GenericButtonRed16.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AddInContent Include="DarkImages\GenericButtonRed32.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!--
