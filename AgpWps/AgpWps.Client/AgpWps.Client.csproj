@@ -177,6 +177,9 @@
     <Compile Include="Controls\LiteralInput.xaml.cs">
       <DependentUpon>LiteralInput.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\Rectangle.xaml.cs">
+      <DependentUpon>Rectangle.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Converters\DebugConverter.cs" />
     <Compile Include="Converters\ValidReferenceToVisibilityConverter.cs" />
     <Compile Include="Services\ArcgisContext.cs" />
@@ -206,6 +209,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Controls\LiteralInput.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\Rectangle.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
