@@ -11,17 +11,17 @@
         <TextBlock>
             <Run Text="Bottom left corner: "/>
             <Run Text="("/>
-            <Run Text="{Binding LeftBottom.Item1}"/>
+            <Run Text="{Binding LeftBottom.Item1, Mode=OneWay}"/>
             <Run Text="; "/>
-            <Run Text="{Binding LeftBottom.Item2}"/>
+            <Run Text="{Binding LeftBottom.Item2, Mode=OneWay}"/>
             <Run Text=")"/>
         </TextBlock>
         <TextBlock>
             <Run Text="Top right corner: "/>
             <Run Text="("/>
-            <Run Text="{Binding RightTop.Item1}"/>
+            <Run Text="{Binding RightTop.Item1, Mode=OneWay}"/>
             <Run Text="; "/>
-            <Run Text="{Binding RightTop.Item2}"/>
+            <Run Text="{Binding RightTop.Item2, Mode=OneWay}"/>
             <Run Text=")"/>
         </TextBlock>
     </StackPanel>

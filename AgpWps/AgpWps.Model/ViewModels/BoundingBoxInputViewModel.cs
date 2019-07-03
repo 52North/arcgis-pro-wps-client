@@ -10,7 +10,6 @@ namespace AgpWps.Model.ViewModels
         private readonly IContext _context;
 
         private bool _isSelecting;
-
         public bool IsSelecting
         {
             get => _isSelecting;
@@ -28,6 +27,13 @@ namespace AgpWps.Model.ViewModels
             set => Set(ref _selectZoneCommand, value);
         }
 
+        private RectangleViewModel _rectangleViewModel = new RectangleViewModel(new Tuple<double, double>(0.0, 0.0), new Tuple<double, double>(0.0, 0.0));
+        public RectangleViewModel RectangleViewModel
+        {
+            get => _rectangleViewModel;
+            set => Set(ref _rectangleViewModel, value);
+        }
+
         public BoundingBoxInputViewModel(IMapService mapService, IContext context)
         {
             _mapService = mapService ?? throw new ArgumentNullException(nameof(mapService));
@@ -41,6 +47,7 @@ namespace AgpWps.Model.ViewModels
             IsSelecting = true;
             _mapService.SelectZone((r) =>
             {
+                RectangleViewModel = new RectangleViewModel(r.LeftBottom, r.RightTop);
                 IsSelecting = false;
             });
         }

@@ -1,6 +1,7 @@
 ﻿using AgpWps.Client.Tools;
 using AgpWps.Model.Geometry;
 using AgpWps.Model.Services;
+using ArcGIS.Core.Geometry;
 using ArcGIS.Desktop.Framework;
 using System;
 using System.Threading.Tasks;
@@ -18,7 +19,16 @@ namespace AgpWps.Client.Services
             {
                 st.SketchCompleted += (tool, geometry) =>
                 {
-                    selectionCallback.Invoke(new Rectangle((0, 0), (0, 0), (0, 0), (0, 0))); // WIP: Transform geometry into a rectangle
+                    if (geometry is Polygon p)
+                    {
+                        var twoDimensionalPoints = p.Points.Copy2DCoordinatesToList();
+                        if (!(twoDimensionalPoints.Count >= 4))
+                            throw new InvalidOperationException("The shape is not a rectangle");
+
+                        var leftBottomPoint = new Tuple<double, double>(twoDimensionalPoints[0].X, twoDimensionalPoints[0].Y);
+                        var rightTopPoint = new Tuple<double, double>(twoDimensionalPoints[2].X, twoDimensionalPoints[2].Y);
+                        selectionCallback.Invoke(new Rectangle(leftBottomPoint, rightTopPoint));
+                    }
                 };
 
                 st.SketchCancelled += (_, __) => selectionCallback.Invoke(null);
