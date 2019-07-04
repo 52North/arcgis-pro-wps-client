@@ -56,6 +56,10 @@ namespace AgpWps.Model.Factories
             {
                 vm = new BoundingBoxInputViewModel(_mapService, _context, _dialogService);
             }
+            else if (input.Data is ComplexData cd)
+            {
+                vm = new ComplexDataViewModel(_dialogService);
+            }
             else
             {
                 vm = new DataInputViewModel();

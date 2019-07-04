@@ -3,10 +3,9 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             xmlns:viewModels="clr-namespace:AgpWps.Model.ViewModels;assembly=AgpWps.Model"
-             xmlns:templateSelectors="clr-namespace:AgpWps.Client.TemplateSelectors"
              xmlns:controls="clr-namespace:AgpWps.Client.Controls"
-             xmlns:system="clr-namespace:System;assembly=mscorlib"
+             xmlns:templateSelectors="clr-namespace:AgpWps.Client.TemplateSelectors"
+             xmlns:viewModels="clr-namespace:AgpWps.Model.ViewModels;assembly=AgpWps.Model"
              mc:Ignorable="d"
              Name="InputElement"
              d:DataContext="{d:DesignInstance viewModels:DataInputViewModel}"
@@ -22,6 +21,11 @@
             <controls:BoundingBoxInput DataContext="{Binding}"/>
         </DataTemplate>
 
+        <DataTemplate DataType="{x:Type viewModels:ComplexDataViewModel}"
+                      x:Key="ComplexDataInputDataTemplate">
+            <controls:ComplexDataInput DataContext="{Binding}"/>
+        </DataTemplate>
+
         <DataTemplate x:Key="UnknownDataTemplate">
             <TextBlock Text="Unknown data type"
                        HorizontalAlignment="Center"/>
@@ -30,6 +34,7 @@
         <templateSelectors:DataInputTemplateSelector x:Key="InputTemplateSelector"
                                                      LiteralValueDataTemplate="{StaticResource LiteralInputDataTemplate}"
                                                      BoundingBoxValueDataTemplate="{StaticResource BoundingBoxInputDataTemplate}"
+                                                     ComplexValueDataTemplate="{StaticResource ComplexDataInputDataTemplate}"
                                                      UnknownDataTemplate="{StaticResource UnknownDataTemplate}"/>
 
         <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />

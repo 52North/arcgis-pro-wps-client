@@ -177,6 +177,9 @@
     <Compile Include="Controls\BoundingBoxInput.xaml.cs">
       <DependentUpon>BoundingBoxInput.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\ComplexDataInput.xaml.cs">
+      <DependentUpon>ComplexDataInput.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\LiteralInput.xaml.cs">
       <DependentUpon>LiteralInput.xaml</DependentUpon>
     </Compile>
@@ -208,6 +211,10 @@
   </ItemGroup>
   <ItemGroup>
     <Page Include="Controls\BoundingBoxInput.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\ComplexDataInput.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
