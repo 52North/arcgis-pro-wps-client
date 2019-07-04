@@ -5,7 +5,9 @@ using AgpWps.Model.ViewModels;
 using DryIoc;
 using System;
 using System.Windows;
+using Application = System.Windows.Application;
 using MessageBox = ArcGIS.Desktop.Framework.Dialogs.MessageBox;
+using OpenFileDialog = Microsoft.Win32.OpenFileDialog;
 
 namespace AgpWps.Client.Services
 {
@@ -29,6 +31,20 @@ namespace AgpWps.Client.Services
                 DataContext = vm
             };
             popup.ShowDialog();
+        }
+
+        public string ShowFileSelectionDialog(string title, string filter = null)
+        {
+            var dialog = new OpenFileDialog
+            {
+                Multiselect = false,
+                CheckFileExists = true,
+                CheckPathExists = true,
+                Title = title,
+                Filter = filter ?? "All files (*.*)|*.*"
+            };
+
+            return dialog.ShowDialog() == true ? dialog.FileName : null;
         }
 
         public void ShowExecutionBuilderDialog(ExecutionBuilderViewModel vm)
