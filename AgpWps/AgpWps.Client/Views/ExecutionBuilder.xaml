@@ -19,9 +19,11 @@
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
-            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"
+                           MinHeight="150"/>
             <RowDefinition Height="Auto"/>
-            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"
+                           MinHeight="150"/>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
@@ -31,6 +33,7 @@
                    HorizontalAlignment="Center"/>
 
         <ScrollViewer Grid.Row="1"
+                      MinHeight="50"
                       Margin="5,0,5,0">
             <ItemsControl ItemsSource="{Binding DataInputViewModels}">
                 <ItemsControl.ItemsPanel>
@@ -46,8 +49,11 @@
             </ItemsControl>
         </ScrollViewer>
 
-        <Separator Grid.Row="2"
-                   Padding="0,3,0,3"/>
+        <GridSplitter Grid.Row="2"
+                      HorizontalAlignment="Stretch"
+                      Background="Gray"
+                      Height="2"
+                      Padding="0,3,0,3"/>
 
     </Grid>
 </controls:ProWindow>
