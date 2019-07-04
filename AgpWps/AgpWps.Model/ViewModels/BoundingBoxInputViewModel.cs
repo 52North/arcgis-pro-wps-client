@@ -1,4 +1,5 @@
-﻿using AgpWps.Model.Services;
+﻿using AgpWps.Model.Enums;
+using AgpWps.Model.Services;
 using GalaSoft.MvvmLight.Command;
 using System;
 
@@ -8,6 +9,7 @@ namespace AgpWps.Model.ViewModels
     {
         private readonly IMapService _mapService;
         private readonly IContext _context;
+        private readonly IDialogService _dialogService;
 
         private bool _isSelecting;
         public bool IsSelecting
@@ -34,10 +36,11 @@ namespace AgpWps.Model.ViewModels
             set => Set(ref _rectangleViewModel, value);
         }
 
-        public BoundingBoxInputViewModel(IMapService mapService, IContext context)
+        public BoundingBoxInputViewModel(IMapService mapService, IContext context, IDialogService dialogService)
         {
             _mapService = mapService ?? throw new ArgumentNullException(nameof(mapService));
             _context = context ?? throw new ArgumentNullException(nameof(context));
+            _dialogService = dialogService ?? throw new ArgumentNullException(nameof(dialogService));
 
             SelectZoneCommand = new RelayCommand(SelectZone, () => !IsSelecting);
         }
@@ -46,18 +49,25 @@ namespace AgpWps.Model.ViewModels
         {
             if (!IsSelecting)
             {
-                IsSelecting = true;
-                _mapService.SelectZone((r) =>
+                try
                 {
-                    if (r != null)
+                    _mapService.SelectZone((r) =>
                     {
-                        RectangleViewModel = new RectangleViewModel(r.LeftBottom, r.RightTop);
-                    }
-                    else
-                    {
-                        IsSelecting = false;
-                    }
-                });
+                        if (r != null)
+                        {
+                            RectangleViewModel = new RectangleViewModel(r.LeftBottom, r.RightTop);
+                        }
+                        else
+                        {
+                            IsSelecting = false;
+                        }
+                    });
+                    IsSelecting = true;
+                }
+                catch (InvalidOperationException e)
+                {
+                    _dialogService.ShowMessageDialog("Invalid Operation", e.Message, DialogMessageType.Error);
+                }
             }
         }
     }

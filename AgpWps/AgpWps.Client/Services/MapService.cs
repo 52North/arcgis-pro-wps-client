@@ -10,9 +10,19 @@ namespace AgpWps.Client.Services
 {
     public class MapService : IMapService
     {
+
+        private bool _isUsingSelectionTool;
+
         public async Task SelectZone(Action<Rectangle> selectionCallback)
         {
             if (selectionCallback == null) throw new ArgumentNullException(nameof(selectionCallback));
+
+            if (_isUsingSelectionTool)
+            {
+                throw new InvalidOperationException("The zone selection tool is already in use.");
+            }
+
+            _isUsingSelectionTool = true;
 
             await FrameworkApplication.SetCurrentToolAsync("AgpWps_Client_Tools_SelectionTool");
             if (FrameworkApplication.ActiveTool is SelectionTool st)
@@ -28,13 +38,19 @@ namespace AgpWps.Client.Services
                         var leftBottomPoint = new Tuple<double, double>(twoDimensionalPoints[0].X, twoDimensionalPoints[0].Y);
                         var rightTopPoint = new Tuple<double, double>(twoDimensionalPoints[2].X, twoDimensionalPoints[2].Y);
                         selectionCallback.Invoke(new Rectangle(leftBottomPoint, rightTopPoint));
+                        _isUsingSelectionTool = false;
                     }
                 };
 
-                st.SketchCancelled += (_, __) => selectionCallback.Invoke(null);
+                st.SketchCancelled += (_, __) =>
+                {
+                    _isUsingSelectionTool = false;
+                    selectionCallback.Invoke(null);
+                };
             }
             else
             {
+                _isUsingSelectionTool = false;
                 selectionCallback.Invoke(null);
             }
         }
