@@ -15,8 +15,8 @@ namespace AgpWps.Model.ViewModels
             get => _isSelecting;
             set
             {
-                _context.Invoke(SelectZoneCommand.RaiseCanExecuteChanged);
                 Set(ref _isSelecting, value);
+                _context.Invoke(SelectZoneCommand.RaiseCanExecuteChanged);
             }
         }
 
@@ -44,12 +44,21 @@ namespace AgpWps.Model.ViewModels
 
         private void SelectZone()
         {
-            IsSelecting = true;
-            _mapService.SelectZone((r) =>
+            if (!IsSelecting)
             {
-                RectangleViewModel = new RectangleViewModel(r.LeftBottom, r.RightTop);
-                IsSelecting = false;
-            });
+                IsSelecting = true;
+                _mapService.SelectZone((r) =>
+                {
+                    if (r != null)
+                    {
+                        RectangleViewModel = new RectangleViewModel(r.LeftBottom, r.RightTop);
+                    }
+                    else
+                    {
+                        IsSelecting = false;
+                    }
+                });
+            }
         }
     }
 }

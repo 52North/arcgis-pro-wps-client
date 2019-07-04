@@ -38,7 +38,7 @@ namespace AgpWps.Client
             container.Register<IContext, ArcgisContext>();
             container.Register<IDialogService, DialogService>();
             container.Register<IViewModelFactory, ViewModelFactory>();
-            container.Register<IMapService, MapService>();
+            container.Register<IMapService, MapService>(Reuse.Singleton);
 
             // View Models
             container.Register<AddServerPopupViewModel>();
