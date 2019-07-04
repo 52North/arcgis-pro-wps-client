@@ -160,6 +160,9 @@
       <HintPath>C:\Users\stanm\AppData\Local\Programs\ArcGIS\Pro\bin\ArcGIS.Desktop.Resources.dll</HintPath>
       <Private>False</Private>
     </Reference>
+    <Reference Include="Wps.Client, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Wps.Net.1.0.0\lib\netstandard2.0\Wps.Client.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <AddInContent Include="Config.daml">
@@ -262,10 +265,6 @@
     <AddInContent Include="DarkImages\MaterialCircleRemove32.png" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\wpsclient4arcgispro\src\Wps\Wps.Client\Wps.Client.csproj">
-      <Project>{1de678be-dbca-4d45-b826-c9c396c77abe}</Project>
-      <Name>Wps.Client</Name>
-    </ProjectReference>
     <ProjectReference Include="..\AgpWps.Model\AgpWps.Model.csproj">
       <Project>{ec8d2524-7926-4d58-865f-8bcad2cd1144}</Project>
       <Name>AgpWps.Model</Name>

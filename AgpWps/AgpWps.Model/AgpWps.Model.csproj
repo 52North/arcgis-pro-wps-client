@@ -6,10 +6,7 @@
 
   <ItemGroup>
     <PackageReference Include="MvvmLightLibs" Version="5.4.1.1" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\..\..\wpsclient4arcgispro\src\Wps\Wps.Client\Wps.Client.csproj" />
+    <PackageReference Include="Wps.Net" Version="1.0.0" />
   </ItemGroup>
 
 </Project>
