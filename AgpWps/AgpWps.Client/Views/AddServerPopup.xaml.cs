@@ -1,4 +1,6 @@
-﻿namespace AgpWps.Client.Views
+﻿using System.Windows.Input;
+
+namespace AgpWps.Client.Views
 {
     /// <summary>
     /// Interaction logic for AddServerPopup.xaml
@@ -8,6 +10,15 @@
         public AddServerPopup()
         {
             InitializeComponent();
+            ServerInputBox.Focus();
+        }
+
+        private void AddServerPopupKeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Enter)
+            {
+                AddConnectionButton.Command?.Execute(ServerInputBox.Text);
+            }
         }
     }
 }
