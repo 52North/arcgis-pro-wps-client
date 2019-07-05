@@ -18,8 +18,11 @@ namespace AgpWps.Client.Views
             set => SetProperty(ref _viewModel, value);
         }
 
+        internal static CapabilitiesPane Instance { get; private set; }
+
         protected CapabilitiesPane()
         {
+            Instance = this;
             ViewModel = WpsModule.Current.Container.Resolve<CapabilitiesViewModel>();
         }
 
@@ -58,8 +61,14 @@ namespace AgpWps.Client.Views
     {
         protected override void OnClick()
         {
-            var dialogService = WpsModule.Current.Container.Resolve<IDialogService>();
-            dialogService.ShowAddServerDialog();
+            var vm = CapabilitiesPane.Instance.ViewModel;
+            if (vm?.ClearServersCommand != null)
+            {
+                if(vm.ClearServersCommand.CanExecute(null))
+                {
+                    vm.ClearServersCommand.Execute(null);
+                }
+            }
         }
     }
 }

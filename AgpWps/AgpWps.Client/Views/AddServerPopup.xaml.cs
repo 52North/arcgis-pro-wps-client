@@ -17,7 +17,10 @@ namespace AgpWps.Client.Views
         {
             if (e.Key == Key.Enter)
             {
-                AddConnectionButton.Command?.Execute(ServerInputBox.Text);
+                if (AddConnectionButton.Command != null && AddConnectionButton.Command.CanExecute(ServerInputBox.Text))
+                {
+                    AddConnectionButton.Command.Execute(ServerInputBox.Text);
+                }
             }
         }
     }

@@ -3,10 +3,12 @@ using AgpWps.Model.Factories;
 using AgpWps.Model.Messages;
 using AgpWps.Model.Services;
 using GalaSoft.MvvmLight;
+using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Messaging;
 using System;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
+using System.Windows.Input;
 using Wps.Client.Services;
 
 namespace AgpWps.Model.ViewModels
@@ -21,6 +23,13 @@ namespace AgpWps.Model.ViewModels
 
         private ObservableCollection<ServerViewModel> _servers = new ObservableCollection<ServerViewModel>();
 
+        private ICommand _clearServersCommand;
+        public ICommand ClearServersCommand
+        {
+            get => _clearServersCommand;
+            set => Set(ref _clearServersCommand, value);
+        }
+
         public ObservableCollection<ServerViewModel> Servers
         {
             get => _servers;
@@ -33,6 +42,8 @@ namespace AgpWps.Model.ViewModels
             _context = context ?? throw new ArgumentNullException(nameof(context));
             _viewModelFactory = viewModelFactory ?? throw new ArgumentNullException(nameof(viewModelFactory));
             _dialogService = dialogService ?? throw new ArgumentNullException(nameof(dialogService));
+
+            ClearServersCommand = new RelayCommand(Servers.Clear);
 
             Messenger.Default.Register<ServerAddedMessage>(this, OnAddedServer);
         }
