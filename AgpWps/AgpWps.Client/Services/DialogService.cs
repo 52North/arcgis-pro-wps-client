@@ -3,6 +3,7 @@ using AgpWps.Model.Enums;
 using AgpWps.Model.Services;
 using AgpWps.Model.ViewModels;
 using DryIoc;
+using Microsoft.Win32;
 using System;
 using System.Windows;
 using Application = System.Windows.Application;
@@ -42,6 +43,17 @@ namespace AgpWps.Client.Services
                 CheckPathExists = true,
                 Title = title,
                 Filter = filter ?? "All files (*.*)|*.*"
+            };
+
+            return dialog.ShowDialog() == true ? dialog.FileName : null;
+        }
+
+        public string ShowFileSaveDialog(string title, string filter = null)
+        {
+            var dialog = new SaveFileDialog
+            {
+                Filter = filter ?? "All files (*.*)|*.*",
+                Title = title
             };
 
             return dialog.ShowDialog() == true ? dialog.FileName : null;

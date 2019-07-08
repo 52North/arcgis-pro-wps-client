@@ -20,5 +20,13 @@ namespace AgpWps.Model.Services
         /// <returns>The path to the selected file, if null then no file was selected</returns>
         string ShowFileSelectionDialog(string title, string filter = null);
 
+        /// <summary>
+        /// Show a dialog where the user is prompted to save a file under a specific name.
+        /// </summary>
+        /// <param name="title">The title shown on the dialog window</param>
+        /// <param name="filter">The filter applied to the file to be saved, if null then every file is allowed. (ex: txt files (*.txt)|*.txt|All files (*.*)|*.*)</param>
+        /// <returns>The path to the file to be created</returns>
+        string ShowFileSaveDialog(string title, string filter = null);
+
     }
 }
