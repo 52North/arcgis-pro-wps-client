@@ -35,6 +35,13 @@ namespace AgpWps.Model.ViewModels
             set => Set(ref _dataInputViewModels, value);
         }
 
+        private ObservableCollection<DataOutputViewModel> _dataOutputViewModels = new ObservableCollection<DataOutputViewModel>();
+        public ObservableCollection<DataOutputViewModel> DataOutputViewModels
+        {
+            get => _dataOutputViewModels;
+            set => Set(ref _dataOutputViewModels, value);
+        }
+
         private readonly string _wpsUri;
         private readonly string _processId;
         private readonly IWpsClient _wpsClient;
@@ -69,7 +76,16 @@ namespace AgpWps.Model.ViewModels
                             var vm = _viewModelFactory.CreateDataInputViewModel(input);
                             _context.Invoke(() =>
                             {
-                                _dataInputViewModels.Add(vm);
+                                DataInputViewModels.Add(vm);
+                            });
+                        }
+
+                        foreach (var output in processOffering.Process.Outputs)
+                        {
+                            var vm = _viewModelFactory.CreateDataOutputViewModel(output);
+                            _context.Invoke(() =>
+                            {
+                                DataOutputViewModels.Add(vm);
                             });
                         }
                     }
