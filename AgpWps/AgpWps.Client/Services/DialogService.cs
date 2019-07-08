@@ -12,6 +12,9 @@ using OpenFileDialog = Microsoft.Win32.OpenFileDialog;
 
 namespace AgpWps.Client.Services
 {
+    /// <summary>
+    /// A service offering ArcGIS Pro specific implemented dialogues.
+    /// </summary>
     public class DialogService : IDialogService
     {
         public void ShowMessageDialog(string title, string message)

@@ -3,6 +3,9 @@ using Wps.Client.Models;
 
 namespace AgpWps.Model.Factories
 {
+    /// <summary>
+    /// Factory used to create ViewModels
+    /// </summary>
     public interface IViewModelFactory
     {
 

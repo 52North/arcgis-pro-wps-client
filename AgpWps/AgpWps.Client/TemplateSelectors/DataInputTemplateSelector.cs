@@ -4,6 +4,9 @@ using System.Windows.Controls;
 
 namespace AgpWps.Client.TemplateSelectors
 {
+    /// <summary>
+    /// Template selector used to choose the appropriate data template depending on the <see cref="DataInputViewModel"/> given.
+    /// </summary>
     public class DataInputTemplateSelector : DataTemplateSelector
     {
 

@@ -8,6 +8,9 @@ using System.Threading.Tasks;
 
 namespace AgpWps.Client.Services
 {
+    /// <summary>
+    /// The ArcGIS Pro specific service used to manipulate the ArcGIS Pro tools.
+    /// </summary>
     public class MapService : IMapService
     {
 
