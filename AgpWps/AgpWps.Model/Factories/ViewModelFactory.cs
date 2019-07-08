@@ -71,5 +71,20 @@ namespace AgpWps.Model.Factories
 
             return vm;
         }
+
+        public DataOutputViewModel CreateDataOutputViewModel(Output output)
+        {
+            if (output == null) throw new ArgumentNullException(nameof(output));
+
+            var formats = output.Data.Formats.Select(f => f.MimeType).ToArray();
+
+            var vm = new DataOutputViewModel(_dialogService)
+            {
+                Formats = new ObservableCollection<string>(formats),
+                Identifier = output.Identifier
+            };
+
+            return vm;
+        }
     }
 }

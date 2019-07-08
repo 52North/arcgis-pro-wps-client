@@ -180,6 +180,9 @@
     <Compile Include="Controls\ComplexDataInput.xaml.cs">
       <DependentUpon>ComplexDataInput.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\DataOutput.xaml.cs">
+      <DependentUpon>DataOutput.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\LiteralInput.xaml.cs">
       <DependentUpon>LiteralInput.xaml</DependentUpon>
     </Compile>
@@ -215,6 +218,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Controls\ComplexDataInput.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\DataOutput.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
