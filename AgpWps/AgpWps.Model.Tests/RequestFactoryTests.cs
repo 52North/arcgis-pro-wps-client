@@ -2,6 +2,7 @@
 using AgpWps.Model.ViewModels;
 using FluentAssertions;
 using System;
+using Wps.Client.Models;
 using Wps.Client.Models.Execution;
 using Xunit;
 
@@ -116,6 +117,30 @@ namespace AgpWps.Model.Tests
         public void CreateDataInput_NullInputGiven_ShouldThrowArgumentNullException()
         {
             Assert.Throws<ArgumentNullException>(() => { _requestFactory.CreateDataInput(null); });
+        }
+
+        [Fact]
+        public void CreateDataOutput_NullInputGiven_ShouldThrowArgumentNullException()
+        {
+            Assert.Throws<ArgumentNullException>(() => { _requestFactory.CreateDataOutput(null); });
+        }
+
+        [Fact]
+        public void CreateDataOutput_OutputViewModelGiven_ShouldCreateOutput()
+        {
+            const string processName = "processName";
+            const string selectedFormat = "zipped-shp";
+
+            var vm = new DataOutputViewModel(new DialogServiceMock())
+            {
+                Identifier = processName,
+                SelectedFormat = selectedFormat
+            };
+
+            var output = _requestFactory.CreateDataOutput(vm);
+            output.Identifier.Should().Be(processName);
+            output.MimeType.Should().Be(selectedFormat);
+            output.Transmission.Should().Be(TransmissionMode.Value);
         }
 
     }

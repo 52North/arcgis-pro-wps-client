@@ -13,5 +13,12 @@ namespace AgpWps.Model.Factories
         /// <returns>The data input</returns>
         DataInput CreateDataInput(DataInputViewModel viewModel);
 
+        /// <summary>
+        /// Create a data output from <see cref="DataOutputViewModel"/>.
+        /// </summary>
+        /// <param name="viewModel">The viewmodel</param>
+        /// <returns>The data output</returns>
+        DataOutput CreateDataOutput(DataOutputViewModel viewModel);
+
     }
 }

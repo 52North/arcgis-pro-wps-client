@@ -1,6 +1,7 @@
 ﻿using AgpWps.Model.Services;
 using AgpWps.Model.ViewModels;
 using System;
+using Wps.Client.Models;
 using Wps.Client.Models.Execution;
 
 namespace AgpWps.Model.Factories
@@ -64,6 +65,20 @@ namespace AgpWps.Model.Factories
             }
 
             return !viewModel.IsReference && dataInput.Data == null ? null : dataInput;
+        }
+
+        public DataOutput CreateDataOutput(DataOutputViewModel viewModel)
+        {
+            if (viewModel == null) throw new ArgumentNullException(nameof(viewModel));
+
+            var output = new DataOutput
+            {
+                MimeType = viewModel.SelectedFormat,
+                Transmission = TransmissionMode.Value,
+                Identifier = viewModel.Identifier
+            };
+
+            return output;
         }
 
     }
