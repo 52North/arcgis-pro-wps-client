@@ -29,7 +29,7 @@ namespace AgpWps.Model.ViewModels
             set => Set(ref _selectZoneCommand, value);
         }
 
-        private RectangleViewModel _rectangleViewModel = new RectangleViewModel(new Tuple<double, double>(0.0, 0.0), new Tuple<double, double>(0.0, 0.0));
+        private RectangleViewModel _rectangleViewModel;
         public RectangleViewModel RectangleViewModel
         {
             get => _rectangleViewModel;

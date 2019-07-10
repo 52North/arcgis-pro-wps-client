@@ -2,6 +2,7 @@
 using AgpWps.Model.ViewModels;
 using FluentAssertions;
 using System;
+using System.Collections.Generic;
 using Wps.Client.Models;
 using Wps.Client.Models.Execution;
 using Xunit;
@@ -141,6 +142,64 @@ namespace AgpWps.Model.Tests
             output.Identifier.Should().Be(processName);
             output.MimeType.Should().Be(selectedFormat);
             output.Transmission.Should().Be(TransmissionMode.Value);
+        }
+
+        [Fact]
+        public void CreateExecuteRequest_ValidInputAndOutputViewModelsGiven_ShouldCreateRequest()
+        {
+            const string processName = "processName";
+
+            var inputs = new List<DataInputViewModel>
+            {
+                new LiteralInputViewModel {Value = "a"},
+                new BoundingBoxInputViewModel(new MapServiceMock(), new ContextMock(), new DialogServiceMock())
+                {
+                    RectangleViewModel = new RectangleViewModel(new Tuple<double, double>(0.0, 0.0), new Tuple<double, double>(0.0, 0.0) )
+                },
+                new DataInputViewModel(), // Dummy input, should be removed by the factory
+                new ComplexDataViewModel(new DialogServiceMock()) { Input = "i" },
+                new DataInputViewModel{IsReference = true, ReferenceUrl = "ref uri"},
+            };
+
+            var outputs = new List<DataOutputViewModel>
+            {
+                new DataOutputViewModel(new DialogServiceMock()){ FilePath = "file path", SelectedFormat = "zipped-shp"},
+                new DataOutputViewModel(new DialogServiceMock()), // Dummy output, should be removed by the factory
+            };
+
+            var request = _requestFactory.CreateExecuteRequest(processName, inputs, outputs);
+            request.Identifier.Should().Be(processName);
+            request.Inputs.Should().HaveCount(4);
+            request.Outputs.Should().HaveCount(1);
+            request.ResponseType.Should().Be(ResponseType.Document);
+            request.ExecutionMode.Should().Be(ExecutionMode.Asynchronous);
+        }
+
+        [Fact]
+        public void CreateExecuteRequest_NullProcessIdGiven_ShouldThrowArgumentNullException()
+        {
+            Assert.Throws<ArgumentNullException>(() =>
+            {
+                _requestFactory.CreateExecuteRequest(null, new List<DataInputViewModel>(),
+                    new List<DataOutputViewModel>());
+            });
+        }
+
+        [Fact]
+        public void CreateExecuteRequest_NullInputsGiven_ShouldThrowArgumentNullException()
+        {
+            Assert.Throws<ArgumentNullException>(() =>
+                {
+                    _requestFactory.CreateExecuteRequest("", null, new List<DataOutputViewModel>());
+                });
+        }
+        [Fact]
+        public void CreateExecuteRequest_NullOutputsGiven_ShouldThrowArgumentNullException()
+        {
+            Assert.Throws<ArgumentNullException>(() =>
+                {
+                    _requestFactory.CreateExecuteRequest("", new List<DataInputViewModel>(), null);
+                });
         }
 
     }

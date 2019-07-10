@@ -1,8 +1,11 @@
 ﻿using AgpWps.Model.Services;
 using AgpWps.Model.ViewModels;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using Wps.Client.Models;
 using Wps.Client.Models.Execution;
+using Wps.Client.Models.Requests;
 
 namespace AgpWps.Model.Factories
 {
@@ -14,6 +17,42 @@ namespace AgpWps.Model.Factories
         public RequestFactory(IFileReader fileReader)
         {
             _fileReader = fileReader ?? throw new ArgumentNullException(nameof(fileReader));
+        }
+
+        public ExecuteRequest CreateExecuteRequest(string processId, List<DataInputViewModel> dataInputViewModels, List<DataOutputViewModel> dataOutputViewModels)
+        {
+            if (processId == null) throw new ArgumentNullException(nameof(processId));
+            if (dataInputViewModels == null) throw new ArgumentNullException(nameof(dataInputViewModels));
+            if (dataOutputViewModels == null) throw new ArgumentNullException(nameof(dataOutputViewModels));
+
+            // Select all the inputs that have a valid data or if they are reference, otherwise filter them out.
+            var dataInputs = dataInputViewModels.Where(i =>
+            {
+                if (i.IsReference)
+                {
+                    return true;
+                }
+
+                if (i is LiteralInputViewModel lvm) return lvm.Value != null;
+                if (i is BoundingBoxInputViewModel bvm) return bvm.RectangleViewModel != null;
+                if (i is ComplexDataViewModel cvm) return !string.IsNullOrEmpty(cvm.Input);
+
+                return false;
+            }).Select(CreateDataInput);
+
+            // Select only the outputs that have a file path, otherwise it means they are not wanted by the user.
+            var dataOutputs = dataOutputViewModels.Where(o => !string.IsNullOrEmpty(o.FilePath)).Select(CreateDataOutput);
+
+            var executeRequest = new ExecuteRequest
+            {
+                ExecutionMode = ExecutionMode.Asynchronous,
+                Identifier = processId,
+                Inputs = dataInputs.ToArray(),
+                Outputs = dataOutputs.ToArray(),
+                ResponseType = ResponseType.Document
+            };
+
+            return executeRequest;
         }
 
         public DataInput CreateDataInput(DataInputViewModel viewModel)

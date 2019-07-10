@@ -35,6 +35,7 @@ namespace AgpWps.Client
 
             // Services
             container.RegisterInstance<IWpsClient>(client);
+            container.Register<IFileReader, FileReader>();
             container.Register<IContext, ArcgisContext>();
             container.Register<IDialogService, DialogService>();
             container.Register<IViewModelFactory, ViewModelFactory>();
