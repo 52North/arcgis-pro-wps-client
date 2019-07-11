@@ -16,13 +16,15 @@ namespace AgpWps.Model.Factories
         private readonly IDialogService _dialogService;
         private readonly IWpsClient _wpsClient;
         private readonly IContext _context;
+        private readonly IRequestFactory _requestFactory;
 
-        public ViewModelFactory(IMapService mapService, IDialogService dialogService, IWpsClient wpsClient, IContext context)
+        public ViewModelFactory(IMapService mapService, IDialogService dialogService, IWpsClient wpsClient, IContext context, IRequestFactory requestFactory)
         {
             _mapService = mapService ?? throw new ArgumentNullException(nameof(mapService));
             _dialogService = dialogService ?? throw new ArgumentNullException(nameof(dialogService));
             _wpsClient = wpsClient ?? throw new ArgumentNullException(nameof(wpsClient));
             _context = context ?? throw new ArgumentNullException(nameof(context));
+            _requestFactory = requestFactory ?? throw new ArgumentNullException(nameof(requestFactory));
         }
 
         public ProcessOfferingViewModel CreateProcessOfferingViewModel(string wpsUri, ProcessSummary sum)
@@ -85,6 +87,11 @@ namespace AgpWps.Model.Factories
             };
 
             return vm;
+        }
+
+        public ExecutionBuilderViewModel CreateExecutionBuilderViewModel(string wpsUri, string processId)
+        {
+            return new ExecutionBuilderViewModel(wpsUri, processId, _wpsClient, _context, this, _requestFactory, _dialogService);
         }
     }
 }

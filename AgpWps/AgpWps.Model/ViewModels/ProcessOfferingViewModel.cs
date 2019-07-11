@@ -87,7 +87,7 @@ namespace AgpWps.Model.ViewModels
 
         private void OpenExecutionPanel()
         {
-            var executionVm = new ExecutionBuilderViewModel(_wpsUri, _processId, _wpsClient, _context, _viewModelFactory);
+            var executionVm = _viewModelFactory.CreateExecutionBuilderViewModel(_wpsUri, _processId);
             _dialogService.ShowExecutionBuilderDialog(executionVm);
         }
 

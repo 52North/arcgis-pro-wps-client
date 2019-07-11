@@ -70,5 +70,9 @@
             </ItemsControl>
         </ScrollViewer>
 
+        <Button Grid.Row="4"
+                Content="Execute"
+                Command="{Binding ExecuteCommand}"/>
+
     </Grid>
 </controls:ProWindow>

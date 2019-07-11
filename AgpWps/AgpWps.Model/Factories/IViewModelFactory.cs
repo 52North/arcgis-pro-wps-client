@@ -12,6 +12,7 @@ namespace AgpWps.Model.Factories
         ProcessOfferingViewModel CreateProcessOfferingViewModel(string wpsUri, ProcessSummary summary);
         DataInputViewModel CreateDataInputViewModel(Input input);
         DataOutputViewModel CreateDataOutputViewModel(Output output);
+        ExecutionBuilderViewModel CreateExecutionBuilderViewModel(string wpsUri, string processId);
 
     }
 }
