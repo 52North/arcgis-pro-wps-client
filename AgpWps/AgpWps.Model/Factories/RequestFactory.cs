@@ -1,4 +1,5 @@
-﻿using AgpWps.Model.Services;
+﻿using AgpWps.Model.Exceptions;
+using AgpWps.Model.Services;
 using AgpWps.Model.ViewModels;
 using System;
 using System.Collections.Generic;
@@ -25,23 +26,64 @@ namespace AgpWps.Model.Factories
             if (dataInputViewModels == null) throw new ArgumentNullException(nameof(dataInputViewModels));
             if (dataOutputViewModels == null) throw new ArgumentNullException(nameof(dataOutputViewModels));
 
-            // Select all the inputs that have a valid data or if they are reference, otherwise filter them out.
-            var dataInputs = dataInputViewModels.Where(i =>
+            var validInputs = new List<DataInputViewModel>();
+            foreach (var input in dataInputViewModels)
             {
-                if (i.IsReference)
+                if (input.IsReference)
                 {
-                    return true;
+                    if (!string.IsNullOrEmpty(input.ReferenceUrl))
+                    {
+                        validInputs.Add(input);
+                        continue;
+                    }
+
+                    if (!input.IsOptional) throw new NullInputException(input.ProcessName);
                 }
+                else
+                {
+                    if (input is LiteralInputViewModel lvm)
+                    {
+                        if (lvm.Value != null)
+                        {
+                            validInputs.Add(input);
+                            continue;
+                        }
 
-                if (i is LiteralInputViewModel lvm) return lvm.Value != null;
-                if (i is BoundingBoxInputViewModel bvm) return bvm.RectangleViewModel != null;
-                if (i is ComplexDataViewModel cvm) return !string.IsNullOrEmpty(cvm.Input);
+                        if (!lvm.IsOptional) throw new NullInputException(input.ProcessName);
+                    }
+                    else if (input is BoundingBoxInputViewModel bvm)
+                    {
+                        if (bvm.RectangleViewModel != null)
+                        {
+                            validInputs.Add(input);
+                            continue;
+                        }
 
-                return false;
-            }).Select(CreateDataInput);
+                        if (!bvm.IsOptional) throw new NullInputException(input.ProcessName);
+                    }
+                    else if (input is ComplexDataViewModel cvm)
+                    {
+                        if (cvm.Input != null)
+                        {
+                            validInputs.Add(input);
+                            continue;
+                        }
+
+                        if (!cvm.IsOptional) throw new NullInputException(input.ProcessName);
+                    }
+                }
+            }
+
+            // Select all the inputs that have a valid data or if they are reference, otherwise filter them out.
+            var dataInputs = validInputs.Select(CreateDataInput);
 
             // Select only the outputs that have a file path, otherwise it means they are not wanted by the user.
-            var dataOutputs = dataOutputViewModels.Where(o => !string.IsNullOrEmpty(o.FilePath)).Select(CreateDataOutput);
+            var dataOutputs = dataOutputViewModels.Where(o => !string.IsNullOrEmpty(o.FilePath)).Select(CreateDataOutput).ToArray();
+
+            if (!dataOutputs.Any())
+            {
+                throw new NoOutputSelectedException();
+            }
 
             var executeRequest = new ExecuteRequest
             {

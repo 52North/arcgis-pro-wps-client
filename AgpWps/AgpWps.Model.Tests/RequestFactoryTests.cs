@@ -1,4 +1,5 @@
-﻿using AgpWps.Model.Factories;
+﻿using AgpWps.Model.Exceptions;
+using AgpWps.Model.Factories;
 using AgpWps.Model.ViewModels;
 using FluentAssertions;
 using System;
@@ -173,6 +174,83 @@ namespace AgpWps.Model.Tests
             request.Outputs.Should().HaveCount(1);
             request.ResponseType.Should().Be(ResponseType.Document);
             request.ExecutionMode.Should().Be(ExecutionMode.Asynchronous);
+        }
+
+        [Fact]
+        public void CreateExecuteRequest_RequiredLiteralValue_NullValueGiven_ShouldThrowNullInputException()
+        {
+            Assert.Throws<NullInputException>(() =>
+            {
+                var inputs = new List<DataInputViewModel>
+                {
+                    new LiteralInputViewModel{IsOptional = false, Value = null}
+                };
+
+                _requestFactory.CreateExecuteRequest("", inputs,
+                    new List<DataOutputViewModel>());
+            });
+        }
+
+        [Fact]
+        public void CreateExecuteRequest_RequiredBoundingBoxValue_NullValueGiven_ShouldThrowNullInputException()
+        {
+            Assert.Throws<NullInputException>(() =>
+            {
+                var inputs = new List<DataInputViewModel>
+                {
+                    new BoundingBoxInputViewModel(new MapServiceMock(), new ContextMock(), new DialogServiceMock()) { IsOptional = false, RectangleViewModel = null}
+                };
+
+                _requestFactory.CreateExecuteRequest("", inputs,
+                    new List<DataOutputViewModel>());
+            });
+        }
+
+        [Fact]
+        public void CreateExecuteRequest_RequiredComplexValue_NullValueGiven_ShouldThrowNullInputException()
+        {
+            Assert.Throws<NullInputException>(() =>
+            {
+                var inputs = new List<DataInputViewModel>
+                {
+                    new ComplexDataViewModel(new DialogServiceMock()) { IsOptional = false, Input = null }
+                };
+
+                _requestFactory.CreateExecuteRequest("", inputs,
+                    new List<DataOutputViewModel>());
+            });
+        }
+
+        [Fact]
+        public void CreateExecuteRequest_NoOutputSelected_ShouldThrowNoOutputSelectedException()
+        {
+            Assert.Throws<NoOutputSelectedException>(() =>
+            {
+                var outputs = new List<DataOutputViewModel>
+                {
+                    new DataOutputViewModel(new DialogServiceMock()),
+                    new DataOutputViewModel(new DialogServiceMock()),
+                    new DataOutputViewModel(new DialogServiceMock()),
+                };
+
+                _requestFactory.CreateExecuteRequest("", new List<DataInputViewModel>(), 
+                    outputs);
+            });
+        }
+
+        [Fact]
+        public void CreateExecuteRequest_RequiredReferencedData_NullReference_ShouldThrowNullInputException()
+        {
+            Assert.Throws<NullInputException>(() =>
+            {
+                var inputs = new List<DataInputViewModel>
+                {
+                    new DataInputViewModel { IsOptional = false, IsReference = true, ReferenceUrl = null }
+                };
+
+                _requestFactory.CreateExecuteRequest("", inputs,
+                    new List<DataOutputViewModel>());
+            });
         }
 
         [Fact]
