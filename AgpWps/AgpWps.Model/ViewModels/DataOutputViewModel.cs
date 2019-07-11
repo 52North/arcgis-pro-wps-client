@@ -49,7 +49,7 @@ namespace AgpWps.Model.ViewModels
 
         private void SelectFile()
         {
-            var path = _dialogService.ShowFileSelectionDialog("Select the file where you want to save this output");
+            var path = _dialogService.ShowFileSaveDialog("Select the file where you want to save this output");
             FilePath = path;
         }
 
