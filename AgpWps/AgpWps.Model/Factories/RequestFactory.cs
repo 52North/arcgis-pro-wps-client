@@ -118,7 +118,10 @@ namespace AgpWps.Model.Factories
             {
                 if (viewModel is LiteralInputViewModel lvm)
                 {
-                    dataInput.Data = lvm.Value;
+                    dataInput.Data = new LiteralDataValue
+                    {
+                        Value = lvm.Value
+                    };
                 }
                 else if (viewModel is BoundingBoxInputViewModel bvm)
                 {
