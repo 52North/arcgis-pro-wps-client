@@ -25,6 +25,7 @@
           <!-- host controls within groups -->
           <button refID="AgpWps_Client_Views_CapabilitiesShowCapabilities" size="large" />
           <!--<tool refID="AgpWps_Client_Tools_SelectionTool" size="large" />-->
+          <button refID="AgpWps_Client_Views_Results_ShowButton" size="large" />
         </group>
       </groups>
       <controls>
@@ -44,10 +45,16 @@
         <tool id="AgpWps_Client_Tools_SelectionTool" caption="SelectionTool" className="AgpWps.Client.Tools.SelectionTool" loadOnClick="true" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericButtonRed16.png" largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericButtonRed32.png" condition="esri_mapping_mapPane">
           <tooltip heading="Tooltip Heading">Tooltip text<disabledText /></tooltip>
         </tool>
+        <button id="AgpWps_Client_Views_Results_ShowButton" caption="Show Results" className="AgpWps.Client.Views.Results_ShowButton" loadOnClick="true" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericButtonPurple16.png" largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericButtonPurple32.png">
+          <tooltip heading="Show Dockpane">Show Dockpane<disabledText /></tooltip>
+        </button>
       </controls>
       <dockPanes>
         <dockPane id="AgpWps_Client_Views_Capabilities" caption="Capabilities" className="AgpWps.Client.Views.CapabilitiesPane" dock="group" dockWith="esri_core_contentsDockPane">
           <content className="AgpWps.Client.Views.CapabilitiesView" />
+        </dockPane>
+        <dockPane id="AgpWps_Client_Views_Results" caption="Results" className="AgpWps.Client.Views.ResultsPane" dock="group" dockWith="esri_core_contentsDockPane">
+          <content className="AgpWps.Client.Views.ResultsView" />
         </dockPane>
       </dockPanes>
       <menus>
