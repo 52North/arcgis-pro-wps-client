@@ -1,10 +1,12 @@
 ﻿using AgpWps.Model.Enums;
 using AgpWps.Model.Exceptions;
 using AgpWps.Model.Factories;
+using AgpWps.Model.Messages;
 using AgpWps.Model.Services;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.IO;
@@ -115,6 +117,7 @@ namespace AgpWps.Model.ViewModels
                     session.Finished += (sender, args) =>
                     {
                         _dialogService.ShowMessageDialog("Finished", $"The job {args.Result.JobId} has finished its execution. You can now access the outputs. ");
+                        var outputs = new List<Tuple<string, string>>();
 
                         foreach (var output in args.Result.Outputs)
                         {
@@ -141,8 +144,12 @@ namespace AgpWps.Model.ViewModels
                                 {
                                     File.WriteAllText(outputVm.FilePath, output.Data);
                                 }
+
+                                outputs.Add(new Tuple<string, string>(output.Id, outputVm.FilePath));
                             }
                         }
+
+                        MessengerInstance.Send(new ExecutionFinishedMessage(args.Result.JobId, outputs, args.Result.ExpirationDate));
                     };
 
                     var sessionPollingTask = session.StartPolling();

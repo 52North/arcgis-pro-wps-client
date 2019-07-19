@@ -45,7 +45,9 @@ namespace AgpWps.Client
             // View Models
             container.Register<AddServerPopupViewModel>();
             container.Register<CapabilitiesViewModel>();
-            container.Register<ResultsViewModel>();
+
+            var resultsVm = new ResultsViewModel(container.Resolve<IContext>());
+            container.RegisterInstance(resultsVm);
 
             return container;
         }

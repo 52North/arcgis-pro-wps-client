@@ -25,7 +25,7 @@ namespace AgpWps.Client.Views
             }
             else if (e.NewValue is ResultsViewModel vm)
             {
-                
+                ProcessesTreeView.ItemsSource = vm.Results;
             }
             else
             {
