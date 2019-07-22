@@ -1,0 +1,68 @@
+﻿<ArcGIS defaultAssembly="AgpWps.Client.dll" defaultNamespace="AgpWps.Client" xmlns="http://schemas.esri.com/DADF/Registry" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://schemas.esri.com/DADF/Registry file:///C:/Users/stanm/AppData/Local/Programs/ArcGIS/Pro/bin/ArcGIS.Desktop.Framework.xsd">
+  <AddInInfo id="{e4e4b991-c9db-4b78-a061-262f23bde399}" version="1.0" desktopVersion="2.3.15769">
+    <Name>AgpWps.Client</Name>
+    <Description>AgpWps.Client description</Description>
+    <Image>Images\AddinDesktop32.png</Image>
+    <Author>stanm</Author>
+    <Company>Acme</Company>
+    <Date>20-Jun-19 14:29:53, 2019</Date>
+    <Subject>Framework</Subject>
+    <!-- Note subject can be one or more of these topics:
+                    Content, Framework, Editing, Geodatabase, Geometry, Geoprocessing, Layouts, Map Authoring, Map Exploration -->
+  </AddInInfo>
+  <modules>
+    <insertModule id="AgpWps.Client_Module" className="WpsModule" autoLoad="false" caption="WpsModule">
+      <!-- uncomment to have the control hosted on a separate tab-->
+      <tabs>
+        <!--<tab id="AgpWps.Client_Tab1" caption="New Tab">
+          <group refID="AgpWps.Client_Group1"/>
+        </tab>-->
+      </tabs>
+      <groups>
+        <!-- comment this out if you have no controls on the Addin tab to avoid
+              an empty group-->
+        <group id="AgpWpsGroup" caption="WPS" appearsOnAddInTab="true">
+          <!-- host controls within groups -->
+          <button refID="AgpWps_Client_Views_CapabilitiesShowCapabilities" size="large" />
+          <!--<tool refID="AgpWps_Client_Tools_SelectionTool" size="large" />-->
+          <button refID="AgpWps_Client_Views_Results_ShowButton" size="large" />
+        </group>
+      </groups>
+      <controls>
+        <!-- add your controls here -->
+        <button id="AgpWps_Client_Views_CapabilitiesShowCapabilities" caption="Show Capabilities" className="AgpWps.Client.Views.CapabilitiesShowCapabilities" loadOnClick="true" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericButtonPurple16.png" largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericButtonPurple32.png">
+          <tooltip heading="WPS Client">
+            Shows WPS providers capabilities<disabledText /></tooltip>
+        </button>
+        <button id="AgpWps_Client_Views_CapabilitiesAddProviderButton" caption="Add WPS provider" className="AgpWps.Client.Views.CapabilitiesAddProviderButton" loadOnClick="true" smallImage="Images/MaterialCircleAdd16.png" largeImage="Images/MaterialCircleAdd32.png">
+          <tooltip heading="Add WPS Provider">
+            Adds a WPS provider to the list<disabledText /></tooltip>
+        </button>
+        <button id="AgpWps_Client_Views_CapabilitiesClearProvidersButton" caption="Clear all providers" className="AgpWps.Client.Views.CapabilitiesClearProvidersButton" loadOnClick="true" smallImage="Images/MaterialCircleRemove16.png" largeImage="Images/MaterialCircleRemove32.png">
+          <tooltip heading="Clear all providers">
+            Removes all the providers from the list<disabledText /></tooltip>
+        </button>
+        <tool id="AgpWps_Client_Tools_SelectionTool" caption="SelectionTool" className="AgpWps.Client.Tools.SelectionTool" loadOnClick="true" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericButtonRed16.png" largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericButtonRed32.png" condition="esri_mapping_mapPane">
+          <tooltip heading="Tooltip Heading">Tooltip text<disabledText /></tooltip>
+        </tool>
+        <button id="AgpWps_Client_Views_Results_ShowButton" caption="Show Results" className="AgpWps.Client.Views.Results_ShowButton" loadOnClick="true" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericButtonPurple16.png" largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericButtonPurple32.png">
+          <tooltip heading="Show Dockpane">Show Dockpane<disabledText /></tooltip>
+        </button>
+      </controls>
+      <dockPanes>
+        <dockPane id="AgpWps_Client_Views_Capabilities" caption="Capabilities" className="AgpWps.Client.Views.CapabilitiesPane" dock="group" dockWith="esri_core_contentsDockPane">
+          <content className="AgpWps.Client.Views.CapabilitiesView" />
+        </dockPane>
+        <dockPane id="AgpWps_Client_Views_Results" caption="Results" className="AgpWps.Client.Views.ResultsPane" dock="group" dockWith="esri_core_contentsDockPane">
+          <content className="AgpWps.Client.Views.ResultsView" />
+        </dockPane>
+      </dockPanes>
+      <menus>
+        <menu id="AgpWps_Client_Views_Capabilities_Menu" caption="Options" contextMenu="true">
+          <button refID="AgpWps_Client_Views_CapabilitiesAddProviderButton" />
+          <button refID="AgpWps_Client_Views_CapabilitiesClearProvidersButton" />
+        </menu>
+      </menus>
+    </insertModule>
+  </modules>
+</ArcGIS>

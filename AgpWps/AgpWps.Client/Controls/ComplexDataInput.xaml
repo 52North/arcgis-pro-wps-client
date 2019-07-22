@@ -1,0 +1,47 @@
+﻿<UserControl x:Class="AgpWps.Client.Controls.ComplexDataInput"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:viewModels="clr-namespace:AgpWps.Model.ViewModels;assembly=AgpWps.Model"
+             mc:Ignorable="d" 
+             d:DataContext="{d:DesignInstance viewModels:ComplexDataViewModel}"
+             d:DesignHeight="20" d:DesignWidth="300">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="Auto"/>
+        </Grid.ColumnDefinitions>
+
+        <TextBlock Grid.Column="0"
+                   Text="Input:"
+                   HorizontalAlignment="Right"
+                   VerticalAlignment="Center"
+                   Margin="0,0,5,0"/>
+
+        <TextBox Grid.Column="1"
+                 MaxLines="1"
+                 IsReadOnly="{Binding IsFile}">
+            <TextBox.Style>
+                <Style TargetType="{x:Type TextBox}">
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding IsFile}" Value="True">
+                            <Setter Property="Text" Value="{Binding FilePath}"/>
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding IsFile}" Value="False">
+                            <Setter Property="Text" Value="{Binding Input}"/>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </TextBox.Style>
+        </TextBox>
+
+        <Button Grid.Column="2"
+                Margin="5,0,0,0"
+                Padding="5,2,5,2"
+                Command="{Binding SelectFileCommand}"
+                Content="File"/>
+
+    </Grid>
+</UserControl>
