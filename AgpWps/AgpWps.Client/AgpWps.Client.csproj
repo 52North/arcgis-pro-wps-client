@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="15.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -160,8 +160,8 @@
       <HintPath>C:\Users\stanm\AppData\Local\Programs\ArcGIS\Pro\bin\ArcGIS.Desktop.Resources.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="Wps.Client, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Wps.Net.1.0.0\lib\netstandard2.0\Wps.Client.dll</HintPath>
+    <Reference Include="Wps.Client, Version=1.0.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Wps.Net.1.0.1\lib\netstandard2.0\Wps.Client.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>

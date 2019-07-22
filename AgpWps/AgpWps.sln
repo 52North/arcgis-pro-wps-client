@@ -7,7 +7,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AgpWps.Client", "AgpWps.Cli
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AgpWps.Model", "AgpWps.Model\AgpWps.Model.csproj", "{EC8D2524-7926-4D58-865F-8BCAD2CD1144}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AgpWps.Model.Tests", "AgpWps.Model.Tests\AgpWps.Model.Tests.csproj", "{7A6A7E03-694B-4B21-A1D7-E65CF375FA1A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AgpWps.Model.Tests", "AgpWps.Model.Tests\AgpWps.Model.Tests.csproj", "{7A6A7E03-694B-4B21-A1D7-E65CF375FA1A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
