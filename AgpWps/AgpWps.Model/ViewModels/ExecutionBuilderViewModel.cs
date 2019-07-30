@@ -164,24 +164,25 @@ namespace AgpWps.Model.ViewModels
                     }
 
                     sessionPollingTask.Wait();
+
+                    _context.Invoke(() => IsExecutingProcess = false);
                 });
             }
             catch (NoOutputSelectedException)
             {
                 _dialogService.ShowMessageDialog("Error",
                     "You haven't selected any output, please select at least one.", DialogMessageType.Error);
+                IsExecutingProcess = false;
             }
             catch (NullInputException e)
             {
                 _dialogService.ShowMessageDialog("Error", $"You must provide a value to {e.InputName}.",
                     DialogMessageType.Error);
+                IsExecutingProcess = false;
             }
             catch (Exception)
             {
                 _dialogService.ShowMessageDialog("Error", "An unexpected error has occured, please try again.");
-            }
-            finally
-            {
                 IsExecutingProcess = false;
             }
         }

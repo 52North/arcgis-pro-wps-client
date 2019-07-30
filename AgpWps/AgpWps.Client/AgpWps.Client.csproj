@@ -190,6 +190,7 @@
       <DependentUpon>Rectangle.xaml</DependentUpon>
     </Compile>
     <Compile Include="Converters\DebugConverter.cs" />
+    <Compile Include="Converters\InvertBooleanConverter.cs" />
     <Compile Include="Converters\ValidReferenceToVisibilityConverter.cs" />
     <Compile Include="Services\ArcgisContext.cs" />
     <Compile Include="Services\DialogService.cs" />

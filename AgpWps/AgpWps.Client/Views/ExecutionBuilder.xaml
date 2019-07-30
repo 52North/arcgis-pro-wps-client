@@ -7,10 +7,15 @@
                     xmlns:localControls="clr-namespace:AgpWps.Client.Controls"
                     xmlns:viewModels="clr-namespace:AgpWps.Model.ViewModels;assembly=AgpWps.Model"
                     xmlns:controls="clr-namespace:ArcGIS.Desktop.Framework.Controls;assembly=ArcGIS.Desktop.Framework"
+                    xmlns:converters="clr-namespace:AgpWps.Client.Converters"
                     mc:Ignorable="d"
-        d:DataContext="{d:DesignInstance viewModels:ExecutionBuilderViewModel}"
-        Title="ExecutionBuilder" Height="600" Width="600"
-        WindowStartupLocation="CenterOwner">
+                    d:DataContext="{d:DesignInstance viewModels:ExecutionBuilderViewModel}"
+                    Title="ExecutionBuilder" Height="600" Width="600"
+                    Name="BuilderWindow"
+                    WindowStartupLocation="CenterOwner">
+    <controls:ProWindow.Resources>
+        <converters:InvertBooleanConverter x:Key="InvertBooleanConverter"/>
+    </controls:ProWindow.Resources>
     <i:Interaction.Triggers>
         <i:EventTrigger EventName="Loaded">
             <i:InvokeCommandAction Command="{Binding WindowLoadedCommand}"></i:InvokeCommandAction>
@@ -42,7 +47,8 @@
                 </ItemsControl.ItemsPanel>
                 <ItemsControl.ItemTemplate>
                     <DataTemplate DataType="{x:Type viewModels:DataInputViewModel}">
-                        <localControls:DataInput DataContext="{Binding}"/>
+                        <localControls:DataInput DataContext="{Binding}"
+                                                 IsEnabled="{Binding ElementName=BuilderWindow, Path=DataContext.IsExecutingProcess, Converter={StaticResource InvertBooleanConverter}}"/>
                     </DataTemplate>
                 </ItemsControl.ItemTemplate>
             </ItemsControl>
@@ -64,7 +70,8 @@
                 </ItemsControl.ItemsPanel>
                 <ItemsControl.ItemTemplate>
                     <DataTemplate DataType="{x:Type viewModels:DataOutputViewModel}">
-                        <localControls:DataOutput DataContext="{Binding}"/>
+                        <localControls:DataOutput DataContext="{Binding}"
+                                                  IsEnabled="{Binding ElementName=BuilderWindow, Path=DataContext.IsExecutingProcess, Converter={StaticResource InvertBooleanConverter}}"/>
                     </DataTemplate>
                 </ItemsControl.ItemTemplate>
             </ItemsControl>
