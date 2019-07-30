@@ -1,4 +1,4 @@
-﻿using AgpWps.Model.Enums;
+using AgpWps.Model.Enums;
 using AgpWps.Model.Factories;
 using AgpWps.Model.Messages;
 using AgpWps.Model.Services;
@@ -53,6 +53,13 @@ namespace AgpWps.Model.ViewModels
             if (msg == null) throw new ArgumentNullException(nameof(msg));
 
             var serverUrl = msg.ServerUrl;
+
+            if (Servers.Any(svm => svm.ServerUrl.Equals(serverUrl)))
+            {
+                _dialogService.ShowMessageDialog("Server exists", $"The server '{serverUrl}' already exists in the capabilities panel.", DialogMessageType.Informational);
+                return;
+            }
+
             _wpsClient.GetCapabilities(serverUrl).ContinueWith(resp =>
             {
                 try
