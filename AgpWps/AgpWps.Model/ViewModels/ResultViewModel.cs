@@ -21,8 +21,8 @@ namespace AgpWps.Model.ViewModels
             set => Set(ref _elapsedTme, value);
         }
 
-        private ObservableCollection<Tuple<string, string>> _processes;
-        public ObservableCollection<Tuple<string, string>> Processes
+        private ObservableCollection<ResultItemViewModel> _processes;
+        public ObservableCollection<ResultItemViewModel> Processes
         {
             get => _processes;
             set => Set(ref _processes, value);

@@ -145,8 +145,14 @@
     <Compile Include="Controls\DataOutput.xaml.cs">
       <DependentUpon>DataOutput.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\FileResultItem.xaml.cs">
+      <DependentUpon>FileResultItem.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\LiteralInput.xaml.cs">
       <DependentUpon>LiteralInput.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\LiteralResult.xaml.cs">
+      <DependentUpon>LiteralResult.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\Rectangle.xaml.cs">
       <DependentUpon>Rectangle.xaml</DependentUpon>
@@ -158,6 +164,7 @@
     <Compile Include="Services\DialogService.cs" />
     <Compile Include="Services\MapService.cs" />
     <Compile Include="TemplateSelectors\DataInputTemplateSelector.cs" />
+    <Compile Include="TemplateSelectors\ResultItemTemplateSelector.cs" />
     <Compile Include="Tools\SelectionTool.cs" />
     <Compile Include="Views\AddServerPopup.xaml.cs">
       <DependentUpon>AddServerPopup.xaml</DependentUpon>
@@ -192,7 +199,15 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Controls\FileResultItem.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Controls\LiteralInput.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\LiteralResult.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

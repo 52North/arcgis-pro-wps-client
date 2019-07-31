@@ -28,7 +28,7 @@ namespace AgpWps.Model.ViewModels
                     Results.Add(new ResultViewModel
                     {
                         JobId = msg.JobId,
-                        Processes = new ObservableCollection<Tuple<string, string>>(msg.Outputs)
+                        Processes = new ObservableCollection<ResultViewModel>(msg.Outputs)
                     });
                 });
             });
