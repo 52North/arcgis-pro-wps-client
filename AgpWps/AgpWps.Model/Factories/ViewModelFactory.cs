@@ -71,6 +71,16 @@ namespace AgpWps.Model.Factories
             vm.ProcessName = input.Identifier;
             vm.Formats = new ObservableCollection<string>(formats);
 
+            var defaultFormat = input.Data.Formats.FirstOrDefault(f => f.IsDefault);
+            if (defaultFormat == null)
+            {
+                vm.SelectedFormat = formats.FirstOrDefault() ?? string.Empty;
+            }
+            else
+            {
+                vm.SelectedFormat = defaultFormat.MimeType;
+            }
+
             return vm;
         }
 
@@ -83,7 +93,8 @@ namespace AgpWps.Model.Factories
             var vm = new DataOutputViewModel(_dialogService)
             {
                 Formats = new ObservableCollection<string>(formats),
-                Identifier = output.Identifier
+                Identifier = output.Identifier,
+                SelectedFormat = output.Data.Formats.FirstOrDefault(f => f.IsDefault)?.MimeType ?? formats.FirstOrDefault() ?? string.Empty,
             };
 
             return vm;
