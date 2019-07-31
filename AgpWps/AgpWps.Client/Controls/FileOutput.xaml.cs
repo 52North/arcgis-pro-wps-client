@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -15,11 +16,11 @@ using System.Windows.Shapes;
 namespace AgpWps.Client.Controls
 {
     /// <summary>
-    /// Interaction logic for DataOutput.xaml
+    /// Interaction logic for FileOutput.xaml
     /// </summary>
-    public partial class DataOutput : UserControl
+    public partial class FileOutput : UserControl
     {
-        public DataOutput()
+        public FileOutput()
         {
             InitializeComponent();
         }

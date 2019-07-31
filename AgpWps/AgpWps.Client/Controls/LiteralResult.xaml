@@ -14,10 +14,13 @@
         </Grid.ColumnDefinitions>
 
         <TextBlock Grid.Column="0"
-                   VerticalAlignment="Center"
-                   Text="{Binding ResultId}"/>
+                   VerticalAlignment="Center">
+            <Run Text="{Binding ResultId}"/>
+            <Run Text=":"/>
+        </TextBlock>
 
         <TextBlock Grid.Column="1"
+                   Margin="5,0,0,0"
                    VerticalAlignment="Center"
                    Text="{Binding Value}"/>
     </Grid>
