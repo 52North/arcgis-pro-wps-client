@@ -160,10 +160,11 @@ namespace AgpWps.Model.ViewModels
                         _dialogService.ShowMessageDialog("Error", "The job could not be started, please try again.",
                             DialogMessageType.Error);
                         sessionPollingTask.Dispose();
-                        return;
                     }
-
-                    sessionPollingTask.Wait();
+                    else
+                    {
+                        sessionPollingTask.Wait();
+                    }
 
                     _context.Invoke(() => IsExecutingProcess = false);
                 });
