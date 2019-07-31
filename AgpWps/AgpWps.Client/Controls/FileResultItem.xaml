@@ -10,22 +10,23 @@
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto"/>
-            <ColumnDefinition Width="Auto"/>
             <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="Auto"/>
         </Grid.ColumnDefinitions>
 
-        <Button Grid.Column="0"
-                Content="📁"
-                Command="{Binding OpenFolderCommand}"/>
-
-        <TextBlock Grid.Column="1"
+        <TextBlock Grid.Column="0"
                    VerticalAlignment="Center">
             <Run Text="{Binding ResultId}"/>
             <Run Text=":"/>
         </TextBlock>
 
-        <TextBlock Grid.Column="2"
+        <TextBlock Grid.Column="1"
                    VerticalAlignment="Center"
+                   Margin="5,0,5,0"
                    Text="{Binding DirectoryPath}"/>
+
+        <Button Grid.Column="2"
+                Content="📁"
+                Command="{Binding OpenFolderCommand}"/>
     </Grid>
 </UserControl>
