@@ -13,6 +13,7 @@ using System.IO;
 using System.Linq;
 using System.Windows.Input;
 using Wps.Client.Models;
+using Wps.Client.Models.Execution;
 using Wps.Client.Services;
 
 namespace AgpWps.Model.ViewModels
@@ -117,35 +118,68 @@ namespace AgpWps.Model.ViewModels
                     session.Finished += (sender, args) =>
                     {
                         _dialogService.ShowMessageDialog("Finished", $"The job {args.Result.JobId} has finished its execution. You can now access the outputs. ");
-                        var outputs = new List<Tuple<string, string>>();
+                        var outputs = new List<ResultItemViewModel>();
 
                         foreach (var output in args.Result.Outputs)
                         {
                             var outputVm = DataOutputViewModels.FirstOrDefault(ovm => ovm.Identifier.Equals(output.Id));
                             if (outputVm != null)
                             {
-                                var outputFileExists = File.Exists(outputVm.FilePath);
-                                if (outputFileExists)
+                                ResultItemViewModel resultItemVm = null;
+
+                                if (outputVm is FileOutputViewModel fileVm)
                                 {
-                                    var outputDirectory = Path.GetDirectoryName(outputVm.FilePath);
-                                    if (outputDirectory != null)
+                                    var filePath = fileVm.FilePath;
+                                    var outputFileExists = File.Exists(fileVm.FilePath);
+                                    if (outputFileExists)
                                     {
-                                        var random = new Random();
-                                        var newFileName = $"{output.Id}_{random.Next()}";
-                                        var fileName = Path.GetFileName(outputVm.FilePath);
+                                        var outputDirectory = Path.GetDirectoryName(fileVm.FilePath);
+                                        if (outputDirectory != null)
+                                        {
+                                            var random = new Random();
+                                            var newFileName = $"{output.Id}_{random.Next()}";
+                                            var fileName = Path.GetFileName(fileVm.FilePath);
 
-                                        var newFilePath = Path.Combine(outputDirectory, newFileName);
-                                        File.WriteAllText(newFilePath, output.Data);
+                                            var newFilePath = filePath = Path.Combine(outputDirectory, newFileName);
+                                            File.WriteAllText(newFilePath, output.Data);
 
-                                        _dialogService.ShowMessageDialog("Existing file", $"A file under the name {fileName} existed already, the output {output.Id} has been saved under {newFileName}.");
+                                            _dialogService.ShowMessageDialog("Existing file", $"A file under the name {fileName} existed already, the output {output.Id} has been saved under {newFileName}.");
+                                        }
                                     }
+                                    else
+                                    {
+                                        File.WriteAllText(fileVm.FilePath, output.Data);
+                                    }
+
+                                    resultItemVm = new FileResultItemViewModel(filePath)
+                                    {
+                                        ResultId = outputVm.Identifier,
+                                    };
+                                }
+                                else if (outputVm is LiteralDataOutputViewModel ldVm)
+                                {
+                                    var resultVm = new LiteralResultItemViewModel();
+
+                                    try
+                                    {
+                                        var serializer = new XmlSerializationService();
+                                        var val = serializer.Deserialize<LiteralDataValue>(output.Data);
+                                        resultVm.Value = val.Value;
+                                    }
+                                    catch (Exception)
+                                    {
+                                        resultVm.Value = output.Data;
+                                    }
+
+                                    resultItemVm = resultVm;
                                 }
                                 else
                                 {
-                                    File.WriteAllText(outputVm.FilePath, output.Data);
+                                    throw new InvalidOperationException("The output is of different type than the accepted ones.");
                                 }
 
-                                outputs.Add(new Tuple<string, string>(output.Id, outputVm.FilePath));
+                                resultItemVm.ResultId = outputVm.Identifier;
+                                outputs.Add(resultItemVm);
                             }
                         }
 

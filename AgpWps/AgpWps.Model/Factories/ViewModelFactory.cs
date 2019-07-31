@@ -90,14 +90,22 @@ namespace AgpWps.Model.Factories
 
             var formats = output.Data.Formats.Select(f => f.MimeType).ToArray();
 
-            var vm = new DataOutputViewModel(_dialogService)
+            DataOutputViewModel outputVm;
+            if (output.Data is LiteralData)
             {
-                Formats = new ObservableCollection<string>(formats),
-                Identifier = output.Identifier,
-                SelectedFormat = output.Data.Formats.FirstOrDefault(f => f.IsDefault)?.MimeType ?? formats.FirstOrDefault() ?? string.Empty,
-            };
+                outputVm = new LiteralDataOutputViewModel();
+            }
+            else
+            {
+                outputVm = new FileOutputViewModel(_dialogService);
+            }
 
-            return vm;
+            outputVm.Formats = new ObservableCollection<string>(formats);
+            outputVm.Identifier = output.Identifier;
+            outputVm.SelectedFormat = output.Data.Formats.FirstOrDefault(f => f.IsDefault)?.MimeType ??
+                                      formats.FirstOrDefault() ?? string.Empty;
+
+            return outputVm;
         }
 
         public ExecutionBuilderViewModel CreateExecutionBuilderViewModel(string wpsUri, string processId)
