@@ -30,9 +30,8 @@
       </groups>
       <controls>
         <!-- add your controls here -->
-        <button id="AgpWps_Client_Views_CapabilitiesShowCapabilities" caption="Show Capabilities" className="AgpWps.Client.Views.CapabilitiesShowCapabilities" loadOnClick="true" smallImage="Images/OpenCapabilities16.png" largeImage="Images/OpenCapabilities32.png">
-          <tooltip heading="WPS Client">
-            Shows WPS providers capabilities<disabledText /></tooltip>
+        <button id="AgpWps_Client_Views_CapabilitiesShowCapabilities" caption="Manage and Execute" className="AgpWps.Client.Views.CapabilitiesShowCapabilities" loadOnClick="true" smallImage="Images/OpenCapabilities16.png" largeImage="Images/OpenCapabilities32.png">
+          <tooltip heading="WPS Client">Open the window allowing you to manage your WPS instances and execute processes.<disabledText /></tooltip>
         </button>
         <button id="AgpWps_Client_Views_CapabilitiesAddProviderButton" caption="Add WPS provider" className="AgpWps.Client.Views.CapabilitiesAddProviderButton" loadOnClick="true" smallImage="Images/MaterialCircleAdd16.png" largeImage="Images/MaterialCircleAdd32.png">
           <tooltip heading="Add WPS Provider">
@@ -46,7 +45,7 @@
           <tooltip heading="Tooltip Heading">Tooltip text<disabledText /></tooltip>
         </tool>
         <button id="AgpWps_Client_Views_Results_ShowButton" caption="Show Results" className="AgpWps.Client.Views.Results_ShowButton" loadOnClick="true" smallImage="Images/OpenResults16.png" largeImage="Images/OpenResults32.png">
-          <tooltip heading="Show Dockpane">Show Dockpane<disabledText /></tooltip>
+          <tooltip heading="Show Results">Open the window where you can see the results of your processes.<disabledText /></tooltip>
         </button>
       </controls>
       <dockPanes>
