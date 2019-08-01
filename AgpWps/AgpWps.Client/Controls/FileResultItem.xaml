@@ -8,7 +8,8 @@
              xmlns:viewModels="clr-namespace:AgpWps.Model.ViewModels;assembly=AgpWps.Model"
              mc:Ignorable="d" 
              d:DataContext="{d:DesignInstance viewModels:FileResultItemViewModel}"
-             d:DesignHeight="45" d:DesignWidth="200">
+             d:DesignHeight="45" d:DesignWidth="200"
+             ToolTip="Double click to open the folder to the result path.">
     <i:Interaction.Triggers>
         <i:EventTrigger EventName="MouseDoubleClick">
             <command:EventToCommand Command="{Binding OpenFolderCommand}"
