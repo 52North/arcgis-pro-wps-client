@@ -1,4 +1,4 @@
-﻿<ArcGIS defaultAssembly="AgpWps.Client.dll" defaultNamespace="AgpWps.Client" xmlns="http://schemas.esri.com/DADF/Registry" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://schemas.esri.com/DADF/Registry file:///C:/Users/stanm/AppData/Local/Programs/ArcGIS/Pro/bin/ArcGIS.Desktop.Framework.xsd">
+<ArcGIS defaultAssembly="AgpWps.Client.dll" defaultNamespace="AgpWps.Client" xmlns="http://schemas.esri.com/DADF/Registry" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://schemas.esri.com/DADF/Registry file:///C:/Users/stanm/AppData/Local/Programs/ArcGIS/Pro/bin/ArcGIS.Desktop.Framework.xsd">
   <AddInInfo id="{e4e4b991-c9db-4b78-a061-262f23bde399}" version="1.0" desktopVersion="2.3.15769">
     <Name>AgpWps.Client</Name>
     <Description>AgpWps.Client description</Description>
@@ -30,7 +30,7 @@
       </groups>
       <controls>
         <!-- add your controls here -->
-        <button id="AgpWps_Client_Views_CapabilitiesShowCapabilities" caption="Show Capabilities" className="AgpWps.Client.Views.CapabilitiesShowCapabilities" loadOnClick="true" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericButtonPurple16.png" largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericButtonPurple32.png">
+        <button id="AgpWps_Client_Views_CapabilitiesShowCapabilities" caption="Show Capabilities" className="AgpWps.Client.Views.CapabilitiesShowCapabilities" loadOnClick="true" smallImage="Images/OpenCapabilities16.png" largeImage="Images/OpenCapabilities32.png">
           <tooltip heading="WPS Client">
             Shows WPS providers capabilities<disabledText /></tooltip>
         </button>
@@ -45,7 +45,7 @@
         <tool id="AgpWps_Client_Tools_SelectionTool" caption="SelectionTool" className="AgpWps.Client.Tools.SelectionTool" loadOnClick="true" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericButtonRed16.png" largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericButtonRed32.png" condition="esri_mapping_mapPane">
           <tooltip heading="Tooltip Heading">Tooltip text<disabledText /></tooltip>
         </tool>
-        <button id="AgpWps_Client_Views_Results_ShowButton" caption="Show Results" className="AgpWps.Client.Views.Results_ShowButton" loadOnClick="true" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericButtonPurple16.png" largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericButtonPurple32.png">
+        <button id="AgpWps_Client_Views_Results_ShowButton" caption="Show Results" className="AgpWps.Client.Views.Results_ShowButton" loadOnClick="true" smallImage="Images/OpenResults16.png" largeImage="Images/OpenResults32.png">
           <tooltip heading="Show Dockpane">Show Dockpane<disabledText /></tooltip>
         </button>
       </controls>

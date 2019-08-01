@@ -293,7 +293,12 @@
   <ItemGroup>
     <Resource Include="DarkImages\ReferenceValue.png" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <AddInContent Include="Images\OpenCapabilities16.png" />
+    <AddInContent Include="Images\OpenCapabilities32.png" />
+    <AddInContent Include="Images\OpenResults16.png" />
+    <AddInContent Include="Images\OpenResults32.png" />
+  </ItemGroup>
   <ItemGroup>
     <AddInContent Include="Images\GenericButtonRed16.png" />
   </ItemGroup>
