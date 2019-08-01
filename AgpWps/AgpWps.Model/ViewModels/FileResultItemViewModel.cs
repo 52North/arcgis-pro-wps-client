@@ -1,22 +1,31 @@
-﻿using System;
-using System.Windows.Input;
+﻿using GalaSoft.MvvmLight.Command;
+using System;
+using System.Diagnostics;
+using System.IO;
 
 namespace AgpWps.Model.ViewModels
 {
     public class FileResultItemViewModel : ResultItemViewModel
     {
-        public string DirectoryPath { get; }
+        public string FilePath { get; }
+        public string DirectoryPath => Path.GetDirectoryName(FilePath);
 
-        private ICommand _openFolderCommand;
-        public ICommand OpenFolderCommand
+        public RelayCommand<string> OpenFolderCommand { get; }
+
+        public FileResultItemViewModel(string filePath)
         {
-            get => _openFolderCommand;
-            set => Set(ref _openFolderCommand, value);
+            FilePath = filePath ?? throw new ArgumentNullException(nameof(filePath));
+
+            OpenFolderCommand = new RelayCommand<string>(OpenFileExplorerToDirectory);
         }
 
-        public FileResultItemViewModel(string directoryPath)
+        // TODO: Inform the user when the path is invalid and add an abstraction layer by creating a service which will allow to call Process.Start somewhere else.
+        public void OpenFileExplorerToDirectory(string path)
         {
-            DirectoryPath = directoryPath ?? throw new ArgumentNullException(nameof(directoryPath));
+            if(Directory.Exists(path))
+            {
+                Process.Start("explorer.exe", path);
+            }
         }
 
     }
