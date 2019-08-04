@@ -19,12 +19,14 @@
 
         <DataTemplate x:Key="LiteralDataTemplate"
                       DataType="{x:Type viewModels:LiteralDataOutputViewModel}">
-            <localControls:LiteralOutput DataContext="{Binding}"/>
+            <localControls:LiteralOutput DataContext="{Binding}"
+                                         IsEnabled="{Binding ElementName=BuilderWindow, Path=DataContext.IsExecutingProcess, Converter={StaticResource InvertBooleanConverter}}"/>
         </DataTemplate>
 
         <DataTemplate x:Key="FileDataTemplate"
                       DataType="{x:Type viewModels:FileOutputViewModel}">
-            <localControls:FileOutput DataContext="{Binding}"/>
+            <localControls:FileOutput DataContext="{Binding}"
+                                      IsEnabled="{Binding ElementName=BuilderWindow, Path=DataContext.IsExecutingProcess, Converter={StaticResource InvertBooleanConverter}}"/>
         </DataTemplate>
 
         <templateSelectors:DataOutputTemplateSelector x:Key="DataOutputTemplateSelector"
