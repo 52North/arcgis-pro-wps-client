@@ -1,3 +1,4 @@
+﻿using System.IO;
 using AgpWps.Client.Services;
 using AgpWps.Model.Factories;
 using AgpWps.Model.Services;
@@ -42,6 +43,7 @@ namespace AgpWps.Client
             container.Register<IDialogService, DialogService>();
             container.Register<IViewModelFactory, ViewModelFactory>();
             container.Register<IMapService, MapService>(Reuse.Singleton);
+            container.Register<IAppData, AppData>();
 
             // Repositories
             container.Register<IServerRepository, ServerRepository>(setup: Setup.With(trackDisposableTransient: true));

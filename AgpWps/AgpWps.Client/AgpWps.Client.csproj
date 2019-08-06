@@ -136,6 +136,7 @@
     <AddInContent Include="DarkImages\AddInDesktop32.png" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AppData.cs" />
     <Compile Include="Controls\BoundingBoxInput.xaml.cs">
       <DependentUpon>BoundingBoxInput.xaml</DependentUpon>
     </Compile>
