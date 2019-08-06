@@ -7,7 +7,7 @@ using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Messaging;
 using System;
 using System.Collections.ObjectModel;
-using System.Diagnostics;
+using System.Linq;
 using System.Windows.Input;
 using Wps.Client.Services;
 
@@ -53,30 +53,47 @@ namespace AgpWps.Model.ViewModels
             if (msg == null) throw new ArgumentNullException(nameof(msg));
 
             var serverUrl = msg.ServerUrl;
+
+            if (Servers.Any(svm => svm.ServerUrl.Equals(serverUrl)))
+            {
+                _dialogService.ShowMessageDialog("Server exists", $"The server '{serverUrl}' already exists in the capabilities panel.", DialogMessageType.Informational);
+                return;
+            }
+
+            var serverVm = new ServerViewModel(serverUrl)
+            {
+                ServerName = "Loading..."
+            };
+
+            _context.Invoke(() =>
+            {
+                Servers.Add(serverVm);
+            });
+
             _wpsClient.GetCapabilities(serverUrl).ContinueWith(resp =>
             {
                 try
                 {
                     var response = resp.Result;
-                    var serverVm = new ServerViewModel
-                    {
-                        ServerName = serverUrl
-                    };
-
-                    foreach (var sum in response.ProcessSummaries)
-                    {
-                        serverVm.ProcessOfferings.Add(_viewModelFactory.CreateProcessOfferingViewModel(serverUrl, sum));
-                    }
-
+                    
                     _context.Invoke(() =>
                     {
-                        Servers.Add(serverVm);
+                        serverVm.ServerName =
+                            $"{response.ServiceIdentification.Title} ({response.ServiceProvider.ProviderName})";
+
+                        foreach (var sum in response.ProcessSummaries)
+                        {
+                            serverVm.ProcessOfferings.Add(_viewModelFactory.CreateProcessOfferingViewModel(serverUrl, sum));
+                        }
                     });
                 }
-                catch (Exception e)
+                catch (Exception)
                 {
                     _dialogService.ShowMessageDialog("Error", "Something went wrong. Please check your url and connection.", DialogMessageType.Error);
-                    Debug.Write(e);
+                    _context.Invoke(() =>
+                    {
+                        Servers.Remove(serverVm);
+                    });
                 }
             });
         }

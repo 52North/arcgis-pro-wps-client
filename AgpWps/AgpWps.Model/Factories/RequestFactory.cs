@@ -78,7 +78,16 @@ namespace AgpWps.Model.Factories
             var dataInputs = validInputs.Select(CreateDataInput);
 
             // Select only the outputs that have a file path, otherwise it means they are not wanted by the user.
-            var dataOutputs = dataOutputViewModels.Where(o => !string.IsNullOrEmpty(o.FilePath)).Select(CreateDataOutput).ToArray();
+            var dataOutputs = dataOutputViewModels.Where(o =>
+            {
+                if(o is FileOutputViewModel fVm)
+                    return !string.IsNullOrEmpty(fVm.FilePath);
+
+                if (o is LiteralDataOutputViewModel ldVm)
+                    return ldVm.IsIncluded;
+
+                return false;
+            }).Select(CreateDataOutput).ToArray();
 
             if (!dataOutputs.Any())
             {

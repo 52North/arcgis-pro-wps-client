@@ -1,0 +1,43 @@
+﻿<UserControl x:Class="AgpWps.Client.Controls.FileResultItem"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:command="http://www.galasoft.ch/mvvmlight"
+             xmlns:viewModels="clr-namespace:AgpWps.Model.ViewModels;assembly=AgpWps.Model"
+             mc:Ignorable="d" 
+             d:DataContext="{d:DesignInstance viewModels:FileResultItemViewModel}"
+             d:DesignHeight="45" d:DesignWidth="200"
+             ToolTip="Double click to open the folder to the result path.">
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="MouseDoubleClick">
+            <command:EventToCommand Command="{Binding OpenFolderCommand}"
+                                    CommandParameter="{Binding DirectoryPath}"/>
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <TextBlock Grid.Column="0"
+                   VerticalAlignment="Center">
+            <Run Text="{Binding ResultId}"/>
+            <Run Text=":"/>
+        </TextBlock>
+
+        <TextBlock Grid.Column="1"
+                   VerticalAlignment="Center"
+                   Margin="5,0,5,0"
+                   Text="{Binding FilePath}">
+            <i:Interaction.Triggers>
+                <i:EventTrigger EventName="MouseDoubleClick">
+                    <command:EventToCommand Command="{Binding OpenFolderCommand}"
+                                            CommandParameter="{Binding FilePath}"/> 
+                </i:EventTrigger>
+            </i:Interaction.Triggers>
+        </TextBlock>
+    </Grid>
+</UserControl>

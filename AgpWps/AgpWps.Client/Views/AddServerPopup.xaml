@@ -52,7 +52,7 @@
                 <DataTemplate>
                     <TextBlock>
                         <Run Text="Add Connection"/>
-                        <Run Text="(Enter)"
+                        <Run Text="(Press Enter)"
                              FontStyle="Italic"/>
                     </TextBlock>
                 </DataTemplate>

@@ -1,11 +1,12 @@
-﻿using System;
+﻿using AgpWps.Model.ViewModels;
+using System;
 using System.Collections.Generic;
 
 namespace AgpWps.Model.Messages
 {
     public class ExecutionFinishedMessage
     {
-        public ExecutionFinishedMessage(string jobId, List<Tuple<string, string>> outputs, DateTime expiresOn)
+        public ExecutionFinishedMessage(string jobId, List<ResultItemViewModel> outputs, DateTime expiresOn)
         {
             JobId = jobId;
             Outputs = outputs;
@@ -19,7 +20,7 @@ namespace AgpWps.Model.Messages
         /// <summary>
         /// List of outputs containing their id and then their saving path, in this order.
         /// </summary>
-        public List<Tuple<string, string>> Outputs { get; }
+        public List<ResultItemViewModel> Outputs { get; }
 
     }
 }

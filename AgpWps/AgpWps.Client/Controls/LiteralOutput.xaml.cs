@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -15,11 +16,11 @@ using System.Windows.Shapes;
 namespace AgpWps.Client.Controls
 {
     /// <summary>
-    /// Interaction logic for Rectangle.xaml
+    /// Interaction logic for LiteralOutput.xaml
     /// </summary>
-    public partial class Rectangle : UserControl
+    public partial class LiteralOutput : UserControl
     {
-        public Rectangle()
+        public LiteralOutput()
         {
             InitializeComponent();
         }

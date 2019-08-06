@@ -133,7 +133,7 @@ namespace AgpWps.Model.Tests
             const string processName = "processName";
             const string selectedFormat = "zipped-shp";
 
-            var vm = new DataOutputViewModel(new DialogServiceMock())
+            var vm = new DataOutputViewModel()
             {
                 Identifier = processName,
                 SelectedFormat = selectedFormat
@@ -164,8 +164,8 @@ namespace AgpWps.Model.Tests
 
             var outputs = new List<DataOutputViewModel>
             {
-                new DataOutputViewModel(new DialogServiceMock()){ FilePath = "file path", SelectedFormat = "zipped-shp"},
-                new DataOutputViewModel(new DialogServiceMock()), // Dummy output, should be removed by the factory
+                new DataOutputViewModel { SelectedFormat = "zipped-shp"},
+                new DataOutputViewModel(), // Dummy output, should be removed by the factory
             };
 
             var request = _requestFactory.CreateExecuteRequest(processName, inputs, outputs);
@@ -228,9 +228,9 @@ namespace AgpWps.Model.Tests
             {
                 var outputs = new List<DataOutputViewModel>
                 {
-                    new DataOutputViewModel(new DialogServiceMock()),
-                    new DataOutputViewModel(new DialogServiceMock()),
-                    new DataOutputViewModel(new DialogServiceMock()),
+                    new DataOutputViewModel(),
+                    new DataOutputViewModel(),
+                    new DataOutputViewModel(),
                 };
 
                 _requestFactory.CreateExecuteRequest("", new List<DataInputViewModel>(), 

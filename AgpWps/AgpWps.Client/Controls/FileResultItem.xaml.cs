@@ -16,11 +16,11 @@ using System.Windows.Shapes;
 namespace AgpWps.Client.Controls
 {
     /// <summary>
-    /// Interaction logic for DataOutput.xaml
+    /// Interaction logic for FileResultItem.xaml
     /// </summary>
-    public partial class DataOutput : UserControl
+    public partial class FileResultItem : UserControl
     {
-        public DataOutput()
+        public FileResultItem()
         {
             InitializeComponent();
         }

@@ -5,12 +5,34 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
                     xmlns:localControls="clr-namespace:AgpWps.Client.Controls"
+                    xmlns:converters="clr-namespace:AgpWps.Client.Converters"
+                    xmlns:templateSelectors="clr-namespace:AgpWps.Client.TemplateSelectors"
                     xmlns:viewModels="clr-namespace:AgpWps.Model.ViewModels;assembly=AgpWps.Model"
                     xmlns:controls="clr-namespace:ArcGIS.Desktop.Framework.Controls;assembly=ArcGIS.Desktop.Framework"
                     mc:Ignorable="d"
-        d:DataContext="{d:DesignInstance viewModels:ExecutionBuilderViewModel}"
-        Title="ExecutionBuilder" Height="600" Width="600"
-        WindowStartupLocation="CenterOwner">
+                    d:DataContext="{d:DesignInstance viewModels:ExecutionBuilderViewModel}"
+                    Title="ExecutionBuilder" Height="600" Width="600"
+                    Name="BuilderWindow"
+                    WindowStartupLocation="CenterOwner">
+    <controls:ProWindow.Resources>
+        <converters:InvertBooleanConverter x:Key="InvertBooleanConverter"/>
+
+        <DataTemplate x:Key="LiteralDataTemplate"
+                      DataType="{x:Type viewModels:LiteralDataOutputViewModel}">
+            <localControls:LiteralOutput DataContext="{Binding}"
+                                         IsEnabled="{Binding ElementName=BuilderWindow, Path=DataContext.IsExecutingProcess, Converter={StaticResource InvertBooleanConverter}}"/>
+        </DataTemplate>
+
+        <DataTemplate x:Key="FileDataTemplate"
+                      DataType="{x:Type viewModels:FileOutputViewModel}">
+            <localControls:FileOutput DataContext="{Binding}"
+                                      IsEnabled="{Binding ElementName=BuilderWindow, Path=DataContext.IsExecutingProcess, Converter={StaticResource InvertBooleanConverter}}"/>
+        </DataTemplate>
+
+        <templateSelectors:DataOutputTemplateSelector x:Key="DataOutputTemplateSelector"
+                                                      FileDataTemplate="{StaticResource FileDataTemplate}"
+                                                      LiteralDataTemplate="{StaticResource LiteralDataTemplate}"/>
+    </controls:ProWindow.Resources>
     <i:Interaction.Triggers>
         <i:EventTrigger EventName="Loaded">
             <i:InvokeCommandAction Command="{Binding WindowLoadedCommand}"></i:InvokeCommandAction>
@@ -42,7 +64,8 @@
                 </ItemsControl.ItemsPanel>
                 <ItemsControl.ItemTemplate>
                     <DataTemplate DataType="{x:Type viewModels:DataInputViewModel}">
-                        <localControls:DataInput DataContext="{Binding}"/>
+                        <localControls:DataInput DataContext="{Binding}"
+                                                 IsEnabled="{Binding ElementName=BuilderWindow, Path=DataContext.IsExecutingProcess, Converter={StaticResource InvertBooleanConverter}}"/>
                     </DataTemplate>
                 </ItemsControl.ItemTemplate>
             </ItemsControl>
@@ -56,17 +79,13 @@
 
         <ScrollViewer Grid.Row="3"
                       Margin="5,0,5,0">
-            <ItemsControl ItemsSource="{Binding DataOutputViewModels}">
+            <ItemsControl ItemsSource="{Binding DataOutputViewModels}"
+                          ItemTemplateSelector="{StaticResource DataOutputTemplateSelector}">
                 <ItemsControl.ItemsPanel>
                     <ItemsPanelTemplate>
                         <StackPanel Orientation="Vertical"/>
                     </ItemsPanelTemplate>
                 </ItemsControl.ItemsPanel>
-                <ItemsControl.ItemTemplate>
-                    <DataTemplate DataType="{x:Type viewModels:DataOutputViewModel}">
-                        <localControls:DataOutput DataContext="{Binding}"/>
-                    </DataTemplate>
-                </ItemsControl.ItemTemplate>
             </ItemsControl>
         </ScrollViewer>
 

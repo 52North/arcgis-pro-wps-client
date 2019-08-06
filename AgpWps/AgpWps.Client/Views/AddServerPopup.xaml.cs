@@ -11,6 +11,8 @@ namespace AgpWps.Client.Views
         {
             InitializeComponent();
             ServerInputBox.Focus();
+
+            AddConnectionButton.Click += (sender, args) => Close();
         }
 
         private void AddServerPopupKeyDown(object sender, KeyEventArgs e)
@@ -20,6 +22,7 @@ namespace AgpWps.Client.Views
                 if (AddConnectionButton.Command != null && AddConnectionButton.Command.CanExecute(ServerInputBox.Text))
                 {
                     AddConnectionButton.Command.Execute(ServerInputBox.Text);
+                    Close();
                 }
             }
         }
