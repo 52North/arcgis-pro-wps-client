@@ -1,4 +1,4 @@
-﻿using AgpWps.Client.Services;
+using AgpWps.Client.Services;
 using AgpWps.Model.Factories;
 using AgpWps.Model.Services;
 using AgpWps.Model.ViewModels;
@@ -6,6 +6,7 @@ using ArcGIS.Desktop.Framework;
 using ArcGIS.Desktop.Framework.Contracts;
 using DryIoc;
 using System.Net.Http;
+using AgpWps.Model.Repositories;
 using Wps.Client.Services;
 
 namespace AgpWps.Client
@@ -41,6 +42,9 @@ namespace AgpWps.Client
             container.Register<IDialogService, DialogService>();
             container.Register<IViewModelFactory, ViewModelFactory>();
             container.Register<IMapService, MapService>(Reuse.Singleton);
+
+            // Repositories
+            container.Register<IServerRepository, ServerRepository>(setup: Setup.With(trackDisposableTransient: true));
 
             // View Models
             container.Register<AddServerPopupViewModel>();
