@@ -10,7 +10,7 @@ namespace AgpWps.Client.Views
         public AddServerPopup()
         {
             InitializeComponent();
-            ServerInputBox.Focus();
+            ServerInputComboBox.Focus();
 
             AddConnectionButton.Click += (sender, args) => Close();
         }
@@ -19,9 +19,9 @@ namespace AgpWps.Client.Views
         {
             if (e.Key == Key.Enter)
             {
-                if (AddConnectionButton.Command != null && AddConnectionButton.Command.CanExecute(ServerInputBox.Text))
+                if (AddConnectionButton.Command != null && AddConnectionButton.Command.CanExecute(ServerInputComboBox.Text))
                 {
-                    AddConnectionButton.Command.Execute(ServerInputBox.Text);
+                    AddConnectionButton.Command.Execute(ServerInputComboBox.Text);
                     Close();
                 }
             }

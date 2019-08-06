@@ -35,10 +35,12 @@
                    VerticalAlignment="Center"
                    Margin="5,0,5,0"/>
 
-        <TextBox Grid.Row="0" Grid.Column="1"
-                 Name="ServerInputBox"
-                 Margin="5"
-                 VerticalContentAlignment="Center"/>
+        <ComboBox Grid.Row="0" Grid.Column="1"
+                  ItemsSource="{Binding Servers}"
+                  IsEditable="True"
+                  Name="ServerInputComboBox"
+                  Margin="5"
+                  VerticalContentAlignment="Center"/>
 
         <Button Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2"
                 Content="Add Connection"
@@ -46,7 +48,7 @@
                 Margin="5"
                 Padding="15,0,15,0"
                 Command="{Binding AddConnectionCommand}"
-                CommandParameter="{Binding ElementName=ServerInputBox, Path=Text}"
+                CommandParameter="{Binding ElementName=ServerInputComboBox, Path=Text}"
                 HorizontalAlignment="Center">
             <Button.ContentTemplate>
                 <DataTemplate>

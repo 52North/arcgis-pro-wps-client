@@ -20,6 +20,7 @@ namespace AgpWps.Model.ViewModels
         private readonly IContext _context;
         private readonly IViewModelFactory _viewModelFactory;
         private readonly IDialogService _dialogService;
+        private readonly IServerRepository _serverRepo;
 
         private ObservableCollection<ServerViewModel> _servers = new ObservableCollection<ServerViewModel>();
 
@@ -36,12 +37,17 @@ namespace AgpWps.Model.ViewModels
             set => Set(ref _servers, value);
         }
 
-        public CapabilitiesViewModel(IWpsClient wpsClient, IContext context, IViewModelFactory viewModelFactory, IDialogService dialogService)
+        public CapabilitiesViewModel(IWpsClient wpsClient,
+            IContext context,
+            IViewModelFactory viewModelFactory,
+            IDialogService dialogService,
+            IServerRepository serverRepo)
         {
             _wpsClient = wpsClient ?? throw new ArgumentNullException(nameof(wpsClient));
             _context = context ?? throw new ArgumentNullException(nameof(context));
             _viewModelFactory = viewModelFactory ?? throw new ArgumentNullException(nameof(viewModelFactory));
             _dialogService = dialogService ?? throw new ArgumentNullException(nameof(dialogService));
+            _serverRepo = serverRepo ?? throw new ArgumentNullException(nameof(serverRepo));
 
             ClearServersCommand = new RelayCommand(Servers.Clear);
 
@@ -59,6 +65,8 @@ namespace AgpWps.Model.ViewModels
                 _dialogService.ShowMessageDialog("Server exists", $"The server '{serverUrl}' already exists in the capabilities panel.", DialogMessageType.Informational);
                 return;
             }
+
+            _serverRepo.AddServer(serverUrl);
 
             var serverVm = new ServerViewModel(serverUrl)
             {
