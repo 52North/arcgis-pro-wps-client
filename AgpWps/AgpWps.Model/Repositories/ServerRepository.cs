@@ -27,9 +27,10 @@ namespace AgpWps.Model.Repositories
 
         public void AddServer(string serverUrl)
         {
-            if (!_serverUrls.Contains(serverUrl.ToLower()))
+            var formattedUrl = serverUrl.Replace(" ", "").ToLower();
+            if (!_serverUrls.Contains(formattedUrl))
             {
-                _serverUrls.Add(serverUrl);
+                _serverUrls.Add(formattedUrl);
                 Save();
             }
         }

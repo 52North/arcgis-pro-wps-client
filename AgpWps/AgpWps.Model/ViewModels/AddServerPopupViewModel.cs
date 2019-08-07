@@ -36,8 +36,9 @@ namespace AgpWps.Model.ViewModels
 
         private void AddServer(string serverUrl)
         {
-            Servers.Add(serverUrl);
-            Messenger.Default.Send(new ServerAddedMessage(serverUrl));
+            var formattedUrl = serverUrl.Replace(" ", "").ToLower();
+            Servers.Add(formattedUrl);
+            Messenger.Default.Send(new ServerAddedMessage(formattedUrl));
         }
 
     }
