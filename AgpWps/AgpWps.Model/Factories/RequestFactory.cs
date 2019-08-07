@@ -3,6 +3,7 @@ using AgpWps.Model.Services;
 using AgpWps.Model.ViewModels;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using Wps.Client.Models;
 using Wps.Client.Models.Execution;
@@ -63,7 +64,9 @@ namespace AgpWps.Model.Factories
                     }
                     else if (input is ComplexDataViewModel cvm)
                     {
-                        if (cvm.Input != null)
+                        if ((!cvm.IsFile && cvm.Input != null) 
+                            ||
+                            (cvm.IsFile && File.Exists(cvm.FilePath)))
                         {
                             validInputs.Add(input);
                             continue;
@@ -80,7 +83,7 @@ namespace AgpWps.Model.Factories
             // Select only the outputs that have a file path, otherwise it means they are not wanted by the user.
             var dataOutputs = dataOutputViewModels.Where(o =>
             {
-                if(o is FileOutputViewModel fVm)
+                if (o is FileOutputViewModel fVm)
                     return !string.IsNullOrEmpty(fVm.FilePath);
 
                 if (o is LiteralDataOutputViewModel ldVm)
