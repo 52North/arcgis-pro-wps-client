@@ -1,4 +1,5 @@
 ﻿using AgpWps.Model.Messages;
+using AgpWps.Model.Repositories;
 using AgpWps.Model.Services;
 using GalaSoft.MvvmLight;
 using System;
@@ -9,6 +10,7 @@ namespace AgpWps.Model.ViewModels
     public class ResultsViewModel : ViewModelBase
     {
         private readonly IContext _context;
+        private readonly IResultRepository _resultRepo;
 
         private ObservableCollection<ResultViewModel> _results = new ObservableCollection<ResultViewModel>();
         public ObservableCollection<ResultViewModel> Results
@@ -17,19 +19,25 @@ namespace AgpWps.Model.ViewModels
             set => Set(ref _results, value);
         }
 
-        public ResultsViewModel(IContext context)
+        public ResultsViewModel(IContext context, IResultRepository resultRepo)
         {
             _context = context ?? throw new ArgumentNullException(nameof(context));
+            _resultRepo = resultRepo ?? throw new ArgumentNullException(nameof(resultRepo));
+
+            Results = new ObservableCollection<ResultViewModel>(_resultRepo.GetResults());
 
             MessengerInstance.Register<ExecutionFinishedMessage>(this, (msg) =>
             {
                 _context.Invoke(() =>
                 {
-                    Results.Add(new ResultViewModel
+                    var result = new ResultViewModel
                     {
                         JobId = msg.JobId,
                         Processes = new ObservableCollection<ResultItemViewModel>(msg.Outputs)
-                    });
+                    };
+
+                    _resultRepo.AddResult(result);
+                    Results.Add(result);
                 });
             });
         }

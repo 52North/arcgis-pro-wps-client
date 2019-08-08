@@ -9,6 +9,7 @@ using System;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows.Input;
+using AgpWps.Model.Repositories;
 using Wps.Client.Services;
 
 namespace AgpWps.Model.ViewModels

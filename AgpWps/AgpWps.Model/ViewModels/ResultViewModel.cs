@@ -1,9 +1,12 @@
 ﻿using GalaSoft.MvvmLight;
 using System;
 using System.Collections.ObjectModel;
+using System.Xml.Serialization;
 
 namespace AgpWps.Model.ViewModels
 {
+    [XmlInclude(typeof(LiteralResultItemViewModel))]
+    [XmlInclude(typeof(FileResultItemViewModel))]
     public class ResultViewModel : ViewModelBase
     {
 

@@ -151,8 +151,9 @@ namespace AgpWps.Model.ViewModels
                                         File.WriteAllText(fileVm.FilePath, output.Data);
                                     }
 
-                                    resultItemVm = new FileResultItemViewModel(filePath)
+                                    resultItemVm = new FileResultItemViewModel
                                     {
+                                        FilePath = filePath,
                                         ResultId = outputVm.Identifier,
                                     };
                                 }

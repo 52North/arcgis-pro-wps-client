@@ -1,4 +1,4 @@
-﻿namespace AgpWps.Model.Services
+﻿namespace AgpWps.Model.Repositories
 {
     public interface IServerRepository
     {

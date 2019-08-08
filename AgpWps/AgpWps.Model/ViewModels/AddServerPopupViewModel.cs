@@ -1,10 +1,11 @@
-﻿using AgpWps.Model.Messages;
+﻿ using AgpWps.Model.Messages;
 using AgpWps.Model.Services;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Messaging;
 using System;
 using System.Collections.ObjectModel;
+using AgpWps.Model.Repositories;
 
 namespace AgpWps.Model.ViewModels
 {
