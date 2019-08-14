@@ -7,6 +7,8 @@
 
         void RemoveServer(string serverUrl);
 
+        void RemoveAll();
+
         string[] GetServersUrl();
 
     }

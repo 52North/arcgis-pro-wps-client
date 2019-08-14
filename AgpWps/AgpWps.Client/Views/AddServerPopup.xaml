@@ -42,23 +42,30 @@
                   Margin="5"
                   VerticalContentAlignment="Center"/>
 
-        <Button Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2"
-                Content="Add Connection"
+        <StackPanel Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2"
+                    HorizontalAlignment="Center"
+                    Orientation="Horizontal">
+            <Button Content="Add Connection"
                 Name="AddConnectionButton"
                 Margin="5"
                 Padding="15,0,15,0"
                 Command="{Binding AddConnectionCommand}"
                 CommandParameter="{Binding ElementName=ServerInputComboBox, Path=Text}"
                 HorizontalAlignment="Center">
-            <Button.ContentTemplate>
-                <DataTemplate>
-                    <TextBlock>
-                        <Run Text="Add Connection"/>
-                        <Run Text="(Press Enter)"
-                             FontStyle="Italic"/>
-                    </TextBlock>
-                </DataTemplate>
-            </Button.ContentTemplate>
-        </Button>
+                <Button.ContentTemplate>
+                    <DataTemplate>
+                        <TextBlock>
+                            <Run Text="Add Connection"/>
+                            <Run Text="(Press Enter)"
+                                 FontStyle="Italic"/>
+                        </TextBlock>
+                    </DataTemplate>
+                </Button.ContentTemplate>
+            </Button>
+            <Button Content="🗑"
+                    ToolTip="Remove all the server suggestions cache."
+                    Command="{Binding ClearCacheCommand}"
+                    Margin="5"/>
+        </StackPanel>
     </Grid>
 </controls:ProWindow>

@@ -45,6 +45,12 @@ namespace AgpWps.Model.Repositories
             }
         }
 
+        public void RemoveAll()
+        {
+            _serverUrls.Clear();
+            Save();
+        }
+
         public string[] GetServersUrl()
         {
             return _serverUrls.ToArray();
