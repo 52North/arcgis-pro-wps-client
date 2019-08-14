@@ -50,6 +50,13 @@
                 <HierarchicalDataTemplate DataType="{x:Type vm:ServerViewModel}">
                     <TreeViewItem Header="{Binding ServerName}"
                                   ItemsSource="{Binding ProcessOfferings}">
+                        <TreeViewItem.ContextMenu>
+                            <ContextMenu>
+                                <MenuItem Header="Remove Server"
+                                          Command="{Binding RemoveCommand}"
+                                          ToolTip="Delete the server from this panel and the cache."/>
+                            </ContextMenu>
+                        </TreeViewItem.ContextMenu>
                         <TreeViewItem.ItemTemplate>
                             <HierarchicalDataTemplate DataType="{x:Type vm:ProcessOfferingViewModel}">
                                 <TreeViewItem Header="{Binding ProcessName}">

@@ -1,6 +1,7 @@
 ﻿using AgpWps.Model.Enums;
 using AgpWps.Model.Factories;
 using AgpWps.Model.Messages;
+using AgpWps.Model.Repositories;
 using AgpWps.Model.Services;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
@@ -9,7 +10,6 @@ using System;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows.Input;
-using AgpWps.Model.Repositories;
 using Wps.Client.Services;
 
 namespace AgpWps.Model.ViewModels
@@ -53,6 +53,13 @@ namespace AgpWps.Model.ViewModels
             ClearServersCommand = new RelayCommand(Servers.Clear);
 
             Messenger.Default.Register<ServerAddedMessage>(this, OnAddedServer);
+            Messenger.Default.Register<ServerRemovedMessage>(this, OnServerRemoved);
+        }
+
+        private void OnServerRemoved(ServerRemovedMessage msg)
+        {
+            var vm = Servers.FirstOrDefault(s => s.ServerUrl.Equals(msg.ServerUrl));
+            if (vm != null) Servers.Remove(vm);
         }
 
         private void OnAddedServer(ServerAddedMessage msg)
@@ -67,12 +74,8 @@ namespace AgpWps.Model.ViewModels
                 return;
             }
 
-            _serverRepo.AddServer(serverUrl);
-
-            var serverVm = new ServerViewModel(serverUrl)
-            {
-                ServerName = "Loading..."
-            };
+            var serverVm = _viewModelFactory.CreateServerViewModel(serverUrl);
+            serverVm.ServerName = "Loading...";
 
             _context.Invoke(() =>
             {

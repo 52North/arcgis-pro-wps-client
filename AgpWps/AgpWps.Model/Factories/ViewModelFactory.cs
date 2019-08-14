@@ -3,6 +3,7 @@ using AgpWps.Model.ViewModels;
 using System;
 using System.Collections.ObjectModel;
 using System.Linq;
+using AgpWps.Model.Repositories;
 using Wps.Client.Models;
 using Wps.Client.Models.Data;
 using Wps.Client.Services;
@@ -17,14 +18,21 @@ namespace AgpWps.Model.Factories
         private readonly IWpsClient _wpsClient;
         private readonly IContext _context;
         private readonly IRequestFactory _requestFactory;
+        private readonly IServerRepository _serverRepository;
 
-        public ViewModelFactory(IMapService mapService, IDialogService dialogService, IWpsClient wpsClient, IContext context, IRequestFactory requestFactory)
+        public ViewModelFactory(IMapService mapService,
+            IDialogService dialogService,
+            IWpsClient wpsClient,
+            IContext context,
+            IRequestFactory requestFactory,
+            IServerRepository serverRepository)
         {
             _mapService = mapService ?? throw new ArgumentNullException(nameof(mapService));
             _dialogService = dialogService ?? throw new ArgumentNullException(nameof(dialogService));
             _wpsClient = wpsClient ?? throw new ArgumentNullException(nameof(wpsClient));
             _context = context ?? throw new ArgumentNullException(nameof(context));
             _requestFactory = requestFactory ?? throw new ArgumentNullException(nameof(requestFactory));
+            _serverRepository = serverRepository ?? throw new ArgumentNullException(nameof(serverRepository));
         }
 
         public ProcessOfferingViewModel CreateProcessOfferingViewModel(string wpsUri, ProcessSummary sum)
@@ -111,6 +119,11 @@ namespace AgpWps.Model.Factories
         public ExecutionBuilderViewModel CreateExecutionBuilderViewModel(string wpsUri, string processId)
         {
             return new ExecutionBuilderViewModel(wpsUri, processId, _wpsClient, _context, this, _requestFactory, _dialogService);
+        }
+
+        public ServerViewModel CreateServerViewModel(string serverUrl)
+        {
+            return new ServerViewModel(serverUrl, _serverRepository);
         }
     }
 }
