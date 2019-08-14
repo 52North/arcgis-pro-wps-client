@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Text;
 using System.Xml.Serialization;
 
@@ -27,7 +28,7 @@ namespace AgpWps.Model.Repositories
 
         public void AddServer(string serverUrl)
         {
-            var formattedUrl = serverUrl.Replace(" ", "").ToLower();
+            var formattedUrl = serverUrl.Replace(" ", "");
             if (!_serverUrls.Contains(formattedUrl))
             {
                 _serverUrls.Add(formattedUrl);

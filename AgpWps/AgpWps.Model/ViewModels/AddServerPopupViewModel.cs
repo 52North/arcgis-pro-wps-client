@@ -1,11 +1,10 @@
-﻿ using AgpWps.Model.Messages;
-using AgpWps.Model.Services;
+﻿using AgpWps.Model.Messages;
+using AgpWps.Model.Repositories;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Messaging;
 using System;
 using System.Collections.ObjectModel;
-using AgpWps.Model.Repositories;
 
 namespace AgpWps.Model.ViewModels
 {
@@ -37,7 +36,7 @@ namespace AgpWps.Model.ViewModels
 
         private void AddServer(string serverUrl)
         {
-            var formattedUrl = serverUrl.Replace(" ", "").ToLower();
+            var formattedUrl = serverUrl.Replace(" ", "");
             Servers.Add(formattedUrl);
             Messenger.Default.Send(new ServerAddedMessage(formattedUrl));
         }
