@@ -98,6 +98,8 @@ namespace AgpWps.Model.ViewModels
                             serverVm.ProcessOfferings.Add(_viewModelFactory.CreateProcessOfferingViewModel(serverUrl, sum));
                         }
                     });
+
+                    _serverRepo.AddServer(serverUrl);
                 }
                 catch (Exception)
                 {
