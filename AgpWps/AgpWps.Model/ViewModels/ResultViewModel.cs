@@ -1,7 +1,11 @@
-﻿using GalaSoft.MvvmLight;
+﻿using AgpWps.Model.Repositories;
+using GalaSoft.MvvmLight;
+using GalaSoft.MvvmLight.Command;
 using System;
 using System.Collections.ObjectModel;
+using System.Windows.Input;
 using System.Xml.Serialization;
+using AgpWps.Model.Messages;
 
 namespace AgpWps.Model.ViewModels
 {
@@ -24,11 +28,28 @@ namespace AgpWps.Model.ViewModels
             set => Set(ref _elapsedTme, value);
         }
 
+        private ICommand _removeResultCommand;
+
+        [XmlIgnore]
+        public ICommand RemoveResultCommand
+        {
+            get => _removeResultCommand;
+            set => Set(ref _removeResultCommand, value);
+        }
+
         private ObservableCollection<ResultItemViewModel> _processes;
         public ObservableCollection<ResultItemViewModel> Processes
         {
             get => _processes;
             set => Set(ref _processes, value);
+        }
+
+        public ResultViewModel()
+        {
+            RemoveResultCommand = new RelayCommand(() =>
+            {
+                MessengerInstance.Send(new ResultRemovedMessage(JobId));
+            });
         }
 
     }

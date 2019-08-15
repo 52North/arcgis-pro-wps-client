@@ -4,6 +4,7 @@ using AgpWps.Model.Services;
 using GalaSoft.MvvmLight;
 using System;
 using System.Collections.ObjectModel;
+using System.Linq;
 
 namespace AgpWps.Model.ViewModels
 {
@@ -39,6 +40,17 @@ namespace AgpWps.Model.ViewModels
                     _resultRepo.AddResult(result);
                     Results.Add(result);
                 });
+            });
+
+            MessengerInstance.Register<ResultRemovedMessage>(this, (msg) =>
+            {
+                var result = Results.FirstOrDefault(r =>
+                    r.JobId.Equals(msg.JobId, StringComparison.InvariantCultureIgnoreCase));
+                if (result != null)
+                {
+                    Results.Remove(result);
+                    _resultRepo.RemoveResult(result);
+                }
             });
         }
 

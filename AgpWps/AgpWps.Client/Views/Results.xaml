@@ -50,7 +50,15 @@
                 <HierarchicalDataTemplate DataType="{x:Type viewModels:ResultViewModel}">
                     <TreeViewItem Header="{Binding JobId}"
                                   ItemsSource="{Binding Processes}"
-                                  ItemTemplateSelector="{StaticResource ResultItemTemplateSelector}"/>
+                                  ItemTemplateSelector="{StaticResource ResultItemTemplateSelector}">
+                        <TreeViewItem.ContextMenu>
+                            <ContextMenu>
+                                <MenuItem Header="Delete Result"
+                                          Command="{Binding RemoveResultCommand}"
+                                          ToolTip="Delete the result permanently."/>
+                            </ContextMenu>
+                        </TreeViewItem.ContextMenu>
+                    </TreeViewItem>
                 </HierarchicalDataTemplate>
             </TreeView.ItemTemplate>
         </TreeView>
