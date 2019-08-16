@@ -312,6 +312,9 @@
   <ItemGroup>
     <AddInContent Include="DarkImages\GenericButtonRed32.png" />
   </ItemGroup>
+  <ItemGroup>
+    <AddInContent Include="Images\52n_wps_logo.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!--
   PackageAction can be:

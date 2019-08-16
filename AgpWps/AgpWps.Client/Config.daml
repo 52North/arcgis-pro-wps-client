@@ -1,10 +1,10 @@
 <ArcGIS defaultAssembly="AgpWps.Client.dll" defaultNamespace="AgpWps.Client" xmlns="http://schemas.esri.com/DADF/Registry" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://schemas.esri.com/DADF/Registry file:///C:/Users/stanm/AppData/Local/Programs/ArcGIS/Pro/bin/ArcGIS.Desktop.Framework.xsd">
   <AddInInfo id="{e4e4b991-c9db-4b78-a061-262f23bde399}" version="1.0" desktopVersion="2.3.15769">
-    <Name>AgpWps.Client</Name>
-    <Description>AgpWps.Client description</Description>
-    <Image>Images\AddinDesktop32.png</Image>
-    <Author>stanm</Author>
-    <Company>Acme</Company>
+    <Name>AgpWps</Name>
+    <Description>AgpWps allows you to connect to Web Processing Services and take advantage of the numerous capabilities it might offer.</Description>
+    <Image>Images\52n_wps_logo.png</Image>
+    <Author>Mihai Stan and Benjamin Pross</Author>
+    <Company>52°North</Company>
     <Date>20-Jun-19 14:29:53, 2019</Date>
     <Subject>Framework</Subject>
     <!-- Note subject can be one or more of these topics:
