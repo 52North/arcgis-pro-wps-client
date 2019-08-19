@@ -1,9 +1,9 @@
-﻿using AgpWps.Model.Services;
+﻿using AgpWps.Model.Repositories;
+using AgpWps.Model.Services;
 using AgpWps.Model.ViewModels;
 using System;
 using System.Collections.ObjectModel;
 using System.Linq;
-using AgpWps.Model.Repositories;
 using Wps.Client.Models;
 using Wps.Client.Models.Data;
 using Wps.Client.Services;
@@ -37,10 +37,16 @@ namespace AgpWps.Model.Factories
 
         public ProcessOfferingViewModel CreateProcessOfferingViewModel(string wpsUri, ProcessSummary sum)
         {
+            var transmissionMode = sum.OutputTransmission.ToString().ToLower();
+            if (transmissionMode.Equals("ValueReference", StringComparison.InvariantCultureIgnoreCase))
+            {
+                transmissionMode = "value reference";
+            }
+
             return new ProcessOfferingViewModel(wpsUri, sum.Identifier, _dialogService, _wpsClient, _context, this)
             {
                 ProcessName = sum.Identifier,
-                TransmissionModes = sum.OutputTransmission.ToString(),
+                TransmissionModes = transmissionMode,
                 JobControlOptions = sum.JobControlOptions,
                 Keywords = sum.Keywords != null ? string.Join(", ", sum.Keywords) : null,
                 Model = sum.ProcessModel,
