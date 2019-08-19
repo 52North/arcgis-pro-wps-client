@@ -7,7 +7,7 @@
         xmlns:extensions="clr-namespace:ArcGIS.Desktop.Extensions;assembly=ArcGIS.Desktop.Extensions"
         xmlns:vm="clr-namespace:AgpWps.Model.ViewModels;assembly=AgpWps.Model"
         mc:Ignorable="d"
-        Title="AddServerPopup" Height="100" Width="400"
+        Title="Add WPS Connection" Height="100" Width="400"
         WindowStartupLocation="CenterOwner"
         ResizeMode="NoResize"
         KeyDown="AddServerPopupKeyDown"
@@ -35,10 +35,10 @@
                    VerticalAlignment="Center"
                    Margin="5,0,5,0"/>
 
-        <ComboBox Grid.Row="0" Grid.Column="1"
+        <ComboBox Name="ServerInputComboBox"
+                  Grid.Row="0" Grid.Column="1"
                   ItemsSource="{Binding Servers}"
                   IsEditable="True"
-                  Name="ServerInputComboBox"
                   Margin="5"
                   VerticalContentAlignment="Center"/>
 
