@@ -169,7 +169,9 @@ namespace AgpWps.Model.Factories
 
             var output = new DataOutput
             {
-                MimeType = viewModel.SelectedFormat,
+                MimeType = viewModel.SelectedFormat.MimeType,
+                Encoding = viewModel.SelectedFormat.SelectedEncoding,
+                Schema = viewModel.SelectedFormat.SelectedSchema,
                 Transmission = TransmissionMode.Value,
                 Identifier = viewModel.Identifier
             };

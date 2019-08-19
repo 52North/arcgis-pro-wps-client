@@ -130,8 +130,6 @@
     <AddInContent Include="Config.daml">
       <SubType>Designer</SubType>
     </AddInContent>
-    <AddInContent Include="Images\AddInDesktop16.png" />
-    <AddInContent Include="Images\AddInDesktop32.png" />
     <AddInContent Include="DarkImages\AddInDesktop16.png" />
     <AddInContent Include="DarkImages\AddInDesktop32.png" />
   </ItemGroup>
@@ -148,6 +146,9 @@
     </Compile>
     <Compile Include="Controls\FileResultItem.xaml.cs">
       <DependentUpon>FileResultItem.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\FormatSelector.xaml.cs">
+      <DependentUpon>FormatSelector.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\LiteralInput.xaml.cs">
       <DependentUpon>LiteralInput.xaml</DependentUpon>
@@ -205,6 +206,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Controls\FileResultItem.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\FormatSelector.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

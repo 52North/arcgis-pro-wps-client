@@ -1,5 +1,4 @@
-﻿using AgpWps.Model.Services;
-using GalaSoft.MvvmLight;
+﻿using GalaSoft.MvvmLight;
 using System.Collections.ObjectModel;
 
 namespace AgpWps.Model.ViewModels
@@ -14,15 +13,15 @@ namespace AgpWps.Model.ViewModels
             set => Set(ref _identifier, value);
         }
 
-        private string _selectedFormat;
-        public string SelectedFormat
+        private FormatViewModel _selectedFormat;
+        public FormatViewModel SelectedFormat
         {
             get => _selectedFormat;
             set => Set(ref _selectedFormat, value);
         }
 
-        private ObservableCollection<string> _formats = new ObservableCollection<string>();
-        public ObservableCollection<string> Formats
+        private ObservableCollection<FormatViewModel> _formats = new ObservableCollection<FormatViewModel>();
+        public ObservableCollection<FormatViewModel> Formats
         {
             get => _formats;
             set => Set(ref _formats, value);

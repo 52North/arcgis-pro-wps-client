@@ -3,6 +3,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:controls="clr-namespace:AgpWps.Client.Controls"
              xmlns:viewModels="clr-namespace:AgpWps.Model.ViewModels;assembly=AgpWps.Model"
              mc:Ignorable="d" 
              d:DataContext="{d:DesignInstance viewModels:LiteralDataOutputViewModel}"
@@ -29,14 +30,8 @@
                       IsChecked="{Binding IsIncluded}"
                       VerticalAlignment="Center"/>
 
-            <TextBlock Grid.Row="2"  Grid.Column="0"
-                       HorizontalAlignment="Right"
-                       VerticalAlignment="Center"
-                       Margin="0,0,5,0"
-                       Text="Format:"/>
-            <ComboBox Grid.Row="2" Grid.Column="1"
-                      SelectedValue="{Binding SelectedFormat}"
-                      ItemsSource="{Binding Formats}"/>
+            <controls:FormatSelector Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2"
+                                     DataContext="{Binding}"/>
         </Grid>
     </GroupBox>
 </UserControl>
