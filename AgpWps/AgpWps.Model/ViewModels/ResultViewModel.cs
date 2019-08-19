@@ -3,6 +3,7 @@ using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using System;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Windows.Input;
 using System.Xml.Serialization;
 using AgpWps.Model.Messages;
@@ -22,10 +23,18 @@ namespace AgpWps.Model.ViewModels
         }
 
         private TimeSpan _elapsedTme;
+        [XmlIgnore] // TimeSpan isn't correctly serialized by the serializer and a custom serialization could be implemented.
         public TimeSpan ElapsedTime
         {
             get => _elapsedTme;
             set => Set(ref _elapsedTme, value);
+        }
+
+        [Browsable(false), EditorBrowsable(EditorBrowsableState.Never)]
+        public long ElapsedTimeTicks
+        {
+            get => ElapsedTime.Ticks;
+            set => ElapsedTime = new TimeSpan(value);
         }
 
         private ICommand _removeResultCommand;

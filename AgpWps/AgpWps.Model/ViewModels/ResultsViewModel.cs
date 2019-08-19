@@ -34,7 +34,8 @@ namespace AgpWps.Model.ViewModels
                     var result = new ResultViewModel
                     {
                         JobId = msg.JobId,
-                        Processes = new ObservableCollection<ResultItemViewModel>(msg.Outputs)
+                        Processes = new ObservableCollection<ResultItemViewModel>(msg.Outputs),
+                        ElapsedTime = msg.ElapsedTime
                     };
 
                     _resultRepo.AddResult(result);

@@ -103,6 +103,8 @@ namespace AgpWps.Model.ViewModels
                 _wpsClient.AsyncGetDocumentResultAs<string>(_wpsUri, request).ContinueWith((task) =>
                 {
                     var session = task.Result;
+                    var stopWatch = new Stopwatch();
+                    stopWatch.Start();
 
                     session.Polled += (sender, args) =>
                     {
@@ -117,6 +119,7 @@ namespace AgpWps.Model.ViewModels
 
                     session.Finished += (sender, args) =>
                     {
+                        stopWatch.Stop();
                         _dialogService.ShowMessageDialog("Finished", $"The job {args.Result.JobId} has finished its execution. You can now access the outputs. ");
                         var outputs = new List<ResultItemViewModel>();
 
@@ -184,7 +187,7 @@ namespace AgpWps.Model.ViewModels
                             }
                         }
 
-                        MessengerInstance.Send(new ExecutionFinishedMessage(args.Result.JobId, outputs, args.Result.ExpirationDate));
+                        MessengerInstance.Send(new ExecutionFinishedMessage(args.Result.JobId, outputs, args.Result.ExpirationDate, stopWatch.Elapsed));
                     };
 
                     var sessionPollingTask = session.StartPolling();

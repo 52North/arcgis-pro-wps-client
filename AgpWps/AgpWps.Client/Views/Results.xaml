@@ -36,9 +36,7 @@
               ItemsSource="{Binding Results}">
         <TreeView.ItemTemplate>
             <HierarchicalDataTemplate DataType="{x:Type viewModels:ResultViewModel}">
-                <TreeViewItem Header="{Binding JobId}"
-                              ItemsSource="{Binding Processes}"
-                              ItemTemplateSelector="{StaticResource ResultItemTemplateSelector}">
+                <TreeViewItem Header="{Binding JobId}">
                     <TreeViewItem.ContextMenu>
                         <ContextMenu>
                             <MenuItem Header="Delete Result"
@@ -46,6 +44,18 @@
                                       ToolTip="Delete the result permanently."/>
                         </ContextMenu>
                     </TreeViewItem.ContextMenu>
+                    <TextBlock>
+                        <Run Text="Elapsed time:"/>
+                        <Run Text="{Binding ElapsedTime}"/>
+                    </TextBlock>
+                    <ItemsControl ItemsSource="{Binding Processes}"
+                                  ItemTemplateSelector="{StaticResource ResultItemTemplateSelector}">
+                        <ItemsControl.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <StackPanel Orientation="Vertical"/>
+                            </ItemsPanelTemplate>
+                        </ItemsControl.ItemsPanel>
+                    </ItemsControl>
                 </TreeViewItem>
             </HierarchicalDataTemplate>
         </TreeView.ItemTemplate>
