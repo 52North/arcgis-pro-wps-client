@@ -1,0 +1,124 @@
+﻿<UserControl x:Class="AgpWps.Client.Controls.ReferenceableDataInput"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:AgpWps.Client.Controls"
+             xmlns:viewModels="clr-namespace:AgpWps.Model.ViewModels;assembly=AgpWps.Model"
+             xmlns:templateSelectors="clr-namespace:AgpWps.Client.TemplateSelectors"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <UserControl.Resources>
+        <DataTemplate DataType="{x:Type viewModels:BoundingBoxInputViewModel}"
+                      x:Key="BoundingBoxInputDataTemplate">
+            <local:BoundingBoxInput DataContext="{Binding}"/>
+        </DataTemplate>
+
+        <DataTemplate DataType="{x:Type viewModels:ComplexDataViewModel}"
+                      x:Key="ComplexDataInputDataTemplate">
+            <local:ComplexDataInput DataContext="{Binding}"/>
+        </DataTemplate>
+
+        <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+
+        <DataTemplate x:Key="UnknownDataTemplate">
+            <TextBlock Text="Unknown data type"
+                       HorizontalAlignment="Center"/>
+        </DataTemplate>
+
+        <templateSelectors:DataInputTemplateSelector x:Key="InputTemplateSelector"
+                                                     BoundingBoxValueDataTemplate="{StaticResource BoundingBoxInputDataTemplate}"
+                                                     ComplexValueDataTemplate="{StaticResource ComplexDataInputDataTemplate}"
+                                                     UnknownDataTemplate="{StaticResource UnknownDataTemplate}"/>
+        <!--LiteralValueDataTemplate="{}" This shouldn't be part of the referenceable inputs -->
+
+        <Style x:Key="VisibleOnValue" TargetType="FrameworkElement">
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding IsReference}" Value="False">
+                    <Setter Property="Visibility" Value="Visible"/>
+                </DataTrigger>
+                <DataTrigger Binding="{Binding IsReference}" Value="True">
+                    <Setter Property="Visibility" Value="Collapsed"/>
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+
+        <Style x:Key="VisibleOnReference" TargetType="FrameworkElement">
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding IsReference}" Value="False">
+                    <Setter Property="Visibility" Value="Collapsed"/>
+                </DataTrigger>
+                <DataTrigger Binding="{Binding IsReference}" Value="True">
+                    <Setter Property="Visibility" Value="Visible"/>
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+    </UserControl.Resources>
+    <GroupBox Header="{Binding}">
+        <GroupBox.HeaderTemplate>
+            <DataTemplate DataType="{x:Type viewModels:DataInputViewModel}">
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Text="{Binding ProcessName}"
+                               VerticalAlignment="Center"/>
+                    <ToggleButton Content="Ref."
+                                  Margin="5,0,0,0"
+                                  IsChecked="{Binding IsReference}"
+                                  ToolTip="Reference your input from another location or directly input your value."
+                                  Background="Transparent"
+                                  VerticalAlignment="Center"
+                                  VerticalContentAlignment="Stretch"
+                                  HorizontalContentAlignment="Stretch"
+                                  BorderThickness="1"
+                                  Padding="1">
+                        <ToggleButton.ContentTemplate>
+                            <DataTemplate>
+                                <Image Height="17">
+                                    <Image.Style>
+                                        <Style TargetType="{x:Type Image}">
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding ElementName=InputElement, Path=DataContext.IsReference}" Value="True">
+                                                    <Setter Property="Source" Value="pack://application:,,,/AgpWps.Client;component/Images/ReferenceValue.png"/>
+                                                </DataTrigger>
+                                                <DataTrigger Binding="{Binding ElementName=InputElement, Path=DataContext.IsReference}" Value="False">
+                                                    <Setter Property="Source" Value="pack://application:,,,/AgpWps.Client;component/Images/DirectValue.png"/>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </Image.Style>
+                                </Image>
+                            </DataTemplate>
+                        </ToggleButton.ContentTemplate>
+                    </ToggleButton>
+                    <TextBlock Text="(optional)"
+                               FontStyle="Italic"
+                               VerticalAlignment="Center"
+                               Margin="5,0,0,0"
+                               Visibility="{Binding ElementName=InputElement, Path=DataContext.IsOptional, Converter={StaticResource BooleanToVisibilityConverter}}"/>
+                </StackPanel>
+            </DataTemplate>
+        </GroupBox.HeaderTemplate>
+        <StackPanel Orientation="Vertical">
+            <UserControl DataContext="{Binding}"
+                         Content="{Binding}"
+                         ContentTemplateSelector="{StaticResource InputTemplateSelector}"
+                         Style="{StaticResource VisibleOnValue}"/>
+
+            <Grid Style="{StaticResource VisibleOnReference}">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <TextBlock Grid.Row="0" Grid.Column="0"
+                           Text="Reference URL:"
+                           VerticalAlignment="Center"
+                           HorizontalAlignment="Right"
+                           Padding="0,0,5,0"/>
+
+                <TextBox Grid.Row="0" Grid.Column="1"
+                         VerticalAlignment="Center"
+                         Text="{Binding ReferenceUrl}"/>
+            </Grid>
+        </StackPanel>
+    </GroupBox>
+</UserControl>
