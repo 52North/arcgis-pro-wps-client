@@ -115,15 +115,17 @@ namespace AgpWps.Model.Factories
 
             var dataInput = new DataInput
             {
-                Identifier = viewModel.ProcessName
+                Identifier = viewModel.ProcessName,
+                MimeType = viewModel.SelectedFormat?.MimeType ?? "",
+                Schema = viewModel.SelectedFormat?.SelectedSchema ?? "",
+                Encoding = viewModel.SelectedFormat?.SelectedEncoding ?? "",
             };
 
             if (viewModel.IsReference)
             {
                 dataInput.Reference = new ResourceReference
                 {
-                    Href = viewModel.ReferenceUrl,
-                    // Schema = ???
+                    Href = viewModel.ReferenceUrl
                 };
             }
             else
