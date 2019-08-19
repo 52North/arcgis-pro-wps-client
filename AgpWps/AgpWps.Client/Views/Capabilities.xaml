@@ -28,18 +28,11 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <DockPanel Grid.Row="0" LastChildFill="true" KeyboardNavigation.TabNavigation="Local" Height="30">
+        <DockPanel Grid.Row="0" LastChildFill="true" KeyboardNavigation.TabNavigation="Local" Height="30"
+                   HorizontalAlignment="Right">
             <controls:BurgerButton DockPanel.Dock="Right"
                                    Name="MenuBurgerButton"
                                    ToolTip="Manage Providers"/>
-
-            <TextBlock Text="Servers Capabilities" Style="{DynamicResource Esri_TextBlockDockPaneHeader}">
-                <TextBlock.ToolTip>
-                    <WrapPanel Orientation="Vertical" MaxWidth="300">
-                        <TextBlock Text="Servers Capabilities" TextWrapping="Wrap"/>
-                    </WrapPanel>
-                </TextBlock.ToolTip>
-            </TextBlock>
         </DockPanel>
 
         <TreeView Grid.Row="1"

@@ -49,7 +49,7 @@
         </button>
       </controls>
       <dockPanes>
-        <dockPane id="AgpWps_Client_Views_Capabilities" caption="Capabilities" className="AgpWps.Client.Views.CapabilitiesPane" dock="group" dockWith="esri_core_contentsDockPane">
+        <dockPane id="AgpWps_Client_Views_Capabilities" caption="WPS Processes" className="AgpWps.Client.Views.CapabilitiesPane" dock="group" dockWith="esri_core_contentsDockPane">
           <content className="AgpWps.Client.Views.CapabilitiesView" />
         </dockPane>
         <dockPane id="AgpWps_Client_Views_Results" caption="WPS Execution Results" className="AgpWps.Client.Views.ResultsPane" dock="group" dockWith="esri_core_contentsDockPane">
