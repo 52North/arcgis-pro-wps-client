@@ -32,35 +32,22 @@
 
         </ResourceDictionary>
     </UserControl.Resources>
-    <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="*"/>
-        </Grid.RowDefinitions>
-
-        <TextBlock Grid.Row="0"
-                   HorizontalAlignment="Center"
-                   Text="Processing Results"/>
-
-        <TreeView Grid.Row="1"
-                  Name="ProcessesTreeView"
-                  Margin="0,5,0,0"
-                  ItemsSource="{Binding Results}">
-            <TreeView.ItemTemplate>
-                <HierarchicalDataTemplate DataType="{x:Type viewModels:ResultViewModel}">
-                    <TreeViewItem Header="{Binding JobId}"
-                                  ItemsSource="{Binding Processes}"
-                                  ItemTemplateSelector="{StaticResource ResultItemTemplateSelector}">
-                        <TreeViewItem.ContextMenu>
-                            <ContextMenu>
-                                <MenuItem Header="Delete Result"
-                                          Command="{Binding RemoveResultCommand}"
-                                          ToolTip="Delete the result permanently."/>
-                            </ContextMenu>
-                        </TreeViewItem.ContextMenu>
-                    </TreeViewItem>
-                </HierarchicalDataTemplate>
-            </TreeView.ItemTemplate>
-        </TreeView>
-    </Grid>
+    <TreeView Name="ProcessesTreeView"
+              ItemsSource="{Binding Results}">
+        <TreeView.ItemTemplate>
+            <HierarchicalDataTemplate DataType="{x:Type viewModels:ResultViewModel}">
+                <TreeViewItem Header="{Binding JobId}"
+                              ItemsSource="{Binding Processes}"
+                              ItemTemplateSelector="{StaticResource ResultItemTemplateSelector}">
+                    <TreeViewItem.ContextMenu>
+                        <ContextMenu>
+                            <MenuItem Header="Delete Result"
+                                      Command="{Binding RemoveResultCommand}"
+                                      ToolTip="Delete the result permanently."/>
+                        </ContextMenu>
+                    </TreeViewItem.ContextMenu>
+                </TreeViewItem>
+            </HierarchicalDataTemplate>
+        </TreeView.ItemTemplate>
+    </TreeView>
 </UserControl>
