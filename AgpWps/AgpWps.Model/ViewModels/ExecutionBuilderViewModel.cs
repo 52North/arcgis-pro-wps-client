@@ -2,6 +2,7 @@
 using AgpWps.Model.Exceptions;
 using AgpWps.Model.Factories;
 using AgpWps.Model.Messages;
+using AgpWps.Model.Repositories;
 using AgpWps.Model.Services;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
@@ -12,7 +13,6 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Windows.Input;
-using Wps.Client.Models;
 using Wps.Client.Models.Execution;
 using Wps.Client.Services;
 
@@ -74,8 +74,16 @@ namespace AgpWps.Model.ViewModels
         private readonly IViewModelFactory _viewModelFactory;
         private readonly IRequestFactory _requestFactory;
         private readonly IDialogService _dialogService;
+        private readonly ILoggerRepository _loggerRepository;
 
-        public ExecutionBuilderViewModel(string wpsUri, string processId, IWpsClient wpsClient, IContext context, IViewModelFactory viewModelFactory, IRequestFactory requestFactory, IDialogService dialogService)
+        public ExecutionBuilderViewModel(string wpsUri,
+            string processId,
+            IWpsClient wpsClient,
+            IContext context,
+            IViewModelFactory viewModelFactory,
+            IRequestFactory requestFactory,
+            IDialogService dialogService,
+            ILoggerRepository loggerRepository)
         {
             _wpsUri = wpsUri ?? throw new ArgumentNullException(nameof(wpsUri));
             _processId = processId ?? throw new ArgumentNullException(nameof(processId));
@@ -84,6 +92,7 @@ namespace AgpWps.Model.ViewModels
             _viewModelFactory = viewModelFactory ?? throw new ArgumentNullException(nameof(viewModelFactory));
             _requestFactory = requestFactory ?? throw new ArgumentNullException(nameof(requestFactory));
             _dialogService = dialogService ?? throw new ArgumentNullException(nameof(dialogService));
+            _loggerRepository = loggerRepository ?? throw new ArgumentNullException(nameof(loggerRepository));
 
             Title = _processId;
 
@@ -190,18 +199,18 @@ namespace AgpWps.Model.ViewModels
                         MessengerInstance.Send(new ExecutionFinishedMessage(args.Result.JobId, outputs, args.Result.ExpirationDate, stopWatch.Elapsed));
                     };
 
-                    var sessionPollingTask = session.StartPolling();
-                    var status = _wpsClient.GetJobStatus(_wpsUri, session.JobId).Result;
-
-                    if (status.Status == JobStatus.Failed)
+                    try
                     {
-                        _dialogService.ShowMessageDialog("Error", "The job could not be started, please try again.",
-                            DialogMessageType.Error);
-                        sessionPollingTask.Dispose();
+                        session.StartPolling().Wait();
                     }
-                    else
+                    catch (Exception e)
                     {
-                        sessionPollingTask.Wait();
+                        var logPath = _loggerRepository.LogExceptionReport(session.JobId, request, e);
+                        var openLog = _dialogService.ShowErrorDialog(session.JobId);
+                        if (openLog)
+                        {
+                            Process.Start(logPath);
+                        }
                     }
 
                     _context.Invoke(() => IsExecutingProcess = false);
