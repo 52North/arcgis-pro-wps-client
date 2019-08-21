@@ -19,13 +19,15 @@ namespace AgpWps.Model.Factories
         private readonly IContext _context;
         private readonly IRequestFactory _requestFactory;
         private readonly IServerRepository _serverRepository;
+        private readonly ILoggerRepository _loggerRepository;
 
         public ViewModelFactory(IMapService mapService,
             IDialogService dialogService,
             IWpsClient wpsClient,
             IContext context,
             IRequestFactory requestFactory,
-            IServerRepository serverRepository)
+            IServerRepository serverRepository,
+            ILoggerRepository loggerRepository)
         {
             _mapService = mapService ?? throw new ArgumentNullException(nameof(mapService));
             _dialogService = dialogService ?? throw new ArgumentNullException(nameof(dialogService));
@@ -33,6 +35,7 @@ namespace AgpWps.Model.Factories
             _context = context ?? throw new ArgumentNullException(nameof(context));
             _requestFactory = requestFactory ?? throw new ArgumentNullException(nameof(requestFactory));
             _serverRepository = serverRepository ?? throw new ArgumentNullException(nameof(serverRepository));
+            _loggerRepository = loggerRepository ?? throw new ArgumentNullException(nameof(loggerRepository));
         }
 
         public ProcessOfferingViewModel CreateProcessOfferingViewModel(string wpsUri, ProcessSummary sum)
@@ -177,7 +180,14 @@ namespace AgpWps.Model.Factories
 
         public ExecutionBuilderViewModel CreateExecutionBuilderViewModel(string wpsUri, string processId)
         {
-            return new ExecutionBuilderViewModel(wpsUri, processId, _wpsClient, _context, this, _requestFactory, _dialogService);
+            return new ExecutionBuilderViewModel(wpsUri,
+                processId,
+                _wpsClient,
+                _context,
+                this,
+                _requestFactory,
+                _dialogService,
+                _loggerRepository);
         }
 
         public ServerViewModel CreateServerViewModel(string serverUrl)

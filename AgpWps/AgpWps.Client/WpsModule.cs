@@ -48,6 +48,7 @@ namespace AgpWps.Client
             // Repositories
             container.Register<IServerRepository, ServerRepository>(setup: Setup.With(trackDisposableTransient: true));
             container.Register<IResultRepository, ResultsRepository>(setup: Setup.With(trackDisposableTransient: true));
+            container.Register<ILoggerRepository, FileLoggerRepository>(setup: Setup.With(trackDisposableTransient: true));
 
             // View Models
             container.Register<AddServerPopupViewModel>();
