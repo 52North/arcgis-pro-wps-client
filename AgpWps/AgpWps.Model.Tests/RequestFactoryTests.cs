@@ -35,7 +35,11 @@ namespace AgpWps.Model.Tests
 
             var input = _requestFactory.CreateDataInput(vm);
             input.Identifier.Should().Be(processName);
-            input.Data.Should().Be(value);
+            input.Data.Should().BeOfType<LiteralDataValue>();
+            if (input.Data is LiteralDataValue ldv)
+            {
+                ldv.Value.Should().Be(value);
+            }
         }
 
         [Fact]
@@ -131,7 +135,12 @@ namespace AgpWps.Model.Tests
         public void CreateDataOutput_OutputViewModelGiven_ShouldCreateOutput()
         {
             const string processName = "processName";
-            const string selectedFormat = "zipped-shp";
+            var selectedFormat = new FormatViewModel
+            {
+                MimeType = "test format",
+                SelectedEncoding = "encoding",
+                SelectedSchema = "schema"
+            };
 
             var vm = new DataOutputViewModel()
             {
@@ -141,7 +150,9 @@ namespace AgpWps.Model.Tests
 
             var output = _requestFactory.CreateDataOutput(vm);
             output.Identifier.Should().Be(processName);
-            output.MimeType.Should().Be(selectedFormat);
+            output.MimeType.Should().Be(selectedFormat.MimeType);
+            output.Schema.Should().Be(selectedFormat.SelectedSchema);
+            output.Encoding.Should().Be(selectedFormat.SelectedEncoding);
             output.Transmission.Should().Be(TransmissionMode.Value);
         }
 
@@ -162,9 +173,15 @@ namespace AgpWps.Model.Tests
                 new DataInputViewModel{IsReference = true, ReferenceUrl = "ref uri"},
             };
 
+            var selectedFormat = new FormatViewModel
+            {
+                MimeType = "test format",
+                SelectedEncoding = "encoding",
+                SelectedSchema = "schema"
+            };
             var outputs = new List<DataOutputViewModel>
             {
-                new DataOutputViewModel { SelectedFormat = "zipped-shp"},
+                new LiteralDataOutputViewModel{SelectedFormat = selectedFormat, IsIncluded = true},
                 new DataOutputViewModel(), // Dummy output, should be removed by the factory
             };
 
@@ -233,7 +250,7 @@ namespace AgpWps.Model.Tests
                     new DataOutputViewModel(),
                 };
 
-                _requestFactory.CreateExecuteRequest("", new List<DataInputViewModel>(), 
+                _requestFactory.CreateExecuteRequest("", new List<DataInputViewModel>(),
                     outputs);
             });
         }

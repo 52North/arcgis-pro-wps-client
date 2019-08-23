@@ -122,20 +122,19 @@
       <HintPath>C:\Users\stanm\AppData\Local\Programs\ArcGIS\Pro\bin\ArcGIS.Desktop.Shared.Wpf.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="Wps.Client, Version=1.0.1.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Wps.Net.1.0.1\lib\netstandard2.0\Wps.Client.dll</HintPath>
+    <Reference Include="Wps.Client, Version=1.0.3.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Wps.Net.1.0.3\lib\netstandard2.0\Wps.Client.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
     <AddInContent Include="Config.daml">
       <SubType>Designer</SubType>
     </AddInContent>
-    <AddInContent Include="Images\AddInDesktop16.png" />
-    <AddInContent Include="Images\AddInDesktop32.png" />
     <AddInContent Include="DarkImages\AddInDesktop16.png" />
     <AddInContent Include="DarkImages\AddInDesktop32.png" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AppData.cs" />
     <Compile Include="Controls\BoundingBoxInput.xaml.cs">
       <DependentUpon>BoundingBoxInput.xaml</DependentUpon>
     </Compile>
@@ -148,6 +147,9 @@
     <Compile Include="Controls\FileResultItem.xaml.cs">
       <DependentUpon>FileResultItem.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\FormatSelector.xaml.cs">
+      <DependentUpon>FormatSelector.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\LiteralInput.xaml.cs">
       <DependentUpon>LiteralInput.xaml</DependentUpon>
     </Compile>
@@ -159,6 +161,9 @@
     </Compile>
     <Compile Include="Controls\Rectangle.xaml.cs">
       <DependentUpon>Rectangle.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\ReferenceableDataInput.xaml.cs">
+      <DependentUpon>ReferenceableDataInput.xaml</DependentUpon>
     </Compile>
     <Compile Include="Converters\DebugConverter.cs" />
     <Compile Include="Converters\InvertBooleanConverter.cs" />
@@ -207,6 +212,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Controls\FormatSelector.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Controls\LiteralInput.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -220,6 +229,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Controls\Rectangle.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\ReferenceableDataInput.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -310,6 +323,9 @@
   </ItemGroup>
   <ItemGroup>
     <AddInContent Include="DarkImages\GenericButtonRed32.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AddInContent Include="Images\52n_wps_logo.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!--

@@ -48,5 +48,12 @@ namespace AgpWps.Model.Services
         /// <returns>The path to the file to be created</returns>
         string ShowFileSaveDialog(string title, string filter = null);
 
+        /// <summary>
+        /// Prompt a dialog to the user asking him if he wants to open the error report file.
+        /// </summary>
+        /// <param name="jobId">The job id of the error</param>
+        /// <returns>Boolean indicating whether the person wants to open the error report or not</returns>
+        bool ShowErrorDialog(string jobId);
+
     }
 }

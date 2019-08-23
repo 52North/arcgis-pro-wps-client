@@ -62,6 +62,16 @@ namespace AgpWps.Client.Services
             return dialog.ShowDialog() == true ? dialog.FileName : null;
         }
 
+        public bool ShowErrorDialog(string jobId)
+        {
+            var result =
+                MessageBox.Show(
+                    $"An error has occured while executing the job {jobId}. Would you like to open the error report now?",
+                    "Unexpected error", MessageBoxButton.YesNo, MessageBoxImage.Error);
+
+            return result == MessageBoxResult.Yes;
+        }
+
         public void ShowExecutionBuilderDialog(ExecutionBuilderViewModel vm)
         {
             if (vm == null) throw new ArgumentNullException(nameof(vm));

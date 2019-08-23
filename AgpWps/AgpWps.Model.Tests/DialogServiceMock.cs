@@ -36,5 +36,10 @@ namespace AgpWps.Model.Tests
         {
             throw new NotImplementedException();
         }
+
+        public bool ShowErrorDialog(string jobId)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

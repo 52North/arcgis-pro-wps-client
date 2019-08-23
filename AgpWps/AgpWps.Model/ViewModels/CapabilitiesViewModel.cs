@@ -1,6 +1,7 @@
 ﻿using AgpWps.Model.Enums;
 using AgpWps.Model.Factories;
 using AgpWps.Model.Messages;
+using AgpWps.Model.Repositories;
 using AgpWps.Model.Services;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
@@ -20,6 +21,7 @@ namespace AgpWps.Model.ViewModels
         private readonly IContext _context;
         private readonly IViewModelFactory _viewModelFactory;
         private readonly IDialogService _dialogService;
+        private readonly IServerRepository _serverRepo;
 
         private ObservableCollection<ServerViewModel> _servers = new ObservableCollection<ServerViewModel>();
 
@@ -36,16 +38,28 @@ namespace AgpWps.Model.ViewModels
             set => Set(ref _servers, value);
         }
 
-        public CapabilitiesViewModel(IWpsClient wpsClient, IContext context, IViewModelFactory viewModelFactory, IDialogService dialogService)
+        public CapabilitiesViewModel(IWpsClient wpsClient,
+            IContext context,
+            IViewModelFactory viewModelFactory,
+            IDialogService dialogService,
+            IServerRepository serverRepo)
         {
             _wpsClient = wpsClient ?? throw new ArgumentNullException(nameof(wpsClient));
             _context = context ?? throw new ArgumentNullException(nameof(context));
             _viewModelFactory = viewModelFactory ?? throw new ArgumentNullException(nameof(viewModelFactory));
             _dialogService = dialogService ?? throw new ArgumentNullException(nameof(dialogService));
+            _serverRepo = serverRepo ?? throw new ArgumentNullException(nameof(serverRepo));
 
             ClearServersCommand = new RelayCommand(Servers.Clear);
 
             Messenger.Default.Register<ServerAddedMessage>(this, OnAddedServer);
+            Messenger.Default.Register<ServerRemovedMessage>(this, OnServerRemoved);
+        }
+
+        private void OnServerRemoved(ServerRemovedMessage msg)
+        {
+            var vm = Servers.FirstOrDefault(s => s.ServerUrl.Equals(msg.ServerUrl));
+            if (vm != null) Servers.Remove(vm);
         }
 
         private void OnAddedServer(ServerAddedMessage msg)
@@ -60,10 +74,8 @@ namespace AgpWps.Model.ViewModels
                 return;
             }
 
-            var serverVm = new ServerViewModel(serverUrl)
-            {
-                ServerName = "Loading..."
-            };
+            var serverVm = _viewModelFactory.CreateServerViewModel(serverUrl);
+            serverVm.ServerName = "Loading...";
 
             _context.Invoke(() =>
             {
@@ -86,6 +98,8 @@ namespace AgpWps.Model.ViewModels
                             serverVm.ProcessOfferings.Add(_viewModelFactory.CreateProcessOfferingViewModel(serverUrl, sum));
                         }
                     });
+
+                    _serverRepo.AddServer(serverUrl);
                 }
                 catch (Exception)
                 {

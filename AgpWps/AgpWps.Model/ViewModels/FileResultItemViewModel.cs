@@ -1,21 +1,28 @@
 ﻿using GalaSoft.MvvmLight.Command;
-using System;
 using System.Diagnostics;
 using System.IO;
+using System.Xml.Serialization;
 
 namespace AgpWps.Model.ViewModels
 {
     public class FileResultItemViewModel : ResultItemViewModel
     {
-        public string FilePath { get; }
+
+        private string _filePath;
+        public string FilePath
+        {
+            get => _filePath;
+            set => Set(ref _filePath, value);
+        }
+
+        [XmlIgnore]
         public string DirectoryPath => Path.GetDirectoryName(FilePath);
 
+        [XmlIgnore]
         public RelayCommand<string> OpenFolderCommand { get; }
 
-        public FileResultItemViewModel(string filePath)
+        public FileResultItemViewModel()
         {
-            FilePath = filePath ?? throw new ArgumentNullException(nameof(filePath));
-
             OpenFolderCommand = new RelayCommand<string>(OpenFileExplorerToDirectory);
         }
 

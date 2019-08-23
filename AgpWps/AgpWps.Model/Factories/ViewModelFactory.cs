@@ -1,4 +1,5 @@
-﻿using AgpWps.Model.Services;
+﻿using AgpWps.Model.Repositories;
+using AgpWps.Model.Services;
 using AgpWps.Model.ViewModels;
 using System;
 using System.Collections.ObjectModel;
@@ -17,22 +18,38 @@ namespace AgpWps.Model.Factories
         private readonly IWpsClient _wpsClient;
         private readonly IContext _context;
         private readonly IRequestFactory _requestFactory;
+        private readonly IServerRepository _serverRepository;
+        private readonly ILoggerRepository _loggerRepository;
 
-        public ViewModelFactory(IMapService mapService, IDialogService dialogService, IWpsClient wpsClient, IContext context, IRequestFactory requestFactory)
+        public ViewModelFactory(IMapService mapService,
+            IDialogService dialogService,
+            IWpsClient wpsClient,
+            IContext context,
+            IRequestFactory requestFactory,
+            IServerRepository serverRepository,
+            ILoggerRepository loggerRepository)
         {
             _mapService = mapService ?? throw new ArgumentNullException(nameof(mapService));
             _dialogService = dialogService ?? throw new ArgumentNullException(nameof(dialogService));
             _wpsClient = wpsClient ?? throw new ArgumentNullException(nameof(wpsClient));
             _context = context ?? throw new ArgumentNullException(nameof(context));
             _requestFactory = requestFactory ?? throw new ArgumentNullException(nameof(requestFactory));
+            _serverRepository = serverRepository ?? throw new ArgumentNullException(nameof(serverRepository));
+            _loggerRepository = loggerRepository ?? throw new ArgumentNullException(nameof(loggerRepository));
         }
 
         public ProcessOfferingViewModel CreateProcessOfferingViewModel(string wpsUri, ProcessSummary sum)
         {
+            var transmissionMode = sum.OutputTransmission.ToString().ToLower();
+            if (transmissionMode.Equals("ValueReference", StringComparison.InvariantCultureIgnoreCase))
+            {
+                transmissionMode = "value reference";
+            }
+
             return new ProcessOfferingViewModel(wpsUri, sum.Identifier, _dialogService, _wpsClient, _context, this)
             {
                 ProcessName = sum.Identifier,
-                TransmissionModes = sum.OutputTransmission.ToString(),
+                TransmissionModes = transmissionMode,
                 JobControlOptions = sum.JobControlOptions,
                 Keywords = sum.Keywords != null ? string.Join(", ", sum.Keywords) : null,
                 Model = sum.ProcessModel,
@@ -45,7 +62,23 @@ namespace AgpWps.Model.Factories
         {
             if (input == null) throw new ArgumentNullException(nameof(input));
 
-            var formats = input.Data.Formats.Select(f => f.MimeType).ToArray();
+            var formatVms = input.Data.Formats.GroupBy(f => f.MimeType).Select(f =>
+            {
+                var schemas = f.Where(fs => !string.IsNullOrEmpty(fs.Schema)).Select(fs => fs.Schema).ToList();
+                var encodings = f.Where(fe => !string.IsNullOrEmpty(fe.Encoding)).Select(fe => fe.Encoding).ToList();
+
+                var formatVm = new FormatViewModel
+                {
+                    MimeType = f.Key,
+                    Schemas = new ObservableCollection<string>(schemas),
+                    SelectedSchema = schemas.FirstOrDefault(),
+                    Encodings = new ObservableCollection<string>(encodings),
+                    SelectedEncoding = encodings.FirstOrDefault()
+                };
+
+                return formatVm;
+            }).ToList();
+
             var isOptional = input.MinimumOccurrences == 0;
 
             DataInputViewModel vm;
@@ -69,16 +102,23 @@ namespace AgpWps.Model.Factories
 
             vm.IsOptional = isOptional;
             vm.ProcessName = input.Identifier;
-            vm.Formats = new ObservableCollection<string>(formats);
+            vm.Formats = new ObservableCollection<FormatViewModel>(formatVms);
 
             var defaultFormat = input.Data.Formats.FirstOrDefault(f => f.IsDefault);
-            if (defaultFormat == null)
+            if (defaultFormat != null)
             {
-                vm.SelectedFormat = formats.FirstOrDefault() ?? string.Empty;
+                var selectedVm = formatVms.FirstOrDefault(v =>
+                    v.MimeType.Equals(defaultFormat.MimeType, StringComparison.InvariantCultureIgnoreCase));
+                if (selectedVm != null)
+                {
+                    selectedVm.SelectedSchema = defaultFormat.Schema;
+                    selectedVm.SelectedEncoding = defaultFormat.Encoding;
+                    vm.SelectedFormat = selectedVm;
+                }
             }
             else
             {
-                vm.SelectedFormat = defaultFormat.MimeType;
+                vm.SelectedFormat = vm.Formats.FirstOrDefault();
             }
 
             return vm;
@@ -88,7 +128,22 @@ namespace AgpWps.Model.Factories
         {
             if (output == null) throw new ArgumentNullException(nameof(output));
 
-            var formats = output.Data.Formats.Select(f => f.MimeType).ToArray();
+            var formatVms = output.Data.Formats.GroupBy(f => f.MimeType).Select(f =>
+            {
+                var schemas = f.Where(fs => !string.IsNullOrEmpty(fs.Schema)).Select(fs => fs.Schema).ToList();
+                var encodings = f.Where(fe => !string.IsNullOrEmpty(fe.Encoding)).Select(fe => fe.Encoding).ToList();
+
+                var formatVm = new FormatViewModel
+                {
+                    MimeType = f.Key,
+                    Schemas = new ObservableCollection<string>(schemas),
+                    SelectedSchema = schemas.FirstOrDefault(),
+                    Encodings = new ObservableCollection<string>(encodings),
+                    SelectedEncoding = encodings.FirstOrDefault()
+                };
+
+                return formatVm;
+            }).ToList();
 
             DataOutputViewModel outputVm;
             if (output.Data is LiteralData)
@@ -100,17 +155,44 @@ namespace AgpWps.Model.Factories
                 outputVm = new FileOutputViewModel(_dialogService);
             }
 
-            outputVm.Formats = new ObservableCollection<string>(formats);
             outputVm.Identifier = output.Identifier;
-            outputVm.SelectedFormat = output.Data.Formats.FirstOrDefault(f => f.IsDefault)?.MimeType ??
-                                      formats.FirstOrDefault() ?? string.Empty;
+            outputVm.Formats = new ObservableCollection<FormatViewModel>(formatVms);
+
+            var defaultFormat = output.Data.Formats.FirstOrDefault(f => f.IsDefault);
+            if (defaultFormat != null)
+            {
+                var selectedVm = formatVms.FirstOrDefault(v =>
+                    v.MimeType.Equals(defaultFormat.MimeType, StringComparison.InvariantCultureIgnoreCase));
+                if (selectedVm != null)
+                {
+                    selectedVm.SelectedSchema = defaultFormat.Schema;
+                    selectedVm.SelectedEncoding = defaultFormat.Encoding;
+                    outputVm.SelectedFormat = selectedVm;
+                }
+            }
+            else
+            {
+                outputVm.SelectedFormat = outputVm.Formats.FirstOrDefault();
+            }
 
             return outputVm;
         }
 
         public ExecutionBuilderViewModel CreateExecutionBuilderViewModel(string wpsUri, string processId)
         {
-            return new ExecutionBuilderViewModel(wpsUri, processId, _wpsClient, _context, this, _requestFactory, _dialogService);
+            return new ExecutionBuilderViewModel(wpsUri,
+                processId,
+                _wpsClient,
+                _context,
+                this,
+                _requestFactory,
+                _dialogService,
+                _loggerRepository);
+        }
+
+        public ServerViewModel CreateServerViewModel(string serverUrl)
+        {
+            return new ServerViewModel(serverUrl, _serverRepository);
         }
     }
 }
