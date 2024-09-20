@@ -1,3 +1,8 @@
+# ARCHIVED
+
+This project is no longer maintained and will not receive any further updates. If you plan to continue using it, please be aware that future security issues will not be addressed.
+
+
 <h3 align="center">
     <img src="./media/52n-logo.svg" height=100>
     <p><b>WPS client for ArcGIS Pro</b></p>
